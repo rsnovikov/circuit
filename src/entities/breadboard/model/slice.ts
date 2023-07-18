@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { AppDispatch, RootState } from '@/app/appStore';
 import { cirElementList } from '@/shared/api/__mock__/cirElementList';
-import { ICoords } from '@/shared/ui/types';
+import { ICoords } from '@/shared/model/types';
 import { IBreadboardCirElement, IDraggableElement } from './types';
 
 interface IBreadboardSliceState {
@@ -99,28 +99,12 @@ export const confirmPickedElement =
   };
 
 export const addDraggableElement =
-  ({
-    elementId,
-    initialX,
-    initialY,
-  }: {
-    elementId: string;
-    initialX: number;
-    initialY: number;
-  }) =>
+  (draggableElement: IDraggableElement) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
     const cirElement = getState().breadboard.elements.find(
-      (element) => element.id === elementId
+      (element) => element.id === draggableElement.elementId
     );
     if (!cirElement) return;
-    const draggableElement: IDraggableElement = {
-      elementId: cirElement.id,
-      initialX,
-      initialY,
-      offsetX: 0,
-      offsetY: 0,
-    };
-
     dispatch(setDraggableElement(draggableElement));
   };
 
@@ -138,8 +122,8 @@ export const updateDraggableElement =
       (element) => element.id === draggableElement.elementId
     );
     if (!cirElement) return;
-
-    const updatedCirElement = { ...cirElement, x, y };
+    const { offsetX, offsetY } = draggableElement;
+    const updatedCirElement = { ...cirElement, x: x - offsetX, y: y - offsetY };
 
     dispatch(
       updateElementById({

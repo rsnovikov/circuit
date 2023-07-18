@@ -1,5 +1,5 @@
 import { ElementsEnum } from '@/shared/model/ElementsEnum';
-import { ICirElement } from '../../ui/types';
+import { ICirElement } from '../../model/types';
 
 export const cirElementList: ICirElement[] = [
   {
