@@ -1,4 +1,4 @@
-import { ICirElement } from '@/shared/ui/types';
+import { ICirElement } from '@/shared/model/types';
 
 export interface IBreadboardCirElement extends ICirElement {
   id: string;

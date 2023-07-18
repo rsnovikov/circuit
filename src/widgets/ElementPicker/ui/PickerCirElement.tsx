@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ICirElement } from '@/shared/ui/types';
+import { ICirElement } from '@/shared/model/types';
 
 interface IPickerCirElementProps {
   cirElem: ICirElement;

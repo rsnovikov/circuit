@@ -30,16 +30,16 @@ export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({
         />
       )}
       {terminals.map(({ id, x, y }) => (
-        <g key={id} transform={`translate(${x}, ${y})`}>
-          <rect
-            x="-4"
-            y="-4"
-            width="8"
-            height="8"
-            strokeWidth="0"
-            className="hover:stroke-2 hover:fill-[red]"
-          />
-        </g>
+        <rect
+          key={id}
+          transform={`translate(${x}, ${y})`}
+          x="-4"
+          y="-4"
+          width="8"
+          height="8"
+          strokeWidth="0"
+          className="hover:stroke-2 hover:fill-[red]"
+        />
       ))}
     </g>
   );

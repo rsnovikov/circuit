@@ -1,14 +1,13 @@
 import { FC } from 'react';
-import { ICirElement, ICoords } from '@/shared/ui/types';
+import { ICirElement } from '@/shared/model/types';
 
 interface ICirElementProps {
   cirElem: ICirElement;
-  coords?: ICoords;
 }
 
-export const CirElement: FC<ICirElementProps> = ({ cirElem, coords }) => {
+export const CirElement: FC<ICirElementProps> = ({ cirElem }) => {
   return (
-    <g transform={coords && `translate(${coords.x}, ${coords.y})`}>
+    <>
       {cirElem.components.map((component) => (
         <path
           // todo: use id instead of d
@@ -19,6 +18,6 @@ export const CirElement: FC<ICirElementProps> = ({ cirElem, coords }) => {
           strokeWidth="2"
         />
       ))}
-    </g>
+    </>
   );
 };

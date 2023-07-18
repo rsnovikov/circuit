@@ -1,4 +1,4 @@
-import { ElementsEnum } from '../model/ElementsEnum';
+import { ElementsEnum } from './ElementsEnum';
 
 export interface IComponent {
   d: string;
