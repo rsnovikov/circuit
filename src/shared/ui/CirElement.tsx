@@ -3,6 +3,7 @@ import { ICirElement } from '@/shared/model/types';
 
 interface ICirElementProps {
   cirElem: ICirElement;
+  isSelected: boolean;
 }
 
 export const CirElement: FC<ICirElementProps> = ({ cirElem }) => {

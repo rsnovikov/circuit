@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Icon } from '..';
+import { Icon } from '@/shared/ui/Icon/Icon';
 import { PickerCirElementList } from './PickerCirElementList';
 
 export const ElementPicker: FC = () => {
@@ -23,7 +23,7 @@ export const ElementPicker: FC = () => {
         className="absolute -left-[10px] bottom-[50%] w-[20px] h-[50px] bg-[#f1f1f3] border-1 border-[#dfe3e8] border z-10"
       >
         <Icon
-          type={isShow ? 'arrowRightSLine' : 'arrowLeftSLine'}
+          type={isShow ? 'ArrowRightSLine' : 'ArrowLeftSLine'}
           className="h-[30px] w-[30px] absolute -left-[5px] top-[10px]"
         />
       </button>
