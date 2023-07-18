@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler, PropsWithChildren } from 'react';
 import { addPickedElement, removePickedElement } from '@/entities/breadboard';
-import { useKeyPress } from '@/shared/lib/useKeyDown';
+import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch } from '@/shared/model';
 
 interface IPickElementWrapperProps {
@@ -20,7 +20,7 @@ export const PickElementWrapper: FC<
     dispatch(removePickedElement());
   };
 
-  useKeyPress(handleKeyDown, ['Escape']);
+  useKeyDown(handleKeyDown, ['Escape']);
 
   return (
     <div onMouseDown={handleMouseDown} className="h-full">
