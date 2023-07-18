@@ -108,9 +108,12 @@ export const addDraggableElement =
     dispatch(setDraggableElement(draggableElement));
   };
 
-export const removeDraggableElement = () => (dispatch: AppDispatch) => {
+// todo: join confirmDraggableElement and updateDraggableElement
+
+export const confirmDraggableElement = () => (dispatch: AppDispatch) => {
   dispatch(setDraggableElement(null));
 };
+
 // todo: maybe don't update elements every time, but update draggableElement and render in widget Breadboard
 export const updateDraggableElement =
   ({ x, y }: ICoords) =>
@@ -131,4 +134,13 @@ export const updateDraggableElement =
         element: updatedCirElement,
       })
     );
+  };
+
+export const cancelDraggableElement =
+  () => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { draggableElement } = getState().breadboard;
+    if (!draggableElement) return;
+    const { initialX: x, initialY: y } = draggableElement;
+    dispatch(updateDraggableElement({ x, y }));
+    dispatch(setDraggableElement(null));
   };

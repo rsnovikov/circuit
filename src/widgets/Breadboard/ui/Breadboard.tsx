@@ -18,7 +18,6 @@ export const Breadboard: FC = () => {
     const { clientX: x, clientY: y } = e;
     // todo: move updatePickedElement to features
     if (draggableElement) {
-      console.log('drag');
       dispatch(updateDraggableElement({ x, y }));
     } else if (pickedElement) {
       dispatch(updatePickedElementCoords({ x, y }));
@@ -30,7 +29,7 @@ export const Breadboard: FC = () => {
     handleMouseUp: handleElementMouseUp,
   } = useDragElement();
 
-  const handleClick: MouseEventHandler<SVGElement> = () => {
+  const handleSVGClick: MouseEventHandler<SVGElement> = () => {
     if (pickedElement) {
       dispatch(confirmPickedElement());
     }
@@ -42,7 +41,7 @@ export const Breadboard: FC = () => {
       width="100%"
       height="100%"
       onMouseMove={handleMouseMove}
-      onClick={handleClick}
+      onClick={handleSVGClick}
     >
       {elements.map((element) => (
         <BreadboardCirElement

@@ -2,8 +2,9 @@ export {
   addDraggableElement,
   addPickedElement,
   breadboardSlice,
-  removeDraggableElement,
   removePickedElement,
   updateDraggableElement,
   updatePickedElementCoords,
+  cancelDraggableElement,
+  confirmDraggableElement,
 } from './model/slice';
