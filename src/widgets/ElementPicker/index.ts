@@ -1,1 +1,1 @@
-export { Icon } from '../../shared/ui/Icon/Icon';
+export { ElementPicker } from './ui/ElementPicker.tsx';
