@@ -11,8 +11,6 @@ export const useDragElement = () => {
   // todo: maybe don't use selector there
   const dispatch = useAppDispatch();
 
-  const elements = useAppSelector((state) => state.breadboard.elements);
-
   const draggableElement = useAppSelector(
     (state) => state.breadboard.draggableElement
   );
@@ -25,20 +23,14 @@ export const useDragElement = () => {
 
   const handleMouseDown = (e: MouseEvent, id: string) => {
     const { clientX, clientY } = e;
-    const element = elements.find((element) => element.id === id);
-    if (!element) return;
-
-    const { x, y } = element;
-    const offsetX = clientX - x;
-    const offsetY = clientY - y;
+    // const offsetX = clientX - x;
+    // const offsetY = clientY - y;
 
     dispatch(
       addDraggableElement({
         elementId: id,
-        initialX: clientX,
-        initialY: clientY,
-        offsetX,
-        offsetY,
+        clientX,
+        clientY,
       })
     );
   };
