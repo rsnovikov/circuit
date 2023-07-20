@@ -32,3 +32,8 @@ export interface ICoords {
   x: number;
   y: number;
 }
+
+export interface ITranslateCoords {
+  translateX: number;
+  translateY: number;
+}

@@ -10,4 +10,6 @@ export {
   updatePickedElementCoords,
   rotateSelectedElement,
   removeSelectedElement,
+  updateScale,
+  updateTranslateCoords,
 } from './model/slice';
