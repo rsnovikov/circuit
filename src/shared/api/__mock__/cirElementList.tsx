@@ -1,9 +1,9 @@
-import { ElementsEnum } from '@/shared/model/ElementsEnum';
-import { ICirElement } from '../../model/types';
+import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
+import { ICirElement } from '@/shared/model/types';
 
 export const cirElementList: ICirElement[] = [
   {
-    type: ElementsEnum.ground,
+    type: ElementTypesEnum.ground,
     components: [
       {
         d: `
@@ -22,7 +22,7 @@ export const cirElementList: ICirElement[] = [
     terminals: [
       {
         id: '1',
-        type: 'terminal',
+        relatedTerminalId: null,
         x: 0,
         y: -40,
         name: 'Клемма',
@@ -37,7 +37,7 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/ground.png',
   },
   {
-    type: ElementsEnum.key,
+    type: ElementTypesEnum.key,
     components: [
       {
         d: `
@@ -60,14 +60,15 @@ export const cirElementList: ICirElement[] = [
     terminals: [
       {
         id: '1',
-        type: 'terminal',
+        relatedTerminalId: '2',
+
         x: -70,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
-        type: 'terminal',
+        relatedTerminalId: '1',
         x: 70,
         y: 0,
         name: 'Клемма 2',
@@ -82,7 +83,7 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/key.png',
   },
   {
-    type: ElementsEnum.lamp,
+    type: ElementTypesEnum.lamp,
     components: [
       {
         d: `
@@ -105,14 +106,14 @@ export const cirElementList: ICirElement[] = [
     terminals: [
       {
         id: '1',
-        type: 'terminal',
+        relatedTerminalId: '2',
         x: -80,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
-        type: 'terminal',
+        relatedTerminalId: '1',
         x: 80,
         y: 0,
         name: 'Клемма 2',
@@ -121,7 +122,7 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/lamp.png',
   },
   {
-    type: ElementsEnum.motor,
+    type: ElementTypesEnum.motor,
     components: [
       {
         d: `
@@ -150,21 +151,21 @@ export const cirElementList: ICirElement[] = [
     terminals: [
       {
         id: '1',
-        type: 'terminal',
+        relatedTerminalId: '2',
         x: -110,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
-        type: 'terminal',
+        relatedTerminalId: '1',
         x: 110,
         y: 0,
         name: 'Клемма 2',
       },
       {
         id: '3',
-        type: 'terminal',
+        relatedTerminalId: null,
         x: 0,
         y: 110,
         name: 'Клемма 3',
@@ -173,7 +174,7 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/motor.png',
   },
   {
-    type: ElementsEnum.power,
+    type: ElementTypesEnum.power,
     components: [
       {
         d: `
@@ -197,14 +198,14 @@ export const cirElementList: ICirElement[] = [
     terminals: [
       {
         id: '1',
-        type: 'terminal',
+        relatedTerminalId: '2',
         x: -30,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
-        type: 'terminal',
+        relatedTerminalId: '1',
         x: 30,
         y: 0,
         name: 'Клемма 2',
@@ -219,7 +220,7 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/power.png',
   },
   {
-    type: ElementsEnum.relay,
+    type: ElementTypesEnum.relay,
     components: [
       {
         d: `
@@ -265,28 +266,28 @@ export const cirElementList: ICirElement[] = [
     terminals: [
       {
         id: '1',
-        type: 'terminal',
+        relatedTerminalId: '2',
         x: 60,
         y: -50,
         name: 'Клемма 1',
       },
       {
         id: '2',
-        type: 'terminal',
+        relatedTerminalId: '1',
         x: -60,
         y: -50,
         name: 'Клемма 2',
       },
       {
         id: '3',
-        type: 'terminal',
+        relatedTerminalId: '4',
         x: -70,
         y: 55,
         name: 'Клемма 3',
       },
       {
         id: '4',
-        type: 'terminal',
+        relatedTerminalId: '3',
         x: 70,
         y: 55,
         name: 'Клемма 4',
@@ -301,7 +302,7 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/relay.png',
   },
   {
-    type: ElementsEnum.resistor,
+    type: ElementTypesEnum.resistor,
     components: [
       {
         d: `
@@ -322,14 +323,14 @@ export const cirElementList: ICirElement[] = [
     terminals: [
       {
         id: '1',
-        type: 'terminal',
+        relatedTerminalId: '2',
         x: 70,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
-        type: 'terminal',
+        relatedTerminalId: '1',
         x: -70,
         y: 0,
         name: 'Клемма 2',
@@ -338,7 +339,7 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/resistor.png',
   },
   {
-    type: ElementsEnum.switch,
+    type: ElementTypesEnum.switch,
     components: [
       {
         d: `
@@ -387,35 +388,35 @@ export const cirElementList: ICirElement[] = [
     terminals: [
       {
         id: '1',
-        type: 'terminal',
+        relatedTerminalId: null,
         x: -60,
         y: -95,
         name: 'Клемма 1',
       },
       {
         id: '2',
-        type: 'terminal',
+        relatedTerminalId: '3',
         x: -60,
         y: -55,
         name: 'Клемма 2',
       },
       {
         id: '3',
-        type: 'terminal',
+        relatedTerminalId: '2',
         x: -60,
         y: -15,
         name: 'Клемма 3',
       },
       {
         id: '4',
-        type: 'terminal',
+        relatedTerminalId: '5',
         x: -60,
         y: 50,
         name: 'Клемма 4',
       },
       {
         id: '5',
-        type: 'terminal',
+        relatedTerminalId: '4',
         x: 60,
         y: 50,
         name: 'Клемма 5',
