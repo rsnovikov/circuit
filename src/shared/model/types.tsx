@@ -1,4 +1,4 @@
-import { ElementsEnum } from './ElementsEnum';
+import { ElementTypesEnum } from './ElementTypesEnum';
 
 export interface IComponent {
   d: string;
@@ -8,7 +8,7 @@ export interface ITerminal {
   id: string;
   x: number;
   y: number;
-  type: string;
+  relatedTerminalId: string | null;
   name: string;
 }
 
@@ -20,7 +20,7 @@ export interface IHitbox {
 }
 
 export interface ICirElement {
-  type: ElementsEnum;
+  type: ElementTypesEnum;
   components: IComponent[];
   name: string;
   terminals: ITerminal[];

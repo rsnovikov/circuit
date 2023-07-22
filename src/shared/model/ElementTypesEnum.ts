@@ -1,4 +1,4 @@
-export enum ElementsEnum {
+export enum ElementTypesEnum {
   ground = 'ground',
   key = 'key',
   lamp = 'lamp',
@@ -7,4 +7,5 @@ export enum ElementsEnum {
   relay = 'relay',
   resistor = 'resistor',
   switch = 'switch',
+  node = 'node',
 }

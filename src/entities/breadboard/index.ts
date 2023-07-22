@@ -12,4 +12,9 @@ export {
   removeSelectedElement,
   updateScale,
   updateTranslateCoords,
+  startWireFromElement,
+  endWireToElement,
+  updateDrawingWireCoords,
+  removeDrawingWire,
+  addNodeAndConfirmWire,
 } from './model/slice';

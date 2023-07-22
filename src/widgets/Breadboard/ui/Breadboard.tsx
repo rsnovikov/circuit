@@ -1,13 +1,18 @@
 import { FC, MouseEventHandler, useEffect, useRef, useState } from 'react';
 import {
+  addNodeAndConfirmWire,
   confirmPickedElement,
+  removeDrawingWire,
   removeSelectedElementId,
   updateDraggableElement,
+  updateDrawingWireCoords,
   updatePickedElementCoords,
   updateScale,
   updateTranslateCoords,
 } from '@/entities/breadboard/model/slice';
 import { BreadboardCirElement } from '@/entities/breadboard/ui/BreadboardCirElement';
+import { NodeElement } from '@/entities/node';
+import { Wire } from '@/entities/wire';
 import { useDragElement } from '@/features/dragElement';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
@@ -23,8 +28,10 @@ export const Breadboard: FC = () => {
     selectedElementId,
     scale,
     translateCoords: { translateX, translateY },
+    drawingWire,
+    wires,
+    nodes,
   } = useAppSelector((state) => state.breadboard);
-
   const [isBreadboardMove, setIsBreadboardMove] = useState<boolean>(false);
 
   // todo: try move listeners and dispatch to features
@@ -39,14 +46,16 @@ export const Breadboard: FC = () => {
   const handleSvgMouseMove: MouseEventHandler = (e) => {
     const { clientX, clientY, movementX, movementY } = e;
 
+    const coords = getMousePosition({ x: clientX, y: clientY }, svgRef.current?.getScreenCTM());
+    if (!coords) return;
     if (draggableElement) {
       dispatch(updateDraggableElement({ x: clientX, y: clientY }));
     } else if (pickedElement) {
-      const coords = getMousePosition({ x: clientX, y: clientY }, svgRef.current?.getScreenCTM());
-      if (!coords) return;
       dispatch(updatePickedElementCoords(coords));
     } else if (isBreadboardMove) {
       dispatch(updateTranslateCoords({ deltaX: movementX, deltaY: movementY }));
+    } else if (drawingWire) {
+      dispatch(updateDrawingWireCoords(coords));
     }
   };
 
@@ -59,11 +68,18 @@ export const Breadboard: FC = () => {
   };
 
   const handleSvgClick: MouseEventHandler<SVGElement> = (e) => {
+    // todo: add else?
+    const { clientX, clientY } = e;
     if (pickedElement) {
       dispatch(confirmPickedElement());
     }
     if (selectedElementId && e.target === e.currentTarget) {
       dispatch(removeSelectedElementId());
+    }
+    if (drawingWire) {
+      const coords = getMousePosition({ x: clientX, y: clientY }, svgRef.current?.getScreenCTM());
+      if (!coords) return;
+      dispatch(addNodeAndConfirmWire(coords));
     }
   };
 
@@ -80,6 +96,7 @@ export const Breadboard: FC = () => {
   // todo: maybe move logic to feature
   const handleKeyDownRemoveSelected = () => {
     dispatch(removeSelectedElementId());
+    dispatch(removeDrawingWire());
   };
   useKeyDown(handleKeyDownRemoveSelected, ['Escape']);
   const { handleMouseDown: handleElementMouseDown, handleMouseUp: handleElementMouseUp } =
@@ -96,8 +113,11 @@ export const Breadboard: FC = () => {
       onMouseDown={handleSvgMouseDown}
       onMouseUp={handleSvgMouseUp}
     >
-      {/* <g transform={`scale(${scale}, ${scale}) translate(${translateX}, ${translateY})`}> */}
       <g transform={`matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`}>
+        {drawingWire && <Wire wire={drawingWire} />}
+        {wires.map((wire) => (
+          <Wire key={wire.id} wire={wire} />
+        ))}
         {elements.map((element) => (
           <BreadboardCirElement
             key={element.id}
@@ -106,6 +126,9 @@ export const Breadboard: FC = () => {
             onMouseUp={(e) => handleElementMouseUp(e, element.id)}
           />
         ))}
+        {nodes.map((node) =>
+          !node.relatedElement ? <NodeElement key={node.id} node={node} /> : null
+        )}
         {/* todo: add special component without terminals for picked element */}
         {pickedElement && <BreadboardCirElement element={pickedElement} />}
       </g>

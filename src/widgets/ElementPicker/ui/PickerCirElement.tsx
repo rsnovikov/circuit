@@ -1,16 +1,14 @@
 import { FC } from 'react';
 import clsx from 'clsx';
 import { useAppSelector } from '@/shared/model';
-import { ICirElement } from '@/shared/model/types';
+import { IPickerElement } from '../model/types';
 
 interface IPickerCirElementProps {
-  cirElem: ICirElement;
+  cirElem: IPickerElement;
 }
 
 export const PickerCirElement: FC<IPickerCirElementProps> = ({ cirElem }) => {
-  const pickedElement = useAppSelector(
-    (state) => state.breadboard.pickedElement
-  );
+  const pickedElement = useAppSelector((state) => state.breadboard.pickedElement);
 
   return (
     <div
@@ -22,8 +20,7 @@ export const PickerCirElement: FC<IPickerCirElementProps> = ({ cirElem }) => {
       )}
       // todo: try use tailwind instead of style
       style={{
-        borderColor:
-          pickedElement?.type === cirElem.type ? 'rgb(37 99 235 / 0.7)' : '',
+        borderColor: pickedElement?.type === cirElem.type ? 'rgb(37 99 235 / 0.7)' : '',
       }}
     >
       <img src={cirElem.previewImgPath} className="pointer-events-none" />

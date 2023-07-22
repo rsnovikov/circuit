@@ -1,20 +1,34 @@
-import { FC, SVGProps } from 'react';
-import { useAppSelector } from '@/shared/model';
+import { FC, MouseEvent, SVGProps } from 'react';
+import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { CirElement } from '@/shared/ui/CirElement';
+import { endWireToElement, startWireFromElement } from '../model/slice';
 import { IBreadboardCirElement } from '../model/types';
 
 interface IBreadboardCirElementProps extends SVGProps<SVGGElement> {
   element: IBreadboardCirElement;
 }
 
-export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({
-  element,
-  ...rest
-}) => {
+export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({ element, ...rest }) => {
+  const dispatch = useAppDispatch();
+  const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
+  const drawingWire = useAppSelector((state) => state.breadboard.drawingWire);
   const { x, y, rotate, terminals, hitbox, id } = element;
-  const selectedElementId = useAppSelector(
-    (state) => state.breadboard.selectedElementId
-  );
+
+  const handleTerminalClick = (e: MouseEvent, terminalId: string, elementId: string) => {
+    // todo: maybe remove stopPropagation and add check to the handleSvgClick in widget Breadboard
+    e.stopPropagation();
+    if (drawingWire) {
+      dispatch(endWireToElement({ terminalId, elementId }));
+    } else {
+      dispatch(
+        startWireFromElement({
+          terminalId,
+          elementId,
+        })
+      );
+    }
+  };
+
   return (
     <>
       <g
@@ -44,9 +58,10 @@ export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({
             height={Math.abs(hitbox.y2 - hitbox.y1)}
           />
         )}
-        {terminals.map(({ id, x, y }) => (
+        {terminals?.map(({ id: terminalId, x, y }) => (
           <rect
-            key={id}
+            onClick={(e) => handleTerminalClick(e, terminalId, id)}
+            key={terminalId}
             transform={`translate(${x}, ${y})`}
             x="-4"
             y="-4"
