@@ -1,5 +1,6 @@
 import { FC, MouseEventHandler } from 'react';
 import { removeSelectedElement } from '@/entities/breadboard';
+import { removeSelectedNode } from '@/entities/node';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { Icon } from '@/shared/ui/Icon/Icon';
 
@@ -12,6 +13,7 @@ export const RemoveElementTool: FC = () => {
     if (selectedElementId) {
       dispatch(removeSelectedElement());
     } else if (selectedNodeId) {
+      dispatch(removeSelectedNode());
     }
   };
 

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '@/app/appStore';
-import { updateWiresCoordsByNode } from '@/entities/wire';
+import { removeWireById, updateWiresCoordsByNode } from '@/entities/wire';
 import { ICoords, IDraggableElement } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
 import { ICirNode } from './types';
@@ -118,4 +118,28 @@ export const updateDraggableNode =
 
 export const removeSelectedNodeId = () => (dispatch: AppDispatch) => {
   dispatch(setSelectedNodeId(null));
+};
+
+export const removeSelectedNode = () => (dispatch: AppDispatch, getState: () => RootState) => {
+  const {
+    node: { selectedNodeId, nodes },
+    wire: { wires },
+  } = getState();
+  const selectedNode = nodes.find((node) => node.id === selectedNodeId);
+  if (!selectedNode) return;
+  nodes.forEach((node) => {
+    if (node.connectionIds.includes(selectedNode.id)) {
+      const updatedConnectionIds = node.connectionIds.filter(
+        (connectionId) => connectionId !== selectedNode.id
+      );
+      const updatedNode: ICirNode = { ...node, connectionIds: updatedConnectionIds };
+      dispatch(updateNodeById({ id: updatedNode.id, updatedNode }));
+    }
+  });
+  wires.forEach((wire) => {
+    if (wire.startNodeId === selectedNode.id || wire.endNodeId === selectedNode.id) {
+      dispatch(removeWireById(wire.id));
+    }
+  });
+  dispatch(removeNodeById(selectedNode.id));
 };

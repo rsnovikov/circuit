@@ -259,7 +259,7 @@ export const removeSelectedElement = () => (dispatch: AppDispatch, getState: () 
   const elementWires = wires.filter((wire) =>
     elementNodes.some((node) => wire.endNodeId === node.id || wire.startNodeId === node.id)
   );
-  console.log(elementNodes, elementWires);
+
   elementNodes.forEach((node) => dispatch(removeNodeById(node.id)));
   elementWires.forEach((wire) => dispatch(removeWireById(wire.id)));
   dispatch(removeElementById(selectedElementId));
