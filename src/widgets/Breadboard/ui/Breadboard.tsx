@@ -1,18 +1,16 @@
 import { FC, MouseEventHandler, useEffect, useRef, useState } from 'react';
 import {
-  addNodeAndConfirmWire,
   confirmPickedElement,
-  removeDrawingWire,
   removeSelectedElementId,
   updateDraggableElement,
-  updateDrawingWireCoords,
   updatePickedElementCoords,
   updateScale,
   updateTranslateCoords,
 } from '@/entities/breadboard/model/slice';
 import { BreadboardCirElement } from '@/entities/breadboard/ui/BreadboardCirElement';
-import { NodeElement } from '@/entities/node';
-import { Wire } from '@/entities/wire';
+import { NodeCirElement } from '@/entities/node';
+import { Wire, updateDrawingWireCoords } from '@/entities/wire';
+import { addNodeAndConfirmWire, removeDrawingWire } from '@/entities/wire/model/slice';
 import { useDragElement } from '@/features/dragElement';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
@@ -28,10 +26,9 @@ export const Breadboard: FC = () => {
     selectedElementId,
     scale,
     translateCoords: { translateX, translateY },
-    drawingWire,
-    wires,
-    nodes,
   } = useAppSelector((state) => state.breadboard);
+  const { drawingWire, wires } = useAppSelector((state) => state.wire);
+  const { nodes } = useAppSelector((state) => state.node);
   const [isBreadboardMove, setIsBreadboardMove] = useState<boolean>(false);
 
   // todo: try move listeners and dispatch to features
@@ -127,7 +124,7 @@ export const Breadboard: FC = () => {
           />
         ))}
         {nodes.map((node) =>
-          !node.relatedElement ? <NodeElement key={node.id} node={node} /> : null
+          !node.relatedElement ? <NodeCirElement key={node.id} node={node} /> : null
         )}
         {/* todo: add special component without terminals for picked element */}
         {pickedElement && <BreadboardCirElement element={pickedElement} />}
