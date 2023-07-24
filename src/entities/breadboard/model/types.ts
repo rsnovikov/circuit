@@ -6,11 +6,3 @@ export interface IBreadboardCirElement extends ICirElement {
   y: number;
   rotate: number;
 }
-
-export interface IDraggableElement {
-  elementId: string;
-  offsetX: number;
-  offsetY: number;
-  initialX: number;
-  initialY: number;
-}

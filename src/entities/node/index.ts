@@ -1,3 +1,13 @@
-export { NodeCirElement } from './ui/NodeCirElement.tsx';
+export {
+  addDraggableNode,
+  addNode,
+  confirmDraggableNode,
+  nodeSlice,
+  removeNodeById,
+  updateDraggableNode,
+  updateNodeById,
+  removeSelectedNode,
+  removeSelectedNodeId,
+} from './model/slice';
 export type { ICirNode } from './model/types';
-export { nodeSlice, addNode, updateNodeById } from './model/slice';
+export { NodeCirElement } from './ui/NodeCirElement.tsx';

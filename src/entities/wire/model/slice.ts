@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice, nanoid } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '@/app/appStore';
+import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, addNode, updateNodeById } from '@/entities/node';
 import { ICoords } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
@@ -8,11 +9,13 @@ import { ICirWire } from './types';
 interface IWireSliceState {
   drawingWire: ICirWire | null;
   wires: ICirWire[];
+  selectedWireId: string | null;
 }
 
 const initialState: IWireSliceState = {
   drawingWire: null,
   wires: [],
+  selectedWireId: null,
 };
 
 export const wireSlice = createSlice({
@@ -38,10 +41,17 @@ export const wireSlice = createSlice({
         state.wires[index] = updatedWire;
       }
     },
+    removeWireById(state, action: PayloadAction<string>) {
+      state.wires = state.wires.filter((wire) => wire.id !== action.payload);
+    },
+    setSelectedWireId(state, action: PayloadAction<string | null>) {
+      state.selectedWireId = action.payload;
+    },
   },
 });
 
-export const { setDrawingWire, addWire, updateWireById } = wireSlice.actions;
+export const { setDrawingWire, addWire, updateWireById, removeWireById, setSelectedWireId } =
+  wireSlice.actions;
 
 export const startWire =
   ({ startNodeId, x1, y1 }: { startNodeId: string; x1: number; y1: number }) =>
@@ -189,3 +199,78 @@ export const addNodeAndConfirmWire =
     dispatch(updateNodeById({ id: updatedStartNode.id, updatedNode: updatedStartNode }));
     dispatch(startWire({ x1: transformedX, y1: transformedY, startNodeId: endNode.id }));
   };
+
+export const updateWiresCoordsByCirElement =
+  (cirElement: IBreadboardCirElement) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const {
+      node: { nodes },
+      wire: { wires },
+    } = getState();
+    // todo: optimize iterables, maybe add field relatedElement to wire
+    const elementNodes = nodes.filter((node) => node.relatedElement?.elementId === cirElement.id);
+    // todo: refactor this trash!
+    wires
+      .filter((wire) =>
+        elementNodes.some((node) => node.id === wire.startNodeId || node.id === wire.endNodeId)
+      )
+      .forEach((wire) => {
+        const endNode = elementNodes.find((node) => node.id === wire.endNodeId);
+        // todo: remove duplicated code segments
+        if (endNode) {
+          const updatedWire: ICirWire = {
+            ...wire,
+            x2: cirElement.x + endNode.x,
+            y2: cirElement.y + endNode.y,
+          };
+          dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
+        } else {
+          const startNode = elementNodes.find((node) => node.id === wire.startNodeId);
+          if (!startNode) return;
+
+          const updatedWire: ICirWire = {
+            ...wire,
+            x1: cirElement.x + startNode.x,
+            y1: cirElement.y + startNode.y,
+          };
+          dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
+        }
+      });
+  };
+
+export const updateWiresCoordsByNode =
+  (node: ICirNode) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { wires } = getState().wire;
+
+    wires
+      .filter((wire) => node.id === wire.startNodeId || node.id === wire.endNodeId)
+      .forEach((wire) => {
+        const updatedWire = { ...wire };
+        if (wire.endNodeId === node.id) {
+          updatedWire.x2 = node.x;
+          updatedWire.y2 = node.y;
+        } else {
+          updatedWire.x1 = node.x;
+          updatedWire.y1 = node.y;
+        }
+        dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
+      });
+  };
+
+export const addSelectedWireId =
+  (wireId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { wires } = getState().wire;
+    const selectedWire = wires.find((wire) => wire.id === wireId);
+    if (!selectedWire) return;
+    dispatch(setSelectedWireId(selectedWire.id));
+  };
+
+export const removeSelectedWireId = () => (dispatch: AppDispatch) => {
+  dispatch(setSelectedWireId(null));
+};
+
+export const removeSelectedWire = () => (dispatch: AppDispatch, getState: () => RootState) => {
+  const { selectedWireId, wires } = getState().wire;
+  const selectedWire = wires.find((wire) => wire.id === selectedWireId);
+  if (!selectedWire) return;
+  dispatch(removeWireById(selectedWire.id));
+};

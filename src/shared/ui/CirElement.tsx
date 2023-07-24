@@ -1,23 +1,28 @@
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import { ICirElement } from '@/shared/model/types';
 
 interface ICirElementProps {
   cirElem: ICirElement;
-  isSelected: boolean;
+  isSelected?: boolean;
 }
 
-export const CirElement: FC<ICirElementProps> = ({ cirElem }) => {
+export const CirElement: FC<ICirElementProps> = ({ cirElem, isSelected, ...rest }) => {
   return (
     <>
       {cirElem.components.map((component) => (
-        <path
-          // todo: use id instead of d
-          key={component.d}
-          d={component.d}
-          stroke="black"
-          fill="transparent"
-          strokeWidth="2"
-        />
+        // todo: use id instead of d
+        <Fragment key={component.d}>
+          {isSelected && (
+            <path
+              d={component.d}
+              fill="transparent"
+              stroke="DodgerBlue"
+              strokeOpacity={0.4}
+              strokeWidth={6}
+            />
+          )}
+          <path d={component.d} fill="transparent" stroke="black" strokeWidth={3} />
+        </Fragment>
       ))}
     </>
   );
