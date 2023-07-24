@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { AppDispatch, RootState } from '@/app/appStore';
-import { ICirNode, addNode } from '@/entities/node';
-import { ICirWire, updateWireById } from '@/entities/wire';
+import { ICirNode, addNode, removeNodeById } from '@/entities/node';
+import { removeWireById, updatedWiresCoordsByCirElement } from '@/entities/wire';
 import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { ICoords, ITranslateCoords } from '@/shared/model/types';
 import { transformCoords } from '../../../widgets/Breadboard/lib/transformCoords';
@@ -196,8 +196,6 @@ export const updateDraggableElement =
   (dispatch: AppDispatch, getState: () => RootState) => {
     const {
       breadboard: { draggableElement, elements, scale },
-      node: { nodes },
-      wire: { wires },
     } = getState();
 
     if (!draggableElement) return;
@@ -206,41 +204,13 @@ export const updateDraggableElement =
     const { offsetX, offsetY } = draggableElement;
     const { x: transformedX, y: transformedY } = transformCoords({ x, y, scale });
 
-    // todo: optimize iterables, maybe add field relatedElement to wire
-    const elementNodes = nodes.filter((node) => node.relatedElement?.elementId === cirElement.id);
-    // todo: refactor this trash!
-    wires
-      .filter((wire) =>
-        elementNodes.some((node) => node.id === wire.startNodeId || node.id === wire.endNodeId)
-      )
-      .forEach((wire) => {
-        const endNode = elementNodes.find((node) => node.id === wire.endNodeId);
-        // todo: remove duplicated code segments
-        if (endNode) {
-          const updatedWire: ICirWire = {
-            ...wire,
-            x2: transformedX - offsetX + endNode.x,
-            y2: transformedY - offsetY + endNode.y,
-          };
-          dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
-        } else {
-          const startNode = elementNodes.find((node) => node.id === wire.startNodeId);
-          if (!startNode) return;
-
-          const updatedWire: ICirWire = {
-            ...wire,
-            x1: transformedX - offsetX + startNode.x,
-            y1: transformedY - offsetY + startNode.y,
-          };
-          dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
-        }
-      });
-
     const updatedCirElement = {
       ...cirElement,
       x: transformedX - offsetX,
       y: transformedY - offsetY,
     };
+
+    dispatch(updatedWiresCoordsByCirElement(updatedCirElement));
 
     dispatch(
       updateElementById({
@@ -270,8 +240,26 @@ export const removeSelectedElementId = () => (dispatch: AppDispatch) => {
 };
 
 export const removeSelectedElement = () => (dispatch: AppDispatch, getState: () => RootState) => {
-  const { selectedElementId } = getState().breadboard;
+  const {
+    breadboard: { selectedElementId, elements },
+    node: { nodes },
+    wire: { wires },
+  } = getState();
+
   if (!selectedElementId) return;
+  const selectedElement = elements.find((element) => element.id === selectedElementId);
+  if (!selectedElement) return;
+
+  const elementNodes = nodes.filter(
+    (node) => node.relatedElement?.elementId === selectedElement.id
+  );
+
+  const elementWires = wires.filter((wire) =>
+    elementNodes.some((node) => wire.endNodeId === node.id || wire.startNodeId === node.id)
+  );
+  console.log(elementNodes, elementWires);
+  elementNodes.forEach((node) => dispatch(removeNodeById(node.id)));
+  elementWires.forEach((wire) => dispatch(removeWireById(wire.id)));
   dispatch(removeElementById(selectedElementId));
 };
 
@@ -285,6 +273,9 @@ export const rotateSelectedElement =
       ...element,
       rotate: element.rotate + angle,
     };
+
+    dispatch(updatedWiresCoordsByCirElement(updatedElement));
+
     dispatch(updateElementById({ id: element.id, updatedElement }));
   };
 

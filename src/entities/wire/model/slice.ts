@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice, nanoid } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '@/app/appStore';
+import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, addNode, updateNodeById } from '@/entities/node';
 import { ICoords } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
@@ -38,10 +39,13 @@ export const wireSlice = createSlice({
         state.wires[index] = updatedWire;
       }
     },
+    removeWireById(state, action: PayloadAction<string>) {
+      state.wires = state.wires.filter((wire) => wire.id !== action.payload);
+    },
   },
 });
 
-export const { setDrawingWire, addWire, updateWireById } = wireSlice.actions;
+export const { setDrawingWire, addWire, updateWireById, removeWireById } = wireSlice.actions;
 
 export const startWire =
   ({ startNodeId, x1, y1 }: { startNodeId: string; x1: number; y1: number }) =>
@@ -188,4 +192,41 @@ export const addNodeAndConfirmWire =
     dispatch(addWire(updatedWire));
     dispatch(updateNodeById({ id: updatedStartNode.id, updatedNode: updatedStartNode }));
     dispatch(startWire({ x1: transformedX, y1: transformedY, startNodeId: endNode.id }));
+  };
+
+export const updatedWiresCoordsByCirElement =
+  (cirElement: IBreadboardCirElement) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const {
+      node: { nodes },
+      wire: { wires },
+    } = getState();
+    // todo: optimize iterables, maybe add field relatedElement to wire
+    const elementNodes = nodes.filter((node) => node.relatedElement?.elementId === cirElement.id);
+    // todo: refactor this trash!
+    wires
+      .filter((wire) =>
+        elementNodes.some((node) => node.id === wire.startNodeId || node.id === wire.endNodeId)
+      )
+      .forEach((wire) => {
+        const endNode = elementNodes.find((node) => node.id === wire.endNodeId);
+        // todo: remove duplicated code segments
+        if (endNode) {
+          const updatedWire: ICirWire = {
+            ...wire,
+            x2: cirElement.x + endNode.x,
+            y2: cirElement.y + endNode.y,
+          };
+          dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
+        } else {
+          const startNode = elementNodes.find((node) => node.id === wire.startNodeId);
+          if (!startNode) return;
+
+          const updatedWire: ICirWire = {
+            ...wire,
+            x1: cirElement.x + startNode.x,
+            y1: cirElement.y + startNode.x,
+          };
+          dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
+        }
+      });
   };

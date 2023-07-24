@@ -29,7 +29,10 @@ export const nodeSlice = createSlice({
         state.nodes[index] = updatedNode;
       }
     },
+    removeNodeById(state, action: PayloadAction<string>) {
+      state.nodes = state.nodes.filter((node) => node.id !== action.payload);
+    },
   },
 });
 
-export const { addNode, updateNodeById } = nodeSlice.actions;
+export const { addNode, updateNodeById, removeNodeById } = nodeSlice.actions;
