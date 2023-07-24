@@ -1,7 +1,7 @@
 import { FC, MouseEvent, SVGProps } from 'react';
+import { endWireToElement, startWireFromElement } from '@/entities/wire';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { CirElement } from '@/shared/ui/CirElement';
-import { endWireToElement, startWireFromElement } from '../model/slice';
 import { IBreadboardCirElement } from '../model/types';
 
 interface IBreadboardCirElementProps extends SVGProps<SVGGElement> {
@@ -11,7 +11,7 @@ interface IBreadboardCirElementProps extends SVGProps<SVGGElement> {
 export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({ element, ...rest }) => {
   const dispatch = useAppDispatch();
   const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
-  const drawingWire = useAppSelector((state) => state.breadboard.drawingWire);
+  const drawingWire = useAppSelector((state) => state.wire.drawingWire);
   const { x, y, rotate, terminals, hitbox, id } = element;
 
   const handleTerminalClick = (e: MouseEvent, terminalId: string, elementId: string) => {

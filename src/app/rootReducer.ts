@@ -1,8 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { breadboardSlice } from '@/entities/breadboard';
+import { nodeSlice } from '@/entities/node';
+import { wireSlice } from '@/entities/wire';
 import { baseApi } from '@/shared/api';
 
 export const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
   [breadboardSlice.name]: breadboardSlice.reducer,
+  [wireSlice.name]: wireSlice.reducer,
+  [nodeSlice.name]: nodeSlice.reducer,
 });
