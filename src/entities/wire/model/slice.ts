@@ -9,11 +9,13 @@ import { ICirWire } from './types';
 interface IWireSliceState {
   drawingWire: ICirWire | null;
   wires: ICirWire[];
+  selectedWireId: string | null;
 }
 
 const initialState: IWireSliceState = {
   drawingWire: null,
   wires: [],
+  selectedWireId: null,
 };
 
 export const wireSlice = createSlice({
@@ -42,10 +44,14 @@ export const wireSlice = createSlice({
     removeWireById(state, action: PayloadAction<string>) {
       state.wires = state.wires.filter((wire) => wire.id !== action.payload);
     },
+    setSelectedWireId(state, action: PayloadAction<string | null>) {
+      state.selectedWireId = action.payload;
+    },
   },
 });
 
-export const { setDrawingWire, addWire, updateWireById, removeWireById } = wireSlice.actions;
+export const { setDrawingWire, addWire, updateWireById, removeWireById, setSelectedWireId } =
+  wireSlice.actions;
 
 export const startWire =
   ({ startNodeId, x1, y1 }: { startNodeId: string; x1: number; y1: number }) =>
@@ -249,3 +255,22 @@ export const updateWiresCoordsByNode =
         dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
       });
   };
+
+export const addSelectedWireId =
+  (wireId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { wires } = getState().wire;
+    const selectedWire = wires.find((wire) => wire.id === wireId);
+    if (!selectedWire) return;
+    dispatch(setSelectedWireId(selectedWire.id));
+  };
+
+export const removeSelectedWireId = () => (dispatch: AppDispatch) => {
+  dispatch(setSelectedWireId(null));
+};
+
+export const removeSelectedWire = () => (dispatch: AppDispatch, getState: () => RootState) => {
+  const { selectedWireId, wires } = getState().wire;
+  const selectedWire = wires.find((wire) => wire.id === selectedWireId);
+  if (!selectedWire) return;
+  dispatch(removeWireById(selectedWire.id));
+};

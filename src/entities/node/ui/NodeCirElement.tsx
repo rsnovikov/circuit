@@ -33,8 +33,9 @@ export const NodeCirElement: FC<INodeCirElementProps> = ({ node }) => {
       cy={y}
       r={5}
       fill="green"
-      stroke="DodgerBlue"
-      strokeWidth={selectedNodeId === id ? 2 : 0}
+      stroke="green"
+      strokeOpacity={0.4}
+      strokeWidth={selectedNodeId === id ? 4 : 0}
     />
   );
 };

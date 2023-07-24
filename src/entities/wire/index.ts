@@ -1,4 +1,6 @@
 export {
+  addNodeAndConfirmWire,
+  addSelectedWireId,
   addWire,
   endWireToElement,
   removeDrawingWire,
