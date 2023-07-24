@@ -37,3 +37,11 @@ export interface ITranslateCoords {
   translateX: number;
   translateY: number;
 }
+
+export interface IDraggableElement {
+  elementId: string;
+  offsetX: number;
+  offsetY: number;
+  initialX: number;
+  initialY: number;
+}

@@ -7,12 +7,8 @@ interface IRotateElementToolProps {
   direction: 'left' | 'right';
 }
 
-export const RotateElementTool: FC<IRotateElementToolProps> = ({
-  direction,
-}) => {
-  const selectedElementId = useAppSelector(
-    (state) => state.breadboard.selectedElementId
-  );
+export const RotateElementTool: FC<IRotateElementToolProps> = ({ direction }) => {
+  const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
   const dispatch = useAppDispatch();
   const handleClick: MouseEventHandler = () => {
     dispatch(rotateSelectedElement(direction === 'right' ? 30 : -30));

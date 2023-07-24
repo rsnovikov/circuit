@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ICirWire } from '@/entities/breadboard/model/types';
+import { ICirWire } from '../model/types';
 
 interface IWireProps {
   wire: ICirWire;

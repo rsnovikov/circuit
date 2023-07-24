@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { RemoveElementTool } from '@/features/elementTools/ui/RemoveElementTool';
-import { RotateElementTool } from '@/features/elementTools/ui/RotateElementTool';
 
 export const ToolsList: FC = () => {
   return (
@@ -8,12 +7,12 @@ export const ToolsList: FC = () => {
       <div className="flex mr-1.5">
         <RemoveElementTool />
       </div>
-      <div className="flex mr-1.5">
+      {/* <div className="flex mr-1.5">
         <RotateElementTool direction="left" />
       </div>
       <div className="flex mr-1.5">
         <RotateElementTool direction="right" />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -194,7 +194,7 @@ export const addNodeAndConfirmWire =
     dispatch(startWire({ x1: transformedX, y1: transformedY, startNodeId: endNode.id }));
   };
 
-export const updatedWiresCoordsByCirElement =
+export const updateWiresCoordsByCirElement =
   (cirElement: IBreadboardCirElement) => (dispatch: AppDispatch, getState: () => RootState) => {
     const {
       node: { nodes },
@@ -224,9 +224,28 @@ export const updatedWiresCoordsByCirElement =
           const updatedWire: ICirWire = {
             ...wire,
             x1: cirElement.x + startNode.x,
-            y1: cirElement.y + startNode.x,
+            y1: cirElement.y + startNode.y,
           };
           dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
         }
+      });
+  };
+
+export const updateWiresCoordsByNode =
+  (node: ICirNode) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { wires } = getState().wire;
+
+    wires
+      .filter((wire) => node.id === wire.startNodeId || node.id === wire.endNodeId)
+      .forEach((wire) => {
+        const updatedWire = { ...wire };
+        if (wire.endNodeId === node.id) {
+          updatedWire.x2 = node.x;
+          updatedWire.y2 = node.y;
+        } else {
+          updatedWire.x1 = node.x;
+          updatedWire.y1 = node.y;
+        }
+        dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
       });
   };

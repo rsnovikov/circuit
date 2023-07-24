@@ -2,11 +2,11 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { AppDispatch, RootState } from '@/app/appStore';
 import { ICirNode, addNode, removeNodeById } from '@/entities/node';
-import { removeWireById, updatedWiresCoordsByCirElement } from '@/entities/wire';
+import { removeWireById, updateWiresCoordsByCirElement } from '@/entities/wire';
 import { cirElementList } from '@/shared/api/__mock__/cirElementList';
-import { ICoords, ITranslateCoords } from '@/shared/model/types';
+import { ICoords, IDraggableElement, ITranslateCoords } from '@/shared/model/types';
 import { transformCoords } from '../../../widgets/Breadboard/lib/transformCoords';
-import { IBreadboardCirElement, IDraggableElement } from './types';
+import { IBreadboardCirElement } from './types';
 
 interface IBreadboardSliceState {
   scale: number;
@@ -210,7 +210,7 @@ export const updateDraggableElement =
       y: transformedY - offsetY,
     };
 
-    dispatch(updatedWiresCoordsByCirElement(updatedCirElement));
+    dispatch(updateWiresCoordsByCirElement(updatedCirElement));
 
     dispatch(
       updateElementById({
@@ -226,12 +226,14 @@ export const cancelDraggableElement = () => (dispatch: AppDispatch, getState: ()
   const { initialX, initialY } = draggableElement;
   const cirElement = elements.find((element) => element.id === draggableElement.elementId);
   if (!cirElement) return;
+  const updatedElement = { ...cirElement, x: initialX, y: initialY };
   dispatch(
     updateElementById({
       id: cirElement.id,
-      updatedElement: { ...cirElement, x: initialX, y: initialY },
+      updatedElement,
     })
   );
+  dispatch(updateWiresCoordsByCirElement(updatedElement));
   dispatch(setDraggableElement(null));
 };
 
@@ -274,7 +276,7 @@ export const rotateSelectedElement =
       rotate: element.rotate + angle,
     };
 
-    dispatch(updatedWiresCoordsByCirElement(updatedElement));
+    dispatch(updateWiresCoordsByCirElement(updatedElement));
 
     dispatch(updateElementById({ id: element.id, updatedElement }));
   };

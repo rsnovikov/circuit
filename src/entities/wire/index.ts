@@ -8,8 +8,9 @@ export {
   startWireFromElement,
   updateDrawingWireCoords,
   updateWireById,
+  updateWiresCoordsByCirElement,
+  updateWiresCoordsByNode,
   wireSlice,
-  updatedWiresCoordsByCirElement,
 } from './model/slice';
 export type { ICirWire } from './model/types';
 export { Wire } from './ui/Wire.tsx';

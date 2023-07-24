@@ -8,7 +8,8 @@ import {
   updateTranslateCoords,
 } from '@/entities/breadboard/model/slice';
 import { BreadboardCirElement } from '@/entities/breadboard/ui/BreadboardCirElement';
-import { NodeCirElement } from '@/entities/node';
+import { NodeCirElement, updateDraggableNode } from '@/entities/node';
+import { removeSelectedNodeId } from '@/entities/node/model/slice';
 import { Wire, updateDrawingWireCoords } from '@/entities/wire';
 import { addNodeAndConfirmWire, removeDrawingWire } from '@/entities/wire/model/slice';
 import { useDragElement } from '@/features/dragElement';
@@ -28,7 +29,7 @@ export const Breadboard: FC = () => {
     translateCoords: { translateX, translateY },
   } = useAppSelector((state) => state.breadboard);
   const { drawingWire, wires } = useAppSelector((state) => state.wire);
-  const { nodes } = useAppSelector((state) => state.node);
+  const { nodes, draggableNode, selectedNodeId } = useAppSelector((state) => state.node);
   const [isBreadboardMove, setIsBreadboardMove] = useState<boolean>(false);
 
   // todo: try move listeners and dispatch to features
@@ -53,11 +54,13 @@ export const Breadboard: FC = () => {
       dispatch(updateTranslateCoords({ deltaX: movementX, deltaY: movementY }));
     } else if (drawingWire) {
       dispatch(updateDrawingWireCoords(coords));
+    } else if (draggableNode) {
+      dispatch(updateDraggableNode({ x: clientX, y: clientY }));
     }
   };
 
-  const handleSvgMouseDown: MouseEventHandler = () => {
-    setIsBreadboardMove(true);
+  const handleSvgMouseDown: MouseEventHandler = (e) => {
+    if (e.target === e.currentTarget) setIsBreadboardMove(true);
   };
 
   const handleSvgMouseUp: MouseEventHandler = () => {
@@ -73,6 +76,10 @@ export const Breadboard: FC = () => {
     if (selectedElementId && e.target === e.currentTarget) {
       dispatch(removeSelectedElementId());
     }
+    if (selectedNodeId && e.target === e.currentTarget) {
+      dispatch(removeSelectedNodeId());
+    }
+
     if (drawingWire) {
       const coords = getMousePosition({ x: clientX, y: clientY }, svgRef.current?.getScreenCTM());
       if (!coords) return;
