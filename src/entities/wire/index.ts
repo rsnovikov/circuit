@@ -4,6 +4,8 @@ export {
   addWire,
   endWireToElement,
   removeDrawingWire,
+  removeSelectedWire,
+  removeSelectedWireId,
   removeWireById,
   setDrawingWire,
   startWire,
