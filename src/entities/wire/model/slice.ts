@@ -253,6 +253,7 @@ export const addNodeAndConfirmWire =
 
 export const updateWiresCoordsByCirElement =
   (cirElement: IBreadboardCirElement) => (dispatch: AppDispatch, getState: () => RootState) => {
+    console.log(cirElement.rotate);
     const {
       node: { nodes },
       wire: { wires },
@@ -260,6 +261,7 @@ export const updateWiresCoordsByCirElement =
     // todo: optimize iterables, maybe add field relatedElement to wire
     const elementNodes = nodes.filter((node) => node.relatedElement?.elementId === cirElement.id);
     // todo: refactor this trash!
+
     wires
       .filter((wire) =>
         elementNodes.some((node) => node.id === wire.startNodeId || node.id === wire.endNodeId)

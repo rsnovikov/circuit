@@ -278,9 +278,13 @@ export const rotateSelectedElement =
     if (!selectedElementId) return;
     const element = elements.find((element) => element.id === selectedElementId);
     if (!element) return;
+
     const updatedElement: IBreadboardCirElement = {
       ...element,
       rotate: element.rotate + angle,
+      terminals: element.terminals.map((terminal) => ({
+        ...terminal,
+      })),
     };
 
     dispatch(updateWiresCoordsByCirElement(updatedElement));
