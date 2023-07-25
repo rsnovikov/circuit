@@ -116,6 +116,7 @@ export const Breadboard: FC = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
+      id="breadboard"
       width="100%"
       height="100%"
       className="absolute inset-0 bg-[#f4f5f6]"

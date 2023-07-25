@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { RemoveElementTool } from '@/features/elementTools/ui/RemoveElementTool';
 
-export const ToolsList: FC = () => {
+export const ElementToolsList: FC = () => {
   return (
     <div className="flex h-full p-2">
       <div className="flex mr-1.5">
