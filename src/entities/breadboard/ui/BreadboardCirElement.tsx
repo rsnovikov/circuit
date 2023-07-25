@@ -32,7 +32,7 @@ export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({ element, 
   return (
     <>
       <g
-        transform={`translate(${x}, ${y}) rotate(${rotate})`}
+        transform={`translate(${x}, ${y}) rotate(${-rotate})`}
         stroke="black"
         fill="transparent"
         {...rest}
