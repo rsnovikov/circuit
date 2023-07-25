@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '@/app/appStore';
 import { removeWireById, updateWiresCoordsByNode } from '@/entities/wire';
+import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords, IDraggableElement } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
 import { ICirNode } from './types';
@@ -52,6 +53,11 @@ export const nodeSlice = createSlice({
 export const { addNode, updateNodeById, removeNodeById, setDraggableNode, setSelectedNodeId } =
   nodeSlice.actions;
 
+export const addSelectedNodeId = (id: string) => (dispatch: AppDispatch) => {
+  dispatch(removeSelectedEntities());
+  dispatch(setSelectedNodeId(id));
+};
+
 export const addDraggableNode =
   ({ nodeId, clientX, clientY }: { nodeId: string; clientX: number; clientY: number }) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
@@ -79,7 +85,7 @@ export const addDraggableNode =
         offsetY,
       })
     );
-    dispatch(setSelectedNodeId(node.id));
+    dispatch(addSelectedNodeId(node.id));
   };
 
 export const confirmDraggableNode = () => (dispatch: AppDispatch) => {
@@ -142,4 +148,5 @@ export const removeSelectedNode = () => (dispatch: AppDispatch, getState: () => 
     }
   });
   dispatch(removeNodeById(selectedNode.id));
+  dispatch(removeSelectedNodeId());
 };

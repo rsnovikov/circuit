@@ -10,8 +10,13 @@ import {
 import { BreadboardCirElement } from '@/entities/breadboard/ui/BreadboardCirElement';
 import { NodeCirElement, updateDraggableNode } from '@/entities/node';
 import { removeSelectedNodeId } from '@/entities/node/model/slice';
-import { Wire, updateDrawingWireCoords } from '@/entities/wire';
-import { addNodeAndConfirmWire, removeDrawingWire } from '@/entities/wire/model/slice';
+import {
+  Wire,
+  addNodeAndConfirmWire,
+  removeDrawingWire,
+  removeSelectedWireId,
+  updateDrawingWireCoords,
+} from '@/entities/wire';
 import { useDragElement } from '@/features/dragElement';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
@@ -28,7 +33,7 @@ export const Breadboard: FC = () => {
     scale,
     translateCoords: { translateX, translateY },
   } = useAppSelector((state) => state.breadboard);
-  const { drawingWire, wires } = useAppSelector((state) => state.wire);
+  const { drawingWire, wires, selectedWireId } = useAppSelector((state) => state.wire);
   const { nodes, draggableNode, selectedNodeId } = useAppSelector((state) => state.node);
   const [isBreadboardMove, setIsBreadboardMove] = useState<boolean>(false);
   // todo: try move listeners and dispatch to features
@@ -39,7 +44,6 @@ export const Breadboard: FC = () => {
       svgRef.current?.removeEventListener('wheel', handleSvgWheel);
     };
   }, []);
-
   const handleSvgMouseMove: MouseEventHandler = (e) => {
     const { clientX, clientY, movementX, movementY } = e;
 
@@ -79,9 +83,9 @@ export const Breadboard: FC = () => {
       if (selectedNodeId) {
         dispatch(removeSelectedNodeId());
       }
-      // if (selectedWireId) {
-      //   dispatch(removeSelectedWireId());
-      // }
+      if (selectedWireId) {
+        dispatch(removeSelectedWireId());
+      }
     }
 
     if (drawingWire) {

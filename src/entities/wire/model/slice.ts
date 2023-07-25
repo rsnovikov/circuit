@@ -2,6 +2,7 @@ import { PayloadAction, createSlice, nanoid } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '@/app/appStore';
 import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, addNode, updateNodeById } from '@/entities/node';
+import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
 import { ICirWire } from './types';
@@ -136,6 +137,56 @@ export const endWireToElement =
     dispatch(setDrawingWire(null));
   };
 
+export const startWireFromNode =
+  (startNodeId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { nodes } = getState().node;
+    const startNode = nodes.find((node) => node.id === startNodeId);
+
+    if (!startNode) return;
+
+    dispatch(
+      startWire({
+        startNodeId: startNode.id,
+        x1: startNode.x,
+        y1: startNode.y,
+      })
+    );
+  };
+
+// todo: join endWireToNode and endWireToElement
+export const endWireToNode =
+  (endNodeId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const {
+      node: { nodes },
+      wire: { drawingWire },
+    } = getState();
+    if (!drawingWire) return;
+    const startNode = nodes.find((node) => node.id === drawingWire.startNodeId);
+    const endNode = nodes.find((node) => node.id === endNodeId);
+
+    if (!startNode || !endNode) return;
+
+    const updatedStartNode: ICirNode = {
+      ...startNode,
+      connectionIds: [...startNode.connectionIds, endNode.id],
+    };
+    dispatch(updateNodeById({ id: updatedStartNode.id, updatedNode: updatedStartNode }));
+
+    const updatedEndNode: ICirNode = {
+      ...endNode,
+      connectionIds: [...endNode.connectionIds, startNode.id],
+    };
+    dispatch(updateNodeById({ id: updatedEndNode.id, updatedNode: updatedEndNode }));
+
+    const newWire: ICirWire = {
+      ...drawingWire,
+      endNodeId: endNode.id,
+      x2: endNode.x,
+      y2: endNode.y,
+    };
+    dispatch(addWire(newWire));
+  };
+
 export const updateDrawingWireCoords =
   ({ x, y }: ICoords) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
@@ -261,6 +312,7 @@ export const addSelectedWireId =
     const { wires } = getState().wire;
     const selectedWire = wires.find((wire) => wire.id === wireId);
     if (!selectedWire) return;
+    dispatch(removeSelectedEntities());
     dispatch(setSelectedWireId(selectedWire.id));
   };
 
@@ -269,8 +321,28 @@ export const removeSelectedWireId = () => (dispatch: AppDispatch) => {
 };
 
 export const removeSelectedWire = () => (dispatch: AppDispatch, getState: () => RootState) => {
-  const { selectedWireId, wires } = getState().wire;
+  const {
+    wire: { selectedWireId, wires },
+    node: { nodes },
+  } = getState();
   const selectedWire = wires.find((wire) => wire.id === selectedWireId);
   if (!selectedWire) return;
+  const startNode = nodes.find((node) => node.id === selectedWire.startNodeId);
+  const endNode = nodes.find((node) => node.id === selectedWire.endNodeId);
+  if (!startNode || !endNode) return;
+
+  const updatedStartNode: ICirNode = {
+    ...startNode,
+    connectionIds: startNode.connectionIds.filter((connectionId) => {
+      return connectionId !== endNode.id;
+    }),
+  };
+  const updatedEndNode: ICirNode = {
+    ...endNode,
+    connectionIds: endNode.connectionIds.filter((connectionId) => connectionId !== startNode.id),
+  };
+  dispatch(updateNodeById({ id: updatedStartNode.id, updatedNode: updatedStartNode }));
+  dispatch(updateNodeById({ id: updatedEndNode.id, updatedNode: updatedEndNode }));
   dispatch(removeWireById(selectedWire.id));
+  dispatch(removeSelectedWireId());
 };

@@ -36,16 +36,6 @@ export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({ element, 
         stroke="black"
         fill="transparent"
         {...rest}
-        // style={{
-        //   filter:
-        //     selectedElementId === id
-        //       ? `
-        //   drop-shadow( 0.75px  0px 0px DodgerBlue)
-        //   drop-shadow(-0.75px  0px 0px DodgerBlue)
-        //   drop-shadow( 0px  -0.75px 0px DodgerBlue)
-        //   drop-shadow( 0px -0.75px 0px DodgerBlue)`
-        //       : '',
-        // }}
       >
         <CirElement cirElem={element} isSelected={selectedElementId === id} />
         {hitbox && (

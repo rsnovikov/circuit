@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from '@/app/appStore';
 import { ICirNode, addNode, removeNodeById } from '@/entities/node';
 import { removeWireById, updateWiresCoordsByCirElement } from '@/entities/wire';
 import { cirElementList } from '@/shared/api/__mock__/cirElementList';
+import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords, IDraggableElement, ITranslateCoords } from '@/shared/model/types';
 import { transformCoords } from '../../../widgets/Breadboard/lib/transformCoords';
 import { IBreadboardCirElement } from './types';
@@ -83,6 +84,11 @@ const {
   setTranslateCoords,
 } = breadboardSlice.actions;
 
+export const addSelectedElementId = (id: string) => (dispatch: AppDispatch) => {
+  dispatch(removeSelectedEntities());
+  dispatch(setSelectedElementId(id));
+};
+
 // todo: move actions to another file
 export const addPickedElement =
   ({ elementType, x, y }: { elementType: string; x: number; y: number }) =>
@@ -97,7 +103,7 @@ export const addPickedElement =
       ...transformCoords({ x, y, scale, translateCoords }),
     };
     dispatch(setPickedElement(breadboardCirElement));
-    dispatch(setSelectedElementId(breadboardCirElement.id));
+    dispatch(addSelectedElementId(breadboardCirElement.id));
   };
 
 export const removePickedElement = () => (dispatch: AppDispatch) => {
@@ -182,7 +188,7 @@ export const addDraggableElement =
         offsetY,
       })
     );
-    dispatch(setSelectedElementId(elementId));
+    dispatch(addSelectedElementId(elementId));
   };
 
 // todo: join confirmDraggableElement and updateDraggableElement
@@ -263,6 +269,7 @@ export const removeSelectedElement = () => (dispatch: AppDispatch, getState: () 
   elementNodes.forEach((node) => dispatch(removeNodeById(node.id)));
   elementWires.forEach((wire) => dispatch(removeWireById(wire.id)));
   dispatch(removeElementById(selectedElementId));
+  dispatch(removeSelectedElementId());
 };
 
 export const rotateSelectedElement =
