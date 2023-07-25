@@ -137,6 +137,56 @@ export const endWireToElement =
     dispatch(setDrawingWire(null));
   };
 
+export const startWireFromNode =
+  (startNodeId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { nodes } = getState().node;
+    const startNode = nodes.find((node) => node.id === startNodeId);
+
+    if (!startNode) return;
+
+    dispatch(
+      startWire({
+        startNodeId: startNode.id,
+        x1: startNode.x,
+        y1: startNode.y,
+      })
+    );
+  };
+
+// todo: join endWireToNode and endWireToElement
+export const endWireToNode =
+  (endNodeId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const {
+      node: { nodes },
+      wire: { drawingWire },
+    } = getState();
+    if (!drawingWire) return;
+    const startNode = nodes.find((node) => node.id === drawingWire.startNodeId);
+    const endNode = nodes.find((node) => node.id === endNodeId);
+
+    if (!startNode || !endNode) return;
+
+    const updatedStartNode: ICirNode = {
+      ...startNode,
+      connectionIds: [...startNode.connectionIds, endNode.id],
+    };
+    dispatch(updateNodeById({ id: updatedStartNode.id, updatedNode: updatedStartNode }));
+
+    const updatedEndNode: ICirNode = {
+      ...endNode,
+      connectionIds: [...endNode.connectionIds, startNode.id],
+    };
+    dispatch(updateNodeById({ id: updatedEndNode.id, updatedNode: updatedEndNode }));
+
+    const newWire: ICirWire = {
+      ...drawingWire,
+      endNodeId: endNode.id,
+      x2: endNode.x,
+      y2: endNode.y,
+    };
+    dispatch(addWire(newWire));
+  };
+
 export const updateDrawingWireCoords =
   ({ x, y }: ICoords) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
@@ -284,8 +334,6 @@ export const removeSelectedWire = () => (dispatch: AppDispatch, getState: () => 
   const updatedStartNode: ICirNode = {
     ...startNode,
     connectionIds: startNode.connectionIds.filter((connectionId) => {
-      console.log('connectionId', connectionId);
-      console.log('endNode.id', endNode.id);
       return connectionId !== endNode.id;
     }),
   };

@@ -44,7 +44,6 @@ export const Breadboard: FC = () => {
       svgRef.current?.removeEventListener('wheel', handleSvgWheel);
     };
   }, []);
-  console.log(nodes);
   const handleSvgMouseMove: MouseEventHandler = (e) => {
     const { clientX, clientY, movementX, movementY } = e;
 
