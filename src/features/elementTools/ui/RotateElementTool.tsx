@@ -9,17 +9,25 @@ interface IRotateElementToolProps {
 
 export const RotateElementTool: FC<IRotateElementToolProps> = ({ direction }) => {
   const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
+  const selectedNodeId = useAppSelector((state) => state.node.selectedNodeId);
+  const selectedWireId = useAppSelector((state) => state.wire.selectedWireId);
+
   const dispatch = useAppDispatch();
+
   const handleClick: MouseEventHandler = () => {
     dispatch(rotateSelectedElement(direction === 'right' ? 30 : -30));
   };
 
+  const isBtnActive = selectedElementId || selectedNodeId || selectedWireId;
+
   return (
-    <button onClick={handleClick}>
-      <Icon
-        type={direction === 'right' ? 'RotateRight' : 'RotateLeft'}
-        isDisabled={!selectedElementId}
-      />
+    <button
+      onClick={handleClick}
+      style={{
+        cursor: isBtnActive ? 'pointer' : 'default',
+      }}
+    >
+      <Icon type={direction === 'right' ? 'RotateRight' : 'RotateLeft'} isDisabled={!isBtnActive} />
     </button>
   );
 };
