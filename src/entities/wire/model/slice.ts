@@ -2,6 +2,7 @@ import { PayloadAction, createSlice, nanoid } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '@/app/appStore';
 import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, addNode, updateNodeById } from '@/entities/node';
+import { degreesToRadians } from '@/shared/lib/degreesToRadians';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
@@ -260,6 +261,9 @@ export const updateWiresCoordsByCirElement =
     // todo: optimize iterables, maybe add field relatedElement to wire
     const elementNodes = nodes.filter((node) => node.relatedElement?.elementId === cirElement.id);
     // todo: refactor this trash!
+    const cos = Math.round(Math.cos(degreesToRadians(cirElement.rotate)));
+    const sin = Math.round(Math.sin(degreesToRadians(cirElement.rotate)));
+    console.log(cirElement.rotate, cos, sin);
     wires
       .filter((wire) =>
         elementNodes.some((node) => node.id === wire.startNodeId || node.id === wire.endNodeId)
@@ -270,8 +274,8 @@ export const updateWiresCoordsByCirElement =
         if (endNode) {
           const updatedWire: ICirWire = {
             ...wire,
-            x2: cirElement.x + endNode.x,
-            y2: cirElement.y + endNode.y,
+            x2: cirElement.x + (cos !== 0 ? endNode.x * cos : endNode.y * sin),
+            y2: cirElement.y + (cos !== 0 ? endNode.y * cos : -endNode.x * sin),
           };
           dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
         } else {
@@ -280,8 +284,8 @@ export const updateWiresCoordsByCirElement =
 
           const updatedWire: ICirWire = {
             ...wire,
-            x1: cirElement.x + startNode.x,
-            y1: cirElement.y + startNode.y,
+            x1: cirElement.x + (cos !== 0 ? startNode.x * cos : startNode.y * sin),
+            y1: cirElement.y + (cos !== 0 ? startNode.y * cos : -startNode.x * sin),
           };
           dispatch(updateWireById({ id: updatedWire.id, updatedWire }));
         }

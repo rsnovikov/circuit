@@ -12,6 +12,9 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "clsx": "^1.2.1",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.get": "^4.4.2",
+    "lodash.set": "^4.3.2",
     "nanoid": "^3.3.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,6 +23,9 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
+    "@types/lodash.clonedeep": "^4.5.7",
+    "@types/lodash.get": "^4.4.7",
+    "@types/lodash.set": "^4.3.7",
     "@types/node": "^20.4.1",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",

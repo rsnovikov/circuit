@@ -12,4 +12,5 @@ export {
   removeSelectedElement,
   updateScale,
   updateTranslateCoords,
+  updateSelectedElementField,
 } from './model/slice';

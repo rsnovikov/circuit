@@ -4,11 +4,13 @@ import { Icon } from '@/shared/ui/Icon/Icon';
 
 export const SaveAsSVgBreadboardTool: FC = () => {
   const handleClick: MouseEventHandler = () => {
-    const svgElement: SVGSVGElement | null = document.getElementById('breadboard');
+    const svgElement: SVGSVGElement | null = document.getElementById(
+      'breadboard'
+    ) as SVGSVGElement | null;
     if (!svgElement) return;
 
     const clonedSvgElement = svgElement.cloneNode(true);
-    const outerHTML = clonedSvgElement.outerHTML;
+    const outerHTML = (clonedSvgElement as SVGSVGElement).outerHTML;
 
     const blob = new Blob([outerHTML], { type: 'image/svg+xml;charset=utf-8' });
     const blobURL = window.URL.createObjectURL(blob);
@@ -26,7 +28,7 @@ export const SaveAsSVgBreadboardTool: FC = () => {
       <span className="h-[32px] py-1 mr-1">
         <Icon type="Save" className="grow-0 " />
       </span>
-      <span>Сохранить как png</span>
+      <span>Сохранить как SVG</span>
     </button>
   );
 };

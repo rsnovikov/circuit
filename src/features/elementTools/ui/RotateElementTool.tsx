@@ -15,7 +15,7 @@ export const RotateElementTool: FC<IRotateElementToolProps> = ({ direction }) =>
   const dispatch = useAppDispatch();
 
   const handleClick: MouseEventHandler = () => {
-    dispatch(rotateSelectedElement(direction === 'right' ? 30 : -30));
+    dispatch(rotateSelectedElement(direction === 'left' ? 90 : -90));
   };
 
   const isBtnActive = selectedElementId || selectedNodeId || selectedWireId;

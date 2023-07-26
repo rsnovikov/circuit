@@ -19,6 +19,16 @@ export interface IHitbox {
   y2: number;
 }
 
+export interface IPhysDataItem {
+  isChangeable?: boolean;
+  title: string;
+  value: number;
+}
+
+export interface IPhysData {
+  [key: string]: IPhysDataItem;
+}
+
 export interface ICirElement {
   type: ElementTypesEnum;
   components: IComponent[];
@@ -26,6 +36,7 @@ export interface ICirElement {
   terminals: ITerminal[];
   hitbox?: IHitbox;
   previewImgPath: string;
+  physData: IPhysData;
 }
 
 export interface ICoords {

@@ -19,6 +19,7 @@ export const cirElementList: ICirElement[] = [
       },
     ],
     name: 'Земля',
+
     terminals: [
       {
         id: '1',
@@ -35,6 +36,7 @@ export const cirElementList: ICirElement[] = [
       y2: 11,
     },
     previewImgPath: '/images/elements/ground.png',
+    physData: {},
   },
   {
     type: ElementTypesEnum.key,
@@ -81,6 +83,16 @@ export const cirElementList: ICirElement[] = [
       y2: 6,
     },
     previewImgPath: '/images/elements/key.png',
+    physData: {
+      voltage: {
+        value: 0,
+        title: 'Напряжение',
+      },
+      current: {
+        value: 0,
+        title: 'Сила тока',
+      },
+    },
   },
   {
     type: ElementTypesEnum.lamp,
@@ -120,6 +132,21 @@ export const cirElementList: ICirElement[] = [
       },
     ],
     previewImgPath: '/images/elements/lamp.png',
+    physData: {
+      voltage: {
+        value: 0,
+        title: 'Напряжение',
+      },
+      current: {
+        value: 0,
+        title: 'Сила тока',
+      },
+      resistance: {
+        value: 5,
+        title: 'Сопротивление',
+        isChangeable: true,
+      },
+    },
   },
   {
     type: ElementTypesEnum.motor,
@@ -172,9 +199,10 @@ export const cirElementList: ICirElement[] = [
       },
     ],
     previewImgPath: '/images/elements/motor.png',
+    physData: {},
   },
   {
-    type: ElementTypesEnum.power,
+    type: ElementTypesEnum.voltageSource,
     components: [
       {
         d: `
@@ -218,6 +246,22 @@ export const cirElementList: ICirElement[] = [
       y2: 50,
     },
     previewImgPath: '/images/elements/power.png',
+    physData: {
+      voltage: {
+        value: 0,
+        title: 'Напряжение',
+        isChangeable: true,
+      },
+      current: {
+        value: 0,
+        title: 'Сила тока',
+      },
+      resistance: {
+        value: 0,
+        title: 'Сопротивление',
+        isChangeable: true,
+      },
+    },
   },
   {
     type: ElementTypesEnum.relay,
@@ -300,6 +344,7 @@ export const cirElementList: ICirElement[] = [
       y2: 80,
     },
     previewImgPath: '/images/elements/relay.png',
+    physData: {},
   },
   {
     type: ElementTypesEnum.resistor,
@@ -337,6 +382,21 @@ export const cirElementList: ICirElement[] = [
       },
     ],
     previewImgPath: '/images/elements/resistor.png',
+    physData: {
+      voltage: {
+        value: 0,
+        title: 'Напряжение',
+      },
+      current: {
+        value: 0,
+        title: 'Сила тока',
+      },
+      resistance: {
+        value: 5,
+        title: 'Сопротивление',
+        isChangeable: true,
+      },
+    },
   },
   {
     type: ElementTypesEnum.switch,
@@ -429,5 +489,6 @@ export const cirElementList: ICirElement[] = [
       y2: 82,
     },
     previewImgPath: '/images/elements/switch.png',
+    physData: {},
   },
 ];

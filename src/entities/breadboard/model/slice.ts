@@ -1,12 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import cloneDeep from 'lodash.clonedeep';
+import set from 'lodash.set';
 import { nanoid } from 'nanoid';
 import { AppDispatch, RootState } from '@/app/appStore';
 import { ICirNode, addNode, removeNodeById } from '@/entities/node';
 import { removeWireById, updateWiresCoordsByCirElement } from '@/entities/wire';
 import { cirElementList } from '@/shared/api/__mock__/cirElementList';
+import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords, IDraggableElement, ITranslateCoords } from '@/shared/model/types';
 import { transformCoords } from '../../../widgets/Breadboard/lib/transformCoords';
+import { calculateSameTypeElements } from '../lib/calculateSameTypeElements';
 import { IBreadboardCirElement } from './types';
 
 interface IBreadboardSliceState {
@@ -91,16 +95,17 @@ export const addSelectedElementId = (id: string) => (dispatch: AppDispatch) => {
 
 // todo: move actions to another file
 export const addPickedElement =
-  ({ elementType, x, y }: { elementType: string; x: number; y: number }) =>
+  ({ elementType, x, y }: { elementType: ElementTypesEnum; x: number; y: number }) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
     const cirElement = cirElementList.find((item) => item.type === elementType);
     if (!cirElement) return;
-    const { scale, translateCoords } = getState().breadboard;
+    const { scale, translateCoords, elements } = getState().breadboard;
     const breadboardCirElement: IBreadboardCirElement = {
       ...cirElement,
       id: nanoid(),
       rotate: 0,
       ...transformCoords({ x, y, scale, translateCoords }),
+      personalName: String(calculateSameTypeElements(elements, elementType)),
     };
     dispatch(setPickedElement(breadboardCirElement));
     dispatch(addSelectedElementId(breadboardCirElement.id));
@@ -278,9 +283,13 @@ export const rotateSelectedElement =
     if (!selectedElementId) return;
     const element = elements.find((element) => element.id === selectedElementId);
     if (!element) return;
+
     const updatedElement: IBreadboardCirElement = {
       ...element,
       rotate: element.rotate + angle,
+      terminals: element.terminals.map((terminal) => ({
+        ...terminal,
+      })),
     };
 
     dispatch(updateWiresCoordsByCirElement(updatedElement));
@@ -320,5 +329,18 @@ export const updateTranslateCoords =
     } = getState().breadboard;
     dispatch(
       setTranslateCoords({ translateX: translateX + deltaX, translateY: translateY + deltaY })
+    );
+  };
+
+export const updateSelectedElementField =
+  ({ path, value }: { path: string; value: string }) =>
+  (dispatch: AppDispatch, getState: () => RootState) => {
+    const { elements, selectedElementId } = getState().breadboard;
+    const selectedElement = elements.find((element) => element.id === selectedElementId);
+    if (!selectedElement) return;
+    const updatedSelectedElement = cloneDeep(selectedElement);
+    set(updatedSelectedElement, path, value);
+    dispatch(
+      updateElementById({ id: updatedSelectedElement.id, updatedElement: updatedSelectedElement })
     );
   };
