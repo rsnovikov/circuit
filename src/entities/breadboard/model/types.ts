@@ -5,4 +5,5 @@ export interface IBreadboardCirElement extends ICirElement {
   x: number;
   y: number;
   rotate: number;
+  personalName: string;
 }

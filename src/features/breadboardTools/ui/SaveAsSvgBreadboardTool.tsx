@@ -28,7 +28,7 @@ export const SaveAsSVgBreadboardTool: FC = () => {
       <span className="h-[32px] py-1 mr-1">
         <Icon type="Save" className="grow-0 " />
       </span>
-      <span>Сохранить как png</span>
+      <span>Сохранить как SVG</span>
     </button>
   );
 };

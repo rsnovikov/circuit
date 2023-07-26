@@ -3,7 +3,7 @@ export enum ElementTypesEnum {
   key = 'key',
   lamp = 'lamp',
   motor = 'motor',
-  power = 'power',
+  voltageSource = 'voltageSource',
   relay = 'relay',
   resistor = 'resistor',
   switch = 'switch',
