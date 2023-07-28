@@ -98,7 +98,6 @@ export const Breadboard: FC = () => {
   const handleSvgWheel: (e: WheelEvent) => void = (e: WheelEvent) => {
     e.preventDefault();
     const { deltaX, deltaY, clientX, clientY } = e;
-    console.log(deltaY);
     const coords = getMousePosition({ x: clientX, y: clientY }, svgRef.current?.getScreenCTM());
     if (!coords) return;
     const delta = deltaY || deltaX;

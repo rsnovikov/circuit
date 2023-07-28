@@ -13,4 +13,5 @@ export {
   updateScale,
   updateTranslateCoords,
   updateSelectedElementField,
+  setBreadboardElementFromData,
 } from './model/slice';

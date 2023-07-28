@@ -39,6 +39,10 @@ export const breadboardSlice = createSlice({
   name: 'breadboard',
   initialState,
   reducers: {
+    setElements: (state, action: PayloadAction<IBreadboardCirElement[]>) => {
+      state.elements = action.payload;
+    },
+
     setPickedElement(state, action: PayloadAction<IBreadboardCirElement | null>) {
       state.pickedElement = action.payload;
     },
@@ -78,6 +82,7 @@ export const breadboardSlice = createSlice({
 });
 
 const {
+  setElements,
   setPickedElement,
   addElement,
   setDraggableElement,
@@ -343,4 +348,9 @@ export const updateSelectedElementField =
     dispatch(
       updateElementById({ id: updatedSelectedElement.id, updatedElement: updatedSelectedElement })
     );
+  };
+
+export const setBreadboardElementFromData =
+  (elements: IBreadboardCirElement[]) => (dispatch: AppDispatch) => {
+    dispatch(setElements(elements));
   };

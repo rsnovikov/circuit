@@ -3,4 +3,5 @@ export const downloadFile = (href: string, name: string) => {
   link.download = name;
   link.href = href;
   link.click();
+  URL.revokeObjectURL(href);
 };

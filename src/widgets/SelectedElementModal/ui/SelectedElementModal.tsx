@@ -33,8 +33,6 @@ export const SelectedElementModal: FC = () => {
         title: selectedElement.physData[physDataKey].title,
       })),
   ];
-  console.log(fields);
-  console.log(selectedElement);
   return (
     <div className="absolute right-[310px] top-[10px] w-[260px] border-2 border-blue-400 rounded bg-white">
       <div className="py-3 bg-blue-400 px-2 text-xl text-white"> {selectedElement.name}</div>

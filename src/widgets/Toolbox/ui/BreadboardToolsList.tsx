@@ -1,6 +1,10 @@
 import { FC } from 'react';
-import { StartModelingBreadboardTool } from '@/features/breadboardTools';
-import { SaveAsSVgBreadboardTool } from '@/features/breadboardTools/ui/SaveAsSvgBreadboardTool';
+import {
+  SaveAsJsonBreadboardTool,
+  SaveAsSVgBreadboardTool,
+  StartModelingBreadboardTool,
+  UploadJsonBreadboardTool,
+} from '@/features/breadboardTools';
 
 export const BreadboardToolsList: FC = () => {
   return (
@@ -11,6 +15,12 @@ export const BreadboardToolsList: FC = () => {
 
       <div className="flex mr-1.5">
         <SaveAsSVgBreadboardTool />
+      </div>
+      <div className="flex mr-1.5">
+        <SaveAsJsonBreadboardTool />
+      </div>
+      <div className="flex mr-1.5">
+        <UploadJsonBreadboardTool />
       </div>
     </div>
   );

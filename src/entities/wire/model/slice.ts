@@ -24,6 +24,9 @@ export const wireSlice = createSlice({
   name: 'wire',
   initialState,
   reducers: {
+    setWires(state, action: PayloadAction<ICirWire[]>) {
+      state.wires = action.payload;
+    },
     setDrawingWire(state, action: PayloadAction<ICirWire | null>) {
       state.drawingWire = action.payload;
     },
@@ -52,8 +55,14 @@ export const wireSlice = createSlice({
   },
 });
 
-export const { setDrawingWire, addWire, updateWireById, removeWireById, setSelectedWireId } =
-  wireSlice.actions;
+export const {
+  setWires,
+  setDrawingWire,
+  addWire,
+  updateWireById,
+  removeWireById,
+  setSelectedWireId,
+} = wireSlice.actions;
 
 export const startWire =
   ({ startNodeId, x1, y1 }: { startNodeId: string; x1: number; y1: number }) =>
@@ -263,7 +272,6 @@ export const updateWiresCoordsByCirElement =
     // todo: refactor this trash!
     const cos = Math.round(Math.cos(degreesToRadians(cirElement.rotate)));
     const sin = Math.round(Math.sin(degreesToRadians(cirElement.rotate)));
-    console.log(cirElement.rotate, cos, sin);
     wires
       .filter((wire) =>
         elementNodes.some((node) => node.id === wire.startNodeId || node.id === wire.endNodeId)
@@ -350,3 +358,7 @@ export const removeSelectedWire = () => (dispatch: AppDispatch, getState: () => 
   dispatch(removeWireById(selectedWire.id));
   dispatch(removeSelectedWireId());
 };
+
+export const setWiresFromData = (wires: ICirWire[]) => (dispatch: AppDispatch) =>{
+  dispatch(setWires(wires));
+}

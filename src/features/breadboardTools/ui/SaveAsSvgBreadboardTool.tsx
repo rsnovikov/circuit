@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler } from 'react';
 import { downloadFile } from '@/shared/lib/downloadFile';
-import { Icon } from '@/shared/ui/Icon/Icon';
+import { BreadboardToolsBtn } from './BreadboardToolsBtn';
 
 export const SaveAsSVgBreadboardTool: FC = () => {
   const handleClick: MouseEventHandler = () => {
@@ -18,17 +18,8 @@ export const SaveAsSVgBreadboardTool: FC = () => {
   };
 
   return (
-    <button
-      className="h-[32px] px-2 border rounded-sm border-[#34495e] flex items-center justify-between shadow-sm"
-      onClick={handleClick}
-      // style={{
-      //   cursor: isBtnActive ? 'pointer' : 'default',
-      // }}
-    >
-      <span className="h-[32px] py-1 mr-1">
-        <Icon type="Save" className="grow-0 " />
-      </span>
-      <span>Сохранить как SVG</span>
-    </button>
+    <BreadboardToolsBtn iconType="ImageDownload" onClick={handleClick}>
+      Сохранить как SVG
+    </BreadboardToolsBtn>
   );
 };
