@@ -8,6 +8,7 @@ export {
   updateNodeById,
   removeSelectedNode,
   removeSelectedNodeId,
+  setNodesFromData,
 } from './model/slice';
 export type { ICirNode } from './model/types';
 export { NodeCirElement } from './ui/NodeCirElement.tsx';

@@ -39,6 +39,10 @@ export interface ICirElement {
   physData: IPhysData;
 }
 
+export type ICirElementList = {
+  [key in ElementTypesEnum]: ICirElement;
+};
+
 export interface ICoords {
   x: number;
   y: number;
@@ -55,4 +59,11 @@ export interface IDraggableElement {
   offsetY: number;
   initialX: number;
   initialY: number;
+}
+
+export interface ICirWireData {
+  id: string;
+  startNodeId: string;
+  endNodeId: string | null;
+  color: string;
 }

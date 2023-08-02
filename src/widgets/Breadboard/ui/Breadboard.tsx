@@ -101,8 +101,10 @@ export const Breadboard: FC = () => {
     const coords = getMousePosition({ x: clientX, y: clientY }, svgRef.current?.getScreenCTM());
     if (!coords) return;
     const delta = deltaY || deltaX;
-    const scaleStep = -(delta / 100);
-    dispatch(updateScale(scaleStep, coords));
+    const scaleStep = Math.abs(delta) < 50 ? 0.1 : 0.2;
+    const scaleDelta = delta < 0 ? scaleStep : -scaleStep;
+
+    dispatch(updateScale(scaleDelta, coords));
   };
 
   // todo: maybe move logic to feature

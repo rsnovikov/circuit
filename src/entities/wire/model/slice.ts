@@ -4,8 +4,9 @@ import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, addNode, updateNodeById } from '@/entities/node';
 import { degreesToRadians } from '@/shared/lib/degreesToRadians';
 import { removeSelectedEntities } from '@/shared/model/actions';
-import { ICoords } from '@/shared/model/types';
+import { ICirWireData, ICoords } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
+import { getRelatedNodeAbsoluteCoords } from '../lib/getRelatedNodeAbsoluteCoords';
 import { ICirWire } from './types';
 
 interface IWireSliceState {
@@ -24,6 +25,9 @@ export const wireSlice = createSlice({
   name: 'wire',
   initialState,
   reducers: {
+    setWires(state, action: PayloadAction<ICirWire[]>) {
+      state.wires = action.payload;
+    },
     setDrawingWire(state, action: PayloadAction<ICirWire | null>) {
       state.drawingWire = action.payload;
     },
@@ -52,8 +56,14 @@ export const wireSlice = createSlice({
   },
 });
 
-export const { setDrawingWire, addWire, updateWireById, removeWireById, setSelectedWireId } =
-  wireSlice.actions;
+export const {
+  setWires,
+  setDrawingWire,
+  addWire,
+  updateWireById,
+  removeWireById,
+  setSelectedWireId,
+} = wireSlice.actions;
 
 export const startWire =
   ({ startNodeId, x1, y1 }: { startNodeId: string; x1: number; y1: number }) =>
@@ -230,7 +240,6 @@ export const addNodeAndConfirmWire =
       x: transformedX,
       y: transformedY,
       connectionIds: [drawingWire.startNodeId],
-      rotate: 0,
       relatedElement: null,
     };
 
@@ -251,7 +260,7 @@ export const addNodeAndConfirmWire =
     dispatch(updateNodeById({ id: updatedStartNode.id, updatedNode: updatedStartNode }));
     dispatch(startWire({ x1: transformedX, y1: transformedY, startNodeId: endNode.id }));
   };
-
+// todo: remove
 export const updateWiresCoordsByCirElement =
   (cirElement: IBreadboardCirElement) => (dispatch: AppDispatch, getState: () => RootState) => {
     const {
@@ -263,7 +272,6 @@ export const updateWiresCoordsByCirElement =
     // todo: refactor this trash!
     const cos = Math.round(Math.cos(degreesToRadians(cirElement.rotate)));
     const sin = Math.round(Math.sin(degreesToRadians(cirElement.rotate)));
-    console.log(cirElement.rotate, cos, sin);
     wires
       .filter((wire) =>
         elementNodes.some((node) => node.id === wire.startNodeId || node.id === wire.endNodeId)
@@ -350,3 +358,30 @@ export const removeSelectedWire = () => (dispatch: AppDispatch, getState: () => 
   dispatch(removeWireById(selectedWire.id));
   dispatch(removeSelectedWireId());
 };
+
+export const createWiresFromNodes =
+  (wiresData: ICirWireData[]) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const {
+      node: { nodes },
+      breadboard: { elements },
+    } = getState();
+
+    const wires: ICirWire[] = wiresData.reduce((acc, wireData) => {
+      const startNode = nodes.find((node) => node.id === wireData.startNodeId);
+      const endNode = nodes.find((node) => node.id === wireData.endNodeId);
+      if (!startNode || !endNode) return acc;
+      const startCoords = getRelatedNodeAbsoluteCoords(startNode, elements);
+      const endCoords = getRelatedNodeAbsoluteCoords(endNode, elements);
+      if (!startCoords || !endCoords) return acc;
+
+      const { x: x1, y: y1 } = startCoords;
+
+      const { x: x2, y: y2 } = endCoords;
+
+      return [...acc, { ...wireData, x1, y1, x2, y2 }];
+    }, [] as ICirWire[]);
+    dispatch(setWires(wires));
+  };
+
+export const selectWiresData = (state: RootState) =>
+  state.wire.wires.map(({ x1, x2, y1, y2, ...rest }) => ({ ...rest }));

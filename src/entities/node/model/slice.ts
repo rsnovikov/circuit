@@ -22,6 +22,9 @@ export const nodeSlice = createSlice({
   name: 'node',
   initialState,
   reducers: {
+    setNodes(state, action: PayloadAction<ICirNode[]>) {
+      state.nodes = action.payload;
+    },
     addNode(state, action: PayloadAction<ICirNode>) {
       state.nodes.push(action.payload);
     },
@@ -50,8 +53,15 @@ export const nodeSlice = createSlice({
   },
 });
 
-export const { addNode, updateNodeById, removeNodeById, setDraggableNode, setSelectedNodeId } =
-  nodeSlice.actions;
+export const {
+  setNodes,
+
+  addNode,
+  updateNodeById,
+  removeNodeById,
+  setDraggableNode,
+  setSelectedNodeId,
+} = nodeSlice.actions;
 
 export const addSelectedNodeId = (id: string) => (dispatch: AppDispatch) => {
   dispatch(removeSelectedEntities());
@@ -149,4 +159,8 @@ export const removeSelectedNode = () => (dispatch: AppDispatch, getState: () => 
   });
   dispatch(removeNodeById(selectedNode.id));
   dispatch(removeSelectedNodeId());
+};
+
+export const setNodesFromData = (nodes: ICirNode[]) => (dispatch: AppDispatch) => {
+  dispatch(setNodes(nodes));
 };

@@ -1,9 +1,9 @@
 import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
-import { ICirElement } from '@/shared/model/types';
+import { ICirElementList } from '@/shared/model/types';
 
-export const cirElementList: ICirElement[] = [
-  {
-    type: ElementTypesEnum.ground,
+export const cirElementList: ICirElementList = {
+  [ElementTypesEnum.Ground]: {
+    type: ElementTypesEnum.Ground,
     components: [
       {
         d: `
@@ -38,8 +38,8 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/ground.png',
     physData: {},
   },
-  {
-    type: ElementTypesEnum.key,
+  [ElementTypesEnum.Key]: {
+    type: ElementTypesEnum.Key,
     components: [
       {
         d: `
@@ -94,8 +94,8 @@ export const cirElementList: ICirElement[] = [
       },
     },
   },
-  {
-    type: ElementTypesEnum.lamp,
+  [ElementTypesEnum.Lamp]: {
+    type: ElementTypesEnum.Lamp,
     components: [
       {
         d: `
@@ -148,8 +148,8 @@ export const cirElementList: ICirElement[] = [
       },
     },
   },
-  {
-    type: ElementTypesEnum.motor,
+  [ElementTypesEnum.Motor]: {
+    type: ElementTypesEnum.Motor,
     components: [
       {
         d: `
@@ -201,8 +201,8 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/motor.png',
     physData: {},
   },
-  {
-    type: ElementTypesEnum.voltageSource,
+  [ElementTypesEnum.VoltageSource]: {
+    type: ElementTypesEnum.VoltageSource,
     components: [
       {
         d: `
@@ -263,8 +263,8 @@ export const cirElementList: ICirElement[] = [
       },
     },
   },
-  {
-    type: ElementTypesEnum.relay,
+  [ElementTypesEnum.Relay]: {
+    type: ElementTypesEnum.Relay,
     components: [
       {
         d: `
@@ -346,8 +346,8 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/relay.png',
     physData: {},
   },
-  {
-    type: ElementTypesEnum.resistor,
+  [ElementTypesEnum.Resistor]: {
+    type: ElementTypesEnum.Resistor,
     components: [
       {
         d: `
@@ -398,8 +398,8 @@ export const cirElementList: ICirElement[] = [
       },
     },
   },
-  {
-    type: ElementTypesEnum.switch,
+  [ElementTypesEnum.Switch]: {
+    type: ElementTypesEnum.Switch,
     components: [
       {
         d: `
@@ -491,4 +491,4 @@ export const cirElementList: ICirElement[] = [
     previewImgPath: '/images/elements/switch.png',
     physData: {},
   },
-];
+};

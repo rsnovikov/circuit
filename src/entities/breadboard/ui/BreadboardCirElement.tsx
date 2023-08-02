@@ -1,5 +1,6 @@
 import { FC, MouseEvent, SVGProps } from 'react';
 import { endWireToElement, startWireFromElement } from '@/entities/wire';
+import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { CirElement } from '@/shared/ui/CirElement';
 import { IBreadboardCirElement } from '../model/types';
@@ -12,8 +13,8 @@ export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({ element, 
   const dispatch = useAppDispatch();
   const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
   const drawingWire = useAppSelector((state) => state.wire.drawingWire);
-  const { x, y, rotate, terminals, hitbox, id } = element;
-
+  const { x, y, rotate, id } = element;
+  const { terminals, hitbox, components } = cirElementList[element.type];
   const handleTerminalClick = (e: MouseEvent, terminalId: string, elementId: string) => {
     // todo: maybe remove stopPropagation and add check to the handleSvgClick in widget Breadboard
     e.stopPropagation();
@@ -37,7 +38,7 @@ export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({ element, 
         fill="transparent"
         {...rest}
       >
-        <CirElement cirElem={element} isSelected={selectedElementId === id} />
+        <CirElement components={components} isSelected={selectedElementId === id} />
         {hitbox && (
           <rect
             fill="transparent"

@@ -39,6 +39,10 @@ export const breadboardSlice = createSlice({
   name: 'breadboard',
   initialState,
   reducers: {
+    setElements: (state, action: PayloadAction<IBreadboardCirElement[]>) => {
+      state.elements = action.payload;
+    },
+
     setPickedElement(state, action: PayloadAction<IBreadboardCirElement | null>) {
       state.pickedElement = action.payload;
     },
@@ -78,6 +82,7 @@ export const breadboardSlice = createSlice({
 });
 
 const {
+  setElements,
   setPickedElement,
   addElement,
   setDraggableElement,
@@ -97,15 +102,19 @@ export const addSelectedElementId = (id: string) => (dispatch: AppDispatch) => {
 export const addPickedElement =
   ({ elementType, x, y }: { elementType: ElementTypesEnum; x: number; y: number }) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
-    const cirElement = cirElementList.find((item) => item.type === elementType);
+    const cirElement = Object.values(cirElementList).find((item) => item.type === elementType);
     if (!cirElement) return;
     const { scale, translateCoords, elements } = getState().breadboard;
     const breadboardCirElement: IBreadboardCirElement = {
-      ...cirElement,
+      type: cirElement.type,
       id: nanoid(),
       rotate: 0,
       ...transformCoords({ x, y, scale, translateCoords }),
       personalName: String(calculateSameTypeElements(elements, elementType)),
+      physData: Object.keys(cirElement.physData).reduce(
+        (acc, key) => ({ ...acc, [key]: { value: cirElement.physData[key].value } }),
+        {}
+      ),
     };
     dispatch(setPickedElement(breadboardCirElement));
     dispatch(addSelectedElementId(breadboardCirElement.id));
@@ -131,7 +140,7 @@ export const updatePickedElementCoords =
 export const confirmPickedElement = () => (dispatch: AppDispatch, getState: () => RootState) => {
   const { pickedElement } = getState().breadboard;
   if (!pickedElement) return;
-  const pickedElementNodes = pickedElement.terminals
+  const pickedElementNodes = cirElementList[pickedElement.type].terminals
     .map((terminal) => {
       const nodeElement: ICirNode = {
         id: nanoid(),
@@ -142,7 +151,6 @@ export const confirmPickedElement = () => (dispatch: AppDispatch, getState: () =
         connectionIds: terminal.relatedTerminalId ? [terminal.relatedTerminalId] : [],
         x: terminal.x,
         y: terminal.y,
-        rotate: 0,
       };
       return nodeElement;
     })
@@ -287,9 +295,6 @@ export const rotateSelectedElement =
     const updatedElement: IBreadboardCirElement = {
       ...element,
       rotate: element.rotate + angle,
-      terminals: element.terminals.map((terminal) => ({
-        ...terminal,
-      })),
     };
 
     dispatch(updateWiresCoordsByCirElement(updatedElement));
@@ -343,4 +348,9 @@ export const updateSelectedElementField =
     dispatch(
       updateElementById({ id: updatedSelectedElement.id, updatedElement: updatedSelectedElement })
     );
+  };
+
+export const setBreadboardElementFromData =
+  (elements: IBreadboardCirElement[]) => (dispatch: AppDispatch) => {
+    dispatch(setElements(elements));
   };

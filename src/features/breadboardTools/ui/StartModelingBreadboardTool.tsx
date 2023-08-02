@@ -1,18 +1,14 @@
 import { FC } from 'react';
-import { Icon } from '@/shared/ui/Icon/Icon';
+import { BreadboardToolsBtn } from './BreadboardToolsBtn';
 
 export const StartModelingBreadboardTool: FC = () => {
+  const handleClick = () => {
+    console.log('start modeling');
+  };
+
   return (
-    <button
-      className="h-[32px] px-2 border rounded-sm border-[#34495e] flex items-center justify-between shadow-sm"
-      // style={{
-      //   cursor: isBtnActive ? 'pointer' : 'default',
-      // }}
-    >
-      <span className="h-[32px] py-1 mr-1">
-        <Icon type="PlayFill" className="grow-0 " />
-      </span>
-      <span> Начать моделирование</span>
-    </button>
+    <BreadboardToolsBtn iconType="PlayFill" onClick={handleClick}>
+      Начать моделирование
+    </BreadboardToolsBtn>
   );
 };
