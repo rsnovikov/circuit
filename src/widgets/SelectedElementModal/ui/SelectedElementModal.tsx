@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import get from 'lodash.get';
 import { updateSelectedElementField } from '@/entities/breadboard';
+import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 
 export const SelectedElementModal: FC = () => {
@@ -12,6 +13,23 @@ export const SelectedElementModal: FC = () => {
 
   if (!selectedElement) return null;
 
+  const { name } = cirElementList[selectedElement.type];
+
+  const fields = [
+    {
+      path: 'personalName',
+      title: 'Имя',
+    },
+    ...Object.keys(selectedElement.physData)
+      .filter((physDataKey) => {
+        return cirElementList[selectedElement.type].physData[physDataKey].isChangeable;
+      })
+      .map((physDataKey) => ({
+        path: `physData.${physDataKey}.value`,
+        title: cirElementList[selectedElement.type].physData[physDataKey].title,
+      })),
+  ];
+
   const handleInputChange = ({ path, value }: { path: string; value: string }) => {
     dispatch(
       updateSelectedElementField({
@@ -21,24 +39,15 @@ export const SelectedElementModal: FC = () => {
     );
   };
 
-  const fields = [
-    {
-      path: 'personalName',
-      title: 'Имя',
-    },
-    ...Object.keys(selectedElement.physData)
-      .filter((physDataKey) => selectedElement.physData[physDataKey].isChangeable)
-      .map((physDataKey) => ({
-        path: `physData.${physDataKey}.value`,
-        title: selectedElement.physData[physDataKey].title,
-      })),
-  ];
   return (
     <div className="absolute right-[310px] top-[10px] w-[260px] border-2 border-blue-400 rounded bg-white">
-      <div className="py-3 bg-blue-400 px-2 text-xl text-white"> {selectedElement.name}</div>
+      <div className="py-3 bg-blue-400 px-2 text-xl text-white"> {name}</div>
       <div className="p-2">
         <ul>
-          {Object.values(selectedElement.physData).map(({ value, title, isChangeable }) => {
+          {Object.keys(selectedElement.physData).map((key) => {
+            const { value } = selectedElement.physData[key];
+
+            const { title, isChangeable } = cirElementList[selectedElement.type].physData[key];
             if (isChangeable) return;
             return (
               <li

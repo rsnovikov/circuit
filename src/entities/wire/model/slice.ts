@@ -4,8 +4,9 @@ import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, addNode, updateNodeById } from '@/entities/node';
 import { degreesToRadians } from '@/shared/lib/degreesToRadians';
 import { removeSelectedEntities } from '@/shared/model/actions';
-import { ICoords } from '@/shared/model/types';
+import { ICirWireData, ICoords } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
+import { getRelatedNodeAbsoluteCoords } from '../lib/getRelatedNodeAbsoluteCoords';
 import { ICirWire } from './types';
 
 interface IWireSliceState {
@@ -239,7 +240,6 @@ export const addNodeAndConfirmWire =
       x: transformedX,
       y: transformedY,
       connectionIds: [drawingWire.startNodeId],
-      rotate: 0,
       relatedElement: null,
     };
 
@@ -260,7 +260,7 @@ export const addNodeAndConfirmWire =
     dispatch(updateNodeById({ id: updatedStartNode.id, updatedNode: updatedStartNode }));
     dispatch(startWire({ x1: transformedX, y1: transformedY, startNodeId: endNode.id }));
   };
-
+// todo: remove
 export const updateWiresCoordsByCirElement =
   (cirElement: IBreadboardCirElement) => (dispatch: AppDispatch, getState: () => RootState) => {
     const {
@@ -359,6 +359,29 @@ export const removeSelectedWire = () => (dispatch: AppDispatch, getState: () => 
   dispatch(removeSelectedWireId());
 };
 
-export const setWiresFromData = (wires: ICirWire[]) => (dispatch: AppDispatch) =>{
-  dispatch(setWires(wires));
-}
+export const createWiresFromNodes =
+  (wiresData: ICirWireData[]) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const {
+      node: { nodes },
+      breadboard: { elements },
+    } = getState();
+
+    const wires: ICirWire[] = wiresData.reduce((acc, wireData) => {
+      const startNode = nodes.find((node) => node.id === wireData.startNodeId);
+      const endNode = nodes.find((node) => node.id === wireData.endNodeId);
+      if (!startNode || !endNode) return acc;
+      const startCoords = getRelatedNodeAbsoluteCoords(startNode, elements);
+      const endCoords = getRelatedNodeAbsoluteCoords(endNode, elements);
+      if (!startCoords || !endCoords) return acc;
+
+      const { x: x1, y: y1 } = startCoords;
+
+      const { x: x2, y: y2 } = endCoords;
+
+      return [...acc, { ...wireData, x1, y1, x2, y2 }];
+    }, [] as ICirWire[]);
+    dispatch(setWires(wires));
+  };
+
+export const selectWiresData = (state: RootState) =>
+  state.wire.wires.map(({ x1, x2, y1, y2, ...rest }) => ({ ...rest }));

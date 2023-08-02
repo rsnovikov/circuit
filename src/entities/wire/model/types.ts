@@ -1,12 +1,8 @@
-export interface ICirWire {
-  id: string;
+import { ICirWireData } from '@/shared/model/types';
+
+export interface ICirWire extends ICirWireData {
   x1: number;
   y1: number;
   x2: number;
   y2: number;
-  startNodeId: string;
-  endNodeId: string | null;
-  // startElementId?: string | null;
-  // endElementId: string | null;
-  color: string;
 }

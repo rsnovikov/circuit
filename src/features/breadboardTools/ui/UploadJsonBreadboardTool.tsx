@@ -2,8 +2,9 @@ import { ChangeEventHandler, FC, MouseEventHandler, useRef } from 'react';
 import { setBreadboardElementFromData } from '@/entities/breadboard';
 import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, setNodesFromData } from '@/entities/node';
-import { ICirWire, setWiresFromData } from '@/entities/wire';
+import { createWiresFromNodes } from '@/entities/wire';
 import { useAppDispatch } from '@/shared/model';
+import { ICirWireData } from '@/shared/model/types';
 import { BreadboardToolsBtn } from './BreadboardToolsBtn';
 
 export const UploadJsonBreadboardTool: FC = () => {
@@ -28,11 +29,11 @@ export const UploadJsonBreadboardTool: FC = () => {
           elements,
           nodes,
           wires,
-        }: { nodes: ICirNode[]; wires: ICirWire[]; elements: IBreadboardCirElement[] } =
+        }: { nodes: ICirNode[]; elements: IBreadboardCirElement[]; wires: ICirWireData[] } =
           JSON.parse(jsonData);
         dispatch(setBreadboardElementFromData(elements));
         dispatch(setNodesFromData(nodes));
-        dispatch(setWiresFromData(wires));
+        dispatch(createWiresFromNodes(wires));
       } catch (error) {
         console.error('JSON невалидный');
       }
@@ -42,7 +43,7 @@ export const UploadJsonBreadboardTool: FC = () => {
   };
   return (
     <BreadboardToolsBtn iconType="FileUploadAlt" onClick={handleBtnClick}>
-      Загрузить схему из JSON
+      Загрузить из JSON
       <input
         type="file"
         accept=".json"
