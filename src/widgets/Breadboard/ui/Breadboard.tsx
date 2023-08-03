@@ -35,6 +35,7 @@ export const Breadboard: FC = () => {
     selectedElementId,
     scale,
     gridStep,
+    isGridVisible,
     translateCoords: { translateX, translateY },
   } = useAppSelector((state) => state.breadboard);
   const { drawingWire, wires, selectedWireId } = useAppSelector((state) => state.wire);
@@ -143,14 +144,16 @@ export const Breadboard: FC = () => {
       onMouseDown={handleSvgMouseDown}
       onMouseUp={handleSvgMouseUp}
     >
-      <BreadboardGrid
-        gridStep={gridStep}
-        width={SvgDimensions?.width}
-        height={SvgDimensions?.height}
-        scale={scale}
-        translateX={translateX}
-        translateY={translateY}
-      />
+      {isGridVisible && (
+        <BreadboardGrid
+          gridStep={gridStep}
+          width={SvgDimensions?.width}
+          height={SvgDimensions?.height}
+          scale={scale}
+          translateX={translateX}
+          translateY={translateY}
+        />
+      )}
       <g transform={`matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`}>
         {drawingWire && <Wire wire={drawingWire} />}
         {wires.map((wire) => (

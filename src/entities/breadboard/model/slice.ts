@@ -23,6 +23,7 @@ interface IBreadboardSliceState {
   selectedElementId: string | null;
   translateCoords: ITranslateCoords;
   gridStep: number;
+  isGridVisible: boolean;
 }
 
 const initialState: IBreadboardSliceState = {
@@ -36,6 +37,7 @@ const initialState: IBreadboardSliceState = {
     translateY: 0,
   },
   gridStep: 30,
+  isGridVisible: false,
 };
 
 export const breadboardSlice = createSlice({
@@ -81,6 +83,9 @@ export const breadboardSlice = createSlice({
     setTranslateCoords(state, action: PayloadAction<ITranslateCoords>) {
       state.translateCoords = action.payload;
     },
+    toggleIsGridVisible(state, action: PayloadAction) {
+      state.isGridVisible = !state.isGridVisible;
+    },
   },
 });
 
@@ -95,6 +100,8 @@ const {
   setScale,
   setTranslateCoords,
 } = breadboardSlice.actions;
+
+export const {toggleIsGridVisible} = breadboardSlice.actions;
 
 export const addSelectedElementId = (id: string) => (dispatch: AppDispatch) => {
   dispatch(removeSelectedEntities());

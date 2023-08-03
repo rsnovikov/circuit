@@ -3,24 +3,32 @@ import {
   SaveAsJsonBreadboardTool,
   SaveAsSVgBreadboardTool,
   StartModelingBreadboardTool,
+  ToggleGridBreadboardTool,
   UploadJsonBreadboardTool,
 } from '@/features/breadboardTools';
 
 export const BreadboardToolsList: FC = () => {
   return (
-    <div className="flex h-full p-2">
-      <div className="flex mr-3">
-        <StartModelingBreadboardTool />
+    <div className="flex h-full">
+      <div className="flex mx-2 p-2 h-full border-x border-gray-600">
+        <div className="flex">
+          <ToggleGridBreadboardTool />
+        </div>
       </div>
 
-      <div className="flex mr-1.5">
-        <SaveAsSVgBreadboardTool />
-      </div>
-      <div className="flex mr-1.5">
-        <SaveAsJsonBreadboardTool />
-      </div>
-      <div className="flex mr-1.5">
-        <UploadJsonBreadboardTool />
+      <div className="flex h-full p-2">
+        <div className="flex mr-3">
+          <StartModelingBreadboardTool />
+        </div>
+        <div className="flex mr-1.5">
+          <SaveAsSVgBreadboardTool />
+        </div>
+        <div className="flex mr-1.5">
+          <SaveAsJsonBreadboardTool />
+        </div>
+        <div className="flex">
+          <UploadJsonBreadboardTool />
+        </div>
       </div>
     </div>
   );

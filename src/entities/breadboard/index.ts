@@ -14,4 +14,5 @@ export {
   updateTranslateCoords,
   updateSelectedElementField,
   setBreadboardElementFromData,
+  toggleIsGridVisible,
 } from './model/slice';

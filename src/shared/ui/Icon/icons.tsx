@@ -9,7 +9,9 @@ export type IconType =
   | 'PlayFill'
   | 'ImageDownload'
   | 'FileDownloadAlt'
-  | 'FileUploadAlt';
+  | 'FileUploadAlt'
+  | 'Grid'
+  | 'GridOff';
 
 export const icons: {
   [key in IconType]: { viewBox: string; component: () => ReactElement };
@@ -87,6 +89,18 @@ export const icons: {
     viewBox: '0 0 24 24',
     component: () => (
       <path d="M13 20H6a1 1 0 01-1-1V5a1 1 0 011-1h5v3a3 3 0 003 3h3v2a1 1 0 002 0V9v-.06a1.31 1.31 0 00-.06-.27v-.09a1.07 1.07 0 00-.19-.28l-6-6a1.07 1.07 0 00-.28-.19.32.32 0 00-.09 0 .88.88 0 00-.33-.11H6a3 3 0 00-3 3v14a3 3 0 003 3h7a1 1 0 000-2zm0-14.59L15.59 8H14a1 1 0 01-1-1zM8 8a1 1 0 000 2h1a1 1 0 000-2zm6 4H8a1 1 0 000 2h6a1 1 0 000-2zm6.71 5.29l-2-2a1 1 0 00-.33-.21 1 1 0 00-.76 0 1 1 0 00-.33.21l-2 2a1 1 0 001.42 1.42l.29-.3V21a1 1 0 002 0v-2.59l.29.3a1 1 0 001.42 0 1 1 0 000-1.42zM12 18a1 1 0 000-2H8a1 1 0 000 2z" />
+    ),
+  },
+  Grid: {
+    viewBox: '0 0 24 24',
+    component: () => (
+      <path d="M10 4v4h4V4h-4m6 0v4h4V4h-4m0 6v4h4v-4h-4m0 6v4h4v-4h-4m-2 4v-4h-4v4h4m-6 0v-4H4v4h4m0-6v-4H4v4h4m0-6V4H4v4h4m2 6h4v-4h-4v4M4 2h16a2 2 0 012 2v16a2 2 0 01-2 2H4c-1.08 0-2-.9-2-2V4a2 2 0 012-2z" />
+    ),
+  },
+  GridOff: {
+    viewBox: '0 0 24 24',
+    component: () => (
+      <path d="M0 2.77L1.28 1.5 22.5 22.72 21.23 24l-2-2H4c-1.08 0-2-.9-2-2V4.77l-2-2M10 4v3.68l-2-2V4H6.32l-2-2H20a2 2 0 012 2v15.7l-2-2V16h-1.68l-2-2H20v-4h-4v3.68l-2-2V10h-1.68l-2-2H14V4h-4m6 0v4h4V4h-4m0 16h1.23L16 18.77V20M4 8h1.23L4 6.77V8m6 6h1.23L10 12.77V14m4 6v-3.23l-.77-.77H10v4h4m-6 0v-4H4v4h4m0-6v-3.23L7.23 10H4v4h4z" />
     ),
   },
 };
