@@ -3,6 +3,7 @@ import { AppDispatch, RootState } from '@/app/appStore';
 import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, addNode, updateNodeById } from '@/entities/node';
 import { degreesToRadians } from '@/shared/lib/degreesToRadians';
+import { roundTo } from '@/shared/lib/roundTo';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICirWireData, ICoords } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
@@ -220,11 +221,11 @@ export const removeDrawingWire = () => (dispatch: AppDispatch) => {
   dispatch(setDrawingWire(null));
 };
 
-export const addNodeAndConfirmWire =
+export const confirmWireAndAddNode =
   ({ x, y }: ICoords) =>
   (dispatch: AppDispatch, getState: () => RootState) => {
     const {
-      breadboard: { scale, translateCoords },
+      breadboard: { scale, translateCoords, gridStep },
       node: { nodes },
       wire: { drawingWire },
     } = getState();
@@ -235,10 +236,13 @@ export const addNodeAndConfirmWire =
 
     const { x: transformedX, y: transformedY } = transformCoords({ x, y, scale, translateCoords });
 
+    const roundedX = roundTo(transformedX, gridStep);
+    const roundedY = roundTo(transformedY, gridStep);
+
     const endNode: ICirNode = {
       id: nanoid(),
-      x: transformedX,
-      y: transformedY,
+      x: roundedX,
+      y: roundedY,
       connectionIds: [drawingWire.startNodeId],
       relatedElement: null,
     };
@@ -246,8 +250,8 @@ export const addNodeAndConfirmWire =
     const updatedWire: ICirWire = {
       ...drawingWire,
       endNodeId: endNode.id,
-      x2: transformedX,
-      y2: transformedY,
+      x2: roundedX,
+      y2: roundedY,
     };
 
     const updatedStartNode: ICirNode = {
@@ -258,8 +262,9 @@ export const addNodeAndConfirmWire =
     dispatch(addNode(endNode));
     dispatch(addWire(updatedWire));
     dispatch(updateNodeById({ id: updatedStartNode.id, updatedNode: updatedStartNode }));
-    dispatch(startWire({ x1: transformedX, y1: transformedY, startNodeId: endNode.id }));
+    dispatch(startWire({ x1: roundedX, y1: roundedY, startNodeId: endNode.id }));
   };
+
 // todo: remove
 export const updateWiresCoordsByCirElement =
   (cirElement: IBreadboardCirElement) => (dispatch: AppDispatch, getState: () => RootState) => {

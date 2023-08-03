@@ -12,6 +12,7 @@ export const NodeCirElement: FC<INodeCirElementProps> = ({ node }) => {
   const dispatch = useAppDispatch();
   const selectedNodeId = useAppSelector((state) => state.node.selectedNodeId);
   const drawingWire = useAppSelector((state) => state.wire.drawingWire);
+
   const handleMouseDown: MouseEventHandler = (e) => {
     const { clientX, clientY } = e;
     dispatch(
@@ -25,6 +26,7 @@ export const NodeCirElement: FC<INodeCirElementProps> = ({ node }) => {
 
   const handleMouseUp: MouseEventHandler = () => {
     dispatch(confirmDraggableNode());
+    console.log('mouse up');
   };
 
   const handleTerminalClick: MouseEventHandler = (e) => {
@@ -34,6 +36,7 @@ export const NodeCirElement: FC<INodeCirElementProps> = ({ node }) => {
       dispatch(endWireToNode(id));
     } else {
       dispatch(startWireFromNode(id));
+      console.log('click');
     }
   };
 

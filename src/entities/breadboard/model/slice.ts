@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '@/app/appStore';
 import { ICirNode, addNode, removeNodeById } from '@/entities/node';
 import { removeWireById, updateWiresCoordsByCirElement } from '@/entities/wire';
 import { cirElementList } from '@/shared/api/__mock__/cirElementList';
+import { roundTo } from '@/shared/lib/roundTo';
 import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords, IDraggableElement, ITranslateCoords } from '@/shared/model/types';
@@ -21,6 +22,7 @@ interface IBreadboardSliceState {
 
   selectedElementId: string | null;
   translateCoords: ITranslateCoords;
+  gridStep: number;
 }
 
 const initialState: IBreadboardSliceState = {
@@ -33,6 +35,7 @@ const initialState: IBreadboardSliceState = {
     translateX: 0,
     translateY: 0,
   },
+  gridStep: 30,
 };
 
 export const breadboardSlice = createSlice({
@@ -138,14 +141,21 @@ export const updatePickedElementCoords =
   };
 
 export const confirmPickedElement = () => (dispatch: AppDispatch, getState: () => RootState) => {
-  const { pickedElement } = getState().breadboard;
+  const { pickedElement, gridStep } = getState().breadboard;
   if (!pickedElement) return;
-  const pickedElementNodes = cirElementList[pickedElement.type].terminals
+
+  const updatedPickedElement: IBreadboardCirElement = {
+    ...pickedElement,
+    x: roundTo(pickedElement.x, gridStep),
+    y: roundTo(pickedElement.y, gridStep),
+  };
+
+  const pickedElementNodes = cirElementList[updatedPickedElement.type].terminals
     .map((terminal) => {
       const nodeElement: ICirNode = {
         id: nanoid(),
         relatedElement: {
-          elementId: pickedElement.id,
+          elementId: updatedPickedElement.id,
           terminalId: terminal.id,
         },
         connectionIds: terminal.relatedTerminalId ? [terminal.relatedTerminalId] : [],
@@ -172,7 +182,7 @@ export const confirmPickedElement = () => (dispatch: AppDispatch, getState: () =
 
   pickedElementNodes.forEach((node) => dispatch(addNode(node)));
 
-  dispatch(addElement(pickedElement));
+  dispatch(addElement(updatedPickedElement));
 
   dispatch(setPickedElement(null));
 };
@@ -205,7 +215,28 @@ export const addDraggableElement =
   };
 
 // todo: join confirmDraggableElement and updateDraggableElement
-export const confirmDraggableElement = () => (dispatch: AppDispatch) => {
+export const confirmDraggableElement = () => (dispatch: AppDispatch, getState: () => RootState) => {
+  const {
+    breadboard: { draggableElement, elements, gridStep },
+  } = getState();
+  if (!draggableElement) return;
+  const cirElement = elements.find((element) => element.id === draggableElement.elementId);
+  if (!cirElement) return;
+
+  const updatedCirElement = {
+    ...cirElement,
+    x: roundTo(cirElement.x, gridStep),
+    y: roundTo(cirElement.y, gridStep),
+  };
+
+  dispatch(updateWiresCoordsByCirElement(updatedCirElement));
+
+  dispatch(
+    updateElementById({
+      id: updatedCirElement.id,
+      updatedElement: updatedCirElement,
+    })
+  );
   dispatch(setDraggableElement(null));
 };
 

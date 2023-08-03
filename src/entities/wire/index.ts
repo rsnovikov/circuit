@@ -1,5 +1,5 @@
 export {
-  addNodeAndConfirmWire,
+  confirmWireAndAddNode,
   addSelectedWireId,
   addWire,
   endWireToElement,

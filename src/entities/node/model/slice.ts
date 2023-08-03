@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '@/app/appStore';
 import { removeWireById, updateWiresCoordsByNode } from '@/entities/wire';
+import { roundTo } from '@/shared/lib/roundTo';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords, IDraggableElement } from '@/shared/model/types';
 import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
@@ -98,7 +99,31 @@ export const addDraggableNode =
     dispatch(addSelectedNodeId(node.id));
   };
 
-export const confirmDraggableNode = () => (dispatch: AppDispatch) => {
+export const confirmDraggableNode = () => (dispatch: AppDispatch, getState: () => RootState) => {
+  const {
+    node: { nodes, draggableNode },
+    breadboard: { gridStep },
+  } = getState();
+
+  if (!draggableNode) return;
+  const node = nodes.find((node) => node.id === draggableNode.elementId);
+  if (!node) return;
+
+  const updatedNode = {
+    ...node,
+    x: roundTo(node.x, gridStep),
+    y: roundTo(node.y, gridStep),
+  };
+
+  dispatch(updateWiresCoordsByNode(updatedNode));
+
+  dispatch(
+    updateNodeById({
+      id: updatedNode.id,
+      updatedNode,
+    })
+  );
+
   dispatch(setDraggableNode(null));
 };
 

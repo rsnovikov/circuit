@@ -2,7 +2,6 @@ import { ICoords, ITranslateCoords } from '@/shared/model/types';
 
 interface ITransformCoordsParams extends ICoords {
   scale: number;
-  // todo: make transformX and transformY required
   translateCoords?: ITranslateCoords;
 }
 
