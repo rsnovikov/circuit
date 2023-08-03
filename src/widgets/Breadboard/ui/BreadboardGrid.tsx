@@ -1,26 +1,20 @@
 import { FC } from 'react';
-import { ceilTo } from '@/shared/lib/ceilTo';
 import { roundTo } from '@/shared/lib/roundTo';
+import { useAppSelector } from '@/shared/model';
 import { IBreadboardLine } from '../model/types';
 
 interface IBreadboardGridProps {
-  gridStep: number;
   width?: number;
   height?: number;
-  scale: number;
-  translateX: number;
-  translateY: number;
 }
 
-export const BreadboardGrid: FC<IBreadboardGridProps> = ({
-  gridStep,
-  width,
-  height,
-  scale,
-  translateX,
-  translateY,
-}) => {
-  if (!width || !height) return;
+export const BreadboardGrid: FC<IBreadboardGridProps> = ({ width, height }) => {
+  const isGridVisible = useAppSelector((state) => state.breadboard.isGridVisible);
+  const gridStep = useAppSelector((state) => state.breadboard.gridStep);
+  const scale = useAppSelector((state) => state.breadboard.scale);
+  const { translateX, translateY } = useAppSelector((state) => state.breadboard.translateCoords);
+
+  if (!isGridVisible || !width || !height) return;
 
   const getLinesArr = (): IBreadboardLine[] => {
     const linesArr: IBreadboardLine[] = [];

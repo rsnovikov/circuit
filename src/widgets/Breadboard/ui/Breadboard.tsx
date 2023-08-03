@@ -7,21 +7,23 @@ import {
   updateScale,
   updateTranslateCoords,
 } from '@/entities/breadboard/model/slice';
-import { BreadboardCirElement } from '@/entities/breadboard/ui/BreadboardCirElement';
-import { NodeCirElement, updateDraggableNode } from '@/entities/node';
+import { updateDraggableNode } from '@/entities/node';
 import { removeSelectedNodeId } from '@/entities/node/model/slice';
 import {
-  Wire,
   confirmWireAndAddNode,
   removeDrawingWire,
   removeSelectedWireId,
   updateDrawingWireCoords,
 } from '@/entities/wire';
-import { useDragElement } from '@/features/dragElement';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { getMousePosition } from '../lib/getMouseCoords';
+import { BreadboardDrawingWire } from './BreadboardDrawingWire';
+import { BreadboardElements } from './BreadboardElements';
 import { BreadboardGrid } from './BreadboardGrid';
+import { BreadboardNodes } from './BreadboardNodes';
+import { BreadboardPickedElement } from './BreadboardPickedElement';
+import { BreadboardWires } from './BreadboardWires';
 
 export const Breadboard: FC = () => {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -30,16 +32,13 @@ export const Breadboard: FC = () => {
 
   const {
     pickedElement,
-    elements,
     draggableElement,
     selectedElementId,
     scale,
-    gridStep,
-    isGridVisible,
     translateCoords: { translateX, translateY },
   } = useAppSelector((state) => state.breadboard);
-  const { drawingWire, wires, selectedWireId } = useAppSelector((state) => state.wire);
-  const { nodes, draggableNode, selectedNodeId } = useAppSelector((state) => state.node);
+  const { drawingWire, selectedWireId } = useAppSelector((state) => state.wire);
+  const { draggableNode, selectedNodeId } = useAppSelector((state) => state.node);
 
   const [isBreadboardMove, setIsBreadboardMove] = useState<boolean>(false);
   const [SvgDimensions, setSvgDimensions] = useState<{ width: number; height: number }>();
@@ -129,9 +128,6 @@ export const Breadboard: FC = () => {
 
   useKeyDown({ callback: handleKeyDownRemoveSelected, codes: ['Escape'] });
 
-  const { handleMouseDown: handleElementMouseDown, handleMouseUp: handleElementMouseUp } =
-    useDragElement();
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -145,34 +141,14 @@ export const Breadboard: FC = () => {
       onMouseDown={handleSvgMouseDown}
       onMouseUp={handleSvgMouseUp}
     >
-      {isGridVisible && (
-        <BreadboardGrid
-          gridStep={gridStep}
-          width={SvgDimensions?.width}
-          height={SvgDimensions?.height}
-          scale={scale}
-          translateX={translateX}
-          translateY={translateY}
-        />
-      )}
+      <BreadboardGrid width={SvgDimensions?.width} height={SvgDimensions?.height} />
+
       <g transform={`matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`}>
-        {drawingWire && <Wire wire={drawingWire} />}
-        {wires.map((wire) => (
-          <Wire key={wire.id} wire={wire} />
-        ))}
-        {elements.map((element) => (
-          <BreadboardCirElement
-            key={element.id}
-            element={element}
-            onMouseDown={(e) => handleElementMouseDown(e, element.id)}
-            onMouseUp={(e) => handleElementMouseUp(e, element.id)}
-          />
-        ))}
-        {nodes.map((node) =>
-          !node.relatedElement ? <NodeCirElement key={node.id} node={node} /> : null
-        )}
-        {/* todo: maybe add special component without terminals for picked element */}
-        {pickedElement && <BreadboardCirElement element={pickedElement} />}
+        <BreadboardDrawingWire />
+        <BreadboardWires />
+        <BreadboardElements />
+        <BreadboardNodes />
+        <BreadboardPickedElement />
       </g>
     </svg>
   );
