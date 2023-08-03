@@ -17,7 +17,7 @@ export const useDragElement = () => {
     dispatch(cancelDraggableElement());
   };
 
-  useKeyDown(handleKeyDown, ['Escape']);
+  useKeyDown({ callback: handleKeyDown, codes: ['Escape'] });
 
   const handleMouseDown = (e: MouseEvent, id: string) => {
     const { clientX, clientY } = e;

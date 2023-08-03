@@ -10,6 +10,7 @@ interface IUsePickElementParams {
 
 export const usePickElement = ({ elementType }: IUsePickElementParams) => {
   const dispatch = useAppDispatch();
+
   const handleMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
     const { clientX: x, clientY: y } = e;
 
@@ -20,7 +21,7 @@ export const usePickElement = ({ elementType }: IUsePickElementParams) => {
     dispatch(removePickedElement());
   };
 
-  useKeyDown(handleKeyDown, ['Escape']);
+  useKeyDown({ callback: handleKeyDown, codes: ['Escape'] });
 
   return { handleMouseDown };
 };

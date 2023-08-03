@@ -127,7 +127,8 @@ export const Breadboard: FC = () => {
     dispatch(removeDrawingWire());
   };
 
-  useKeyDown(handleKeyDownRemoveSelected, ['Escape']);
+  useKeyDown({ callback: handleKeyDownRemoveSelected, codes: ['Escape'] });
+
   const { handleMouseDown: handleElementMouseDown, handleMouseUp: handleElementMouseUp } =
     useDragElement();
 

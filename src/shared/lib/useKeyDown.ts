@@ -1,16 +1,20 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { nanoid } from 'nanoid';
+import { KeydownContext } from './KeyDownProvider';
 
-export const useKeyDown = (callback: (e: KeyboardEvent) => void, keyCodes: string[]) => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    const isAnyKeyPressed = keyCodes.some((keyCode) => keyCode === e.code);
+interface IUseKeyDownParams {
+  callback: () => void;
+  codes: string[];
+}
 
-    if (isAnyKeyPressed) {
-      e?.preventDefault();
-      callback(e);
-    }
-  };
+export const useKeyDown = ({ callback, codes }: IUseKeyDownParams) => {
+  const { addKeyDownListener, removeKeyDownListener } = useContext(KeydownContext);
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
+    const callbackData = { id: nanoid(), codes, callback };
+    addKeyDownListener(callbackData);
+
+    return () => removeKeyDownListener(callbackData.id);
   }, []);
+  const {} = useContext(KeydownContext);
 };
