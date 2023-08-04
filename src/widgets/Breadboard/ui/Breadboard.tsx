@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, useEffect, useRef, useState } from 'react';
+import { FC, MouseEventHandler, useEffect, useState } from 'react';
 import {
   confirmPickedElement,
   removeSelectedElementId,
@@ -13,6 +13,8 @@ import {
   removeSelectedWireId,
   updateDrawingWireCoords,
 } from '@/entities/wire';
+import { useScaleBreadboard } from '@/features/scaleBreadboard/useScaleBreadboard';
+import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { getMousePosition } from '../../../shared/lib/getMouseCoords';
 import { BreadboardDrawingWire } from './BreadboardDrawingWire';
@@ -24,7 +26,7 @@ import { BreadboardWires } from './BreadboardWires';
 import { BreadboardWrapper } from './BreadboardWrapper';
 
 export const Breadboard: FC = () => {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const svgRef = useBreadboardSvgRef();
 
   const dispatch = useAppDispatch();
 
@@ -35,7 +37,6 @@ export const Breadboard: FC = () => {
   const { draggableNode, selectedNodeId } = useAppSelector((state) => state.node);
 
   const [isBreadboardMove, setIsBreadboardMove] = useState<boolean>(false);
-  const [SvgDimensions, setSvgDimensions] = useState<{ width: number; height: number }>();
 
   useEffect(() => {
     svgRef.current?.addEventListener('wheel', handleSvgWheel);
@@ -44,12 +45,6 @@ export const Breadboard: FC = () => {
       svgRef.current?.removeEventListener('wheel', handleSvgWheel);
     };
   }, []);
-
-  useEffect(() => {
-    if (!svgRef.current) return;
-
-    setSvgDimensions({ width: svgRef.current.clientWidth, height: svgRef.current.clientHeight });
-  }, [svgRef.current]);
 
   const handleSvgMouseMove: MouseEventHandler = (e) => {
     const { clientX, clientY, movementX, movementY } = e;
@@ -102,16 +97,16 @@ export const Breadboard: FC = () => {
       dispatch(confirmWireAndAddNode(coords));
     }
   };
-
+  const { scaleBreadboard } = useScaleBreadboard();
   const handleSvgWheel: (e: WheelEvent) => void = (e: WheelEvent) => {
     e.preventDefault();
     const { deltaX, deltaY, clientX, clientY } = e;
+    scaleBreadboard({ clientX, clientY, deltaX, deltaY });
   };
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      id="breadboard"
       width="100%"
       height="100%"
       className="absolute inset-0 bg-[#f4f5f6]"
@@ -121,7 +116,7 @@ export const Breadboard: FC = () => {
       onMouseDown={handleSvgMouseDown}
       onMouseUp={handleSvgMouseUp}
     >
-      <BreadboardGrid width={SvgDimensions?.width} height={SvgDimensions?.height} />
+      <BreadboardGrid />
 
       <BreadboardWrapper>
         <BreadboardDrawingWire />

@@ -37,7 +37,7 @@ const initialState: IBreadboardSliceState = {
     translateY: 0,
   },
   gridStep: 30,
-  isGridVisible: false,
+  isGridVisible: true,
 };
 
 export const breadboardSlice = createSlice({
@@ -83,7 +83,7 @@ export const breadboardSlice = createSlice({
     setTranslateCoords(state, action: PayloadAction<ITranslateCoords>) {
       state.translateCoords = action.payload;
     },
-    toggleIsGridVisible(state, action: PayloadAction) {
+    toggleIsGridVisible(state) {
       state.isGridVisible = !state.isGridVisible;
     },
   },

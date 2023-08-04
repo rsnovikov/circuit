@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import { KeydownContext } from './KeyDownProvider';
+import { KeydownContext } from './KeyDownContext';
 
 interface IUseKeyDownParams {
   callback: () => void;

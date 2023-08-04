@@ -1,14 +1,22 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { roundTo } from '@/shared/lib/roundTo';
 import { useAppSelector } from '@/shared/model';
 import { IBreadboardLine } from '../model/types';
 
-interface IBreadboardGridProps {
-  width?: number;
-  height?: number;
-}
+export const BreadboardGrid: FC = () => {
+  const svgRef = useBreadboardSvgRef();
 
-export const BreadboardGrid: FC<IBreadboardGridProps> = ({ width, height }) => {
+  const [{ width, height }, setSvgDimensions] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
+  });
+
+  useEffect(() => {
+    if (!svgRef.current) return;
+    setSvgDimensions({ width: svgRef.current.clientWidth, height: svgRef.current.clientHeight });
+  }, [svgRef.current]);
+
   const isGridVisible = useAppSelector((state) => state.breadboard.isGridVisible);
   const gridStep = useAppSelector((state) => state.breadboard.gridStep);
   const scale = useAppSelector((state) => state.breadboard.scale);

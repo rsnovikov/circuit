@@ -1,9 +1,11 @@
 import { updateScale } from '@/entities/breadboard';
+import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { getMousePosition } from '@/shared/lib/getMouseCoords';
 import { useAppDispatch } from '@/shared/model';
 
-export const useSelectBreadboard = () => {
+export const useScaleBreadboard = () => {
   const dispatch = useAppDispatch();
+  const svgRef = useBreadboardSvgRef();
 
   const scaleBreadboard = ({
     clientX,

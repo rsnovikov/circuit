@@ -1,15 +1,14 @@
 import { FC, MouseEventHandler } from 'react';
+import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { downloadFile } from '@/shared/lib/downloadFile';
 import { BreadboardToolsBtn } from './BreadboardToolsBtn';
 
 export const SaveAsSVgBreadboardTool: FC = () => {
+  const svgRef = useBreadboardSvgRef();
   const handleClick: MouseEventHandler = () => {
-    const svgElement: SVGSVGElement | null = document.getElementById(
-      'breadboard'
-    ) as SVGSVGElement | null;
-    if (!svgElement) return;
+    if (!svgRef.current) return;
 
-    const clonedSvgElement = svgElement.cloneNode(true);
+    const clonedSvgElement = svgRef.current.cloneNode(true);
     const outerHTML = (clonedSvgElement as SVGSVGElement).outerHTML;
 
     const blob = new Blob([outerHTML], { type: 'image/svg+xml;charset=utf-8' });
