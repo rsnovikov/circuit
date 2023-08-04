@@ -1,25 +1,16 @@
-import { FC, MouseEventHandler } from 'react';
-import { useAppDispatch, useAppSelector } from '@/shared/model';
-import { addSelectedWireId } from '..';
+import { FC, HTMLAttributes } from 'react';
 import { ICirWire } from '../model/types';
 
-interface IWireProps {
+interface IWireProps extends HTMLAttributes<SVGGElement> {
   wire: ICirWire;
+  selectedWireId?: string | null;
 }
 
-export const Wire: FC<IWireProps> = ({ wire }) => {
+export const Wire: FC<IWireProps> = ({ wire, selectedWireId, ...rest }) => {
   const { id, x1, y1, x2, y2, color } = wire;
 
-  const dispatch = useAppDispatch();
-
-  const selectedWireId = useAppSelector((state) => state.wire.selectedWireId);
-
-  const handleMouseDown: MouseEventHandler = () => {
-    dispatch(addSelectedWireId(id));
-  };
-
   return (
-    <g onClick={handleMouseDown}>
+    <g {...rest}>
       {selectedWireId === id && (
         <line x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth={8} strokeOpacity={0.4} />
       )}

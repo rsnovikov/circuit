@@ -1,20 +1,21 @@
-import { MouseEventHandler } from 'react';
 import { addPickedElement, removePickedElement } from '@/entities/breadboard';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch } from '@/shared/model';
 import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
 
-interface IUsePickElementParams {
-  elementType: ElementTypesEnum;
-}
-
-export const usePickElement = ({ elementType }: IUsePickElementParams) => {
+export const usePickElement = () => {
   const dispatch = useAppDispatch();
 
-  const handleMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
-    const { clientX: x, clientY: y } = e;
-
-    dispatch(addPickedElement({ elementType, x, y }));
+  const pickElement = ({
+    elementType,
+    clientX,
+    clientY,
+  }: {
+    clientX: number;
+    clientY: number;
+    elementType: ElementTypesEnum;
+  }) => {
+    dispatch(addPickedElement({ elementType, x: clientX, y: clientY }));
   };
 
   const handleKeyDown = () => {
@@ -23,5 +24,5 @@ export const usePickElement = ({ elementType }: IUsePickElementParams) => {
 
   useKeyDown({ callback: handleKeyDown, codes: ['Escape'] });
 
-  return { handleMouseDown };
+  return { pickElement };
 };

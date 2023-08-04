@@ -7,10 +7,10 @@ import { ICirNode, addNode, removeNodeById } from '@/entities/node';
 import { removeWireById, updateWiresCoordsByCirElement } from '@/entities/wire';
 import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { roundTo } from '@/shared/lib/roundTo';
+import { transformCoords } from '@/shared/lib/transformCoords';
 import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords, IDraggableElement, ITranslateCoords } from '@/shared/model/types';
-import { transformCoords } from '../../../widgets/Breadboard/lib/transformCoords';
 import { calculateSameTypeElements } from '../lib/calculateSameTypeElements';
 import { IBreadboardCirElement } from './types';
 
@@ -101,7 +101,7 @@ const {
   setTranslateCoords,
 } = breadboardSlice.actions;
 
-export const {toggleIsGridVisible} = breadboardSlice.actions;
+export const { toggleIsGridVisible } = breadboardSlice.actions;
 
 export const addSelectedElementId = (id: string) => (dispatch: AppDispatch) => {
   dispatch(removeSelectedEntities());

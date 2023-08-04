@@ -1,21 +1,21 @@
-import { FC } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { usePickElement } from '@/features/pickElement';
-import { useAppSelector } from '@/shared/model';
+import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { IPickerElement } from '../model/types';
 
-interface IPickerCirElementProps {
+interface IPickerCirElementProps extends HTMLAttributes<HTMLDivElement> {
   cirElem: IPickerElement;
+  pickedElement: IBreadboardCirElement | null;
 }
 
-export const PickerCirElement: FC<IPickerCirElementProps> = ({ cirElem }) => {
-  const pickedElement = useAppSelector((state) => state.breadboard.pickedElement);
-
-  const { handleMouseDown } = usePickElement({ elementType: cirElem.type });
-
+export const PickerCirElement: FC<IPickerCirElementProps> = ({
+  cirElem,
+  pickedElement,
+  ...rest
+}) => {
   return (
     <div
-      onMouseDown={handleMouseDown}
+      {...rest}
       className={clsx(
         'w-[88px] h-full cursor-pointer bg-[#f1f1f3] rounded-md text-[#34495e] text-[12px] hover:border-blue-400 border-2 border-transparent hover:border-opacity-70 hover:bg-white hover:text-blue-400'
 

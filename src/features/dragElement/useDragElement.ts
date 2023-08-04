@@ -1,4 +1,3 @@
-import { MouseEvent } from 'react';
 import {
   addDraggableElement,
   cancelDraggableElement,
@@ -8,7 +7,6 @@ import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 
 export const useDragElement = () => {
-  // todo: maybe don't use selector there
   const dispatch = useAppDispatch();
 
   const draggableElement = useAppSelector((state) => state.breadboard.draggableElement);
@@ -19,23 +17,29 @@ export const useDragElement = () => {
 
   useKeyDown({ callback: handleKeyDown, codes: ['Escape'] });
 
-  const handleMouseDown = (e: MouseEvent, id: string) => {
-    const { clientX, clientY } = e;
-
+  const startDragElement = ({
+    clientX,
+    clientY,
+    elementId,
+  }: {
+    clientX: number;
+    clientY: number;
+    elementId: string;
+  }) => {
     dispatch(
       addDraggableElement({
-        elementId: id,
+        elementId,
         clientX,
         clientY,
       })
     );
   };
 
-  const handleMouseUp = (_: MouseEvent, id: string) => {
-    if (id === draggableElement?.elementId) {
+  const endDragElement = ({ elementId }: { elementId: string }) => {
+    if (elementId === draggableElement?.elementId) {
       dispatch(confirmDraggableElement());
     }
   };
 
-  return { handleMouseDown, handleMouseUp };
+  return { startDragElement, endDragElement };
 };

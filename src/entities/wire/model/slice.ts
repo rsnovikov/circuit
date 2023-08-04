@@ -4,9 +4,9 @@ import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, addNode, updateNodeById } from '@/entities/node';
 import { degreesToRadians } from '@/shared/lib/degreesToRadians';
 import { roundTo } from '@/shared/lib/roundTo';
+import { transformCoords } from '@/shared/lib/transformCoords';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICirWireData, ICoords } from '@/shared/model/types';
-import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
 import { getRelatedNodeAbsoluteCoords } from '../lib/getRelatedNodeAbsoluteCoords';
 import { ICirWire } from './types';
 

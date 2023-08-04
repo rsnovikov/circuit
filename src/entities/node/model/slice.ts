@@ -4,8 +4,8 @@ import { removeWireById, updateWiresCoordsByNode } from '@/entities/wire';
 import { roundTo } from '@/shared/lib/roundTo';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords, IDraggableElement } from '@/shared/model/types';
-import { transformCoords } from '@/widgets/Breadboard/lib/transformCoords';
 import { ICirNode } from './types';
+import { transformCoords } from "@/shared/lib/transformCoords";
 
 interface INodeSliceState {
   nodes: ICirNode[];

@@ -1,1 +1,1 @@
-export { usePickElement } from './ui/usePickElement';
+export { usePickElement } from './usePickElement';

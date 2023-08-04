@@ -1,34 +1,21 @@
-import { FC, MouseEvent, SVGProps } from 'react';
-import { endWireToElement, startWireFromElement } from '@/entities/wire';
+import { FC, PropsWithChildren, SVGProps } from 'react';
 import { cirElementList } from '@/shared/api/__mock__/cirElementList';
-import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { CirElement } from '@/shared/ui/CirElement';
 import { IBreadboardCirElement } from '../model/types';
 
 interface IBreadboardCirElementProps extends SVGProps<SVGGElement> {
   element: IBreadboardCirElement;
+  selectedElementId?: string | null;
 }
 
-export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({ element, ...rest }) => {
-  const dispatch = useAppDispatch();
-  const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
-  const drawingWire = useAppSelector((state) => state.wire.drawingWire);
+export const BreadboardCirElement: FC<PropsWithChildren<IBreadboardCirElementProps>> = ({
+  element,
+  selectedElementId,
+  children,
+  ...rest
+}) => {
   const { x, y, rotate, id } = element;
-  const { terminals, hitbox, components } = cirElementList[element.type];
-  const handleTerminalClick = (e: MouseEvent, terminalId: string, elementId: string) => {
-    // todo: maybe remove stopPropagation and add check to the handleSvgClick in widget Breadboard
-    e.stopPropagation();
-    if (drawingWire) {
-      dispatch(endWireToElement({ terminalId, elementId }));
-    } else {
-      dispatch(
-        startWireFromElement({
-          terminalId,
-          elementId,
-        })
-      );
-    }
-  };
+  const { hitbox, components } = cirElementList[element.type];
 
   return (
     <>
@@ -49,19 +36,7 @@ export const BreadboardCirElement: FC<IBreadboardCirElementProps> = ({ element, 
             height={Math.abs(hitbox.y2 - hitbox.y1)}
           />
         )}
-        {terminals?.map(({ id: terminalId, x, y }) => (
-          <rect
-            onClick={(e) => handleTerminalClick(e, terminalId, id)}
-            key={terminalId}
-            transform={`translate(${x}, ${y})`}
-            x="-4"
-            y="-4"
-            width="8"
-            height="8"
-            strokeWidth="0"
-            className="hover:stroke-2 hover:fill-[red]"
-          />
-        ))}
+        {children}
       </g>
     </>
   );

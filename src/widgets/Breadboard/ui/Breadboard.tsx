@@ -4,39 +4,33 @@ import {
   removeSelectedElementId,
   updateDraggableElement,
   updatePickedElementCoords,
-  updateScale,
   updateTranslateCoords,
 } from '@/entities/breadboard/model/slice';
 import { updateDraggableNode } from '@/entities/node';
 import { removeSelectedNodeId } from '@/entities/node/model/slice';
 import {
   confirmWireAndAddNode,
-  removeDrawingWire,
   removeSelectedWireId,
   updateDrawingWireCoords,
 } from '@/entities/wire';
-import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
-import { getMousePosition } from '../lib/getMouseCoords';
+import { getMousePosition } from '../../../shared/lib/getMouseCoords';
 import { BreadboardDrawingWire } from './BreadboardDrawingWire';
 import { BreadboardElements } from './BreadboardElements';
 import { BreadboardGrid } from './BreadboardGrid';
 import { BreadboardNodes } from './BreadboardNodes';
 import { BreadboardPickedElement } from './BreadboardPickedElement';
 import { BreadboardWires } from './BreadboardWires';
+import { BreadboardWrapper } from './BreadboardWrapper';
 
 export const Breadboard: FC = () => {
   const svgRef = useRef<SVGSVGElement>(null);
 
   const dispatch = useAppDispatch();
 
-  const {
-    pickedElement,
-    draggableElement,
-    selectedElementId,
-    scale,
-    translateCoords: { translateX, translateY },
-  } = useAppSelector((state) => state.breadboard);
+  const { pickedElement, draggableElement, selectedElementId } = useAppSelector(
+    (state) => state.breadboard
+  );
   const { drawingWire, selectedWireId } = useAppSelector((state) => state.wire);
   const { draggableNode, selectedNodeId } = useAppSelector((state) => state.node);
 
@@ -112,21 +106,7 @@ export const Breadboard: FC = () => {
   const handleSvgWheel: (e: WheelEvent) => void = (e: WheelEvent) => {
     e.preventDefault();
     const { deltaX, deltaY, clientX, clientY } = e;
-    const coords = getMousePosition({ x: clientX, y: clientY }, svgRef.current?.getScreenCTM());
-    if (!coords) return;
-    const delta = deltaY || deltaX;
-    const scaleStep = Math.abs(delta) < 50 ? 0.1 : 0.2;
-    const scaleDelta = delta < 0 ? scaleStep : -scaleStep;
-
-    dispatch(updateScale(scaleDelta, coords));
   };
-
-  const handleKeyDownRemoveSelected = () => {
-    dispatch(removeSelectedElementId());
-    dispatch(removeDrawingWire());
-  };
-
-  useKeyDown({ callback: handleKeyDownRemoveSelected, codes: ['Escape'] });
 
   return (
     <svg
@@ -143,13 +123,13 @@ export const Breadboard: FC = () => {
     >
       <BreadboardGrid width={SvgDimensions?.width} height={SvgDimensions?.height} />
 
-      <g transform={`matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`}>
+      <BreadboardWrapper>
         <BreadboardDrawingWire />
         <BreadboardWires />
         <BreadboardElements />
         <BreadboardNodes />
         <BreadboardPickedElement />
-      </g>
+      </BreadboardWrapper>
     </svg>
   );
 };

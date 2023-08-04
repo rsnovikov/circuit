@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import { FC, SVGProps } from 'react';
 import { IconType, icons } from './icons';
 
-interface IIconProps extends React.SVGProps<SVGSVGElement> {
+interface IIconProps extends SVGProps<SVGSVGElement> {
   type: IconType;
   isDisabled?: boolean;
 }

@@ -1,20 +1,26 @@
 import { FC } from 'react';
 import { BreadboardCirElement } from '@/entities/breadboard/ui/BreadboardCirElement';
 import { useDragElement } from '@/features/dragElement';
+import { ElementTerminals } from '@/features/elementTerminals/ElementTerminals';
+import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { useAppSelector } from '@/shared/model';
 
 export const BreadboardElements: FC = () => {
   const elements = useAppSelector((state) => state.breadboard.elements);
-
-  const { handleMouseDown: handleElementMouseDown, handleMouseUp: handleElementMouseUp } =
-    useDragElement();
+  const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
+  const { startDragElement, endDragElement } = useDragElement();
 
   return elements.map((element) => (
     <BreadboardCirElement
       key={element.id}
       element={element}
-      onMouseDown={(e) => handleElementMouseDown(e, element.id)}
-      onMouseUp={(e) => handleElementMouseUp(e, element.id)}
-    />
+      selectedElementId={selectedElementId}
+      onMouseDown={({ clientX, clientY }) =>
+        startDragElement({ clientX, clientY, elementId: element.id })
+      }
+      onMouseUp={() => endDragElement({ elementId: element.id })}
+    >
+      <ElementTerminals terminals={cirElementList[element.type].terminals} elementId={element.id} />
+    </BreadboardCirElement>
   ));
 };
