@@ -2,6 +2,7 @@ import {
   addDraggableElement,
   cancelDraggableElement,
   confirmDraggableElement,
+  updateDraggableElement,
 } from '@/entities/breadboard';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
@@ -35,11 +36,15 @@ export const useDragElement = () => {
     );
   };
 
+  const dragElement = ({ clientX, clientY }: { clientX: number; clientY: number }) => {
+    dispatch(updateDraggableElement({ x: clientX, y: clientY }));
+  };
+
   const endDragElement = ({ elementId }: { elementId: string }) => {
     if (elementId === draggableElement?.elementId) {
       dispatch(confirmDraggableElement());
     }
   };
 
-  return { startDragElement, endDragElement };
+  return { startDragElement, dragElement, endDragElement };
 };

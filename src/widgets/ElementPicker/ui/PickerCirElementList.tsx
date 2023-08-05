@@ -7,7 +7,7 @@ import { PickerCirElement } from './PickerCirElement';
 export const PickerCirElementList: FC = () => {
   const pickedElement = useAppSelector((state) => state.breadboard.pickedElement);
 
-  const { pickElement } = usePickElement();
+  const { addPickedElement } = usePickElement();
 
   return (
     <div className="flex justify-between items-stretch flex-wrap p-3 after:content-[''] after:flex-auto -mr-[10.5px]">
@@ -15,7 +15,7 @@ export const PickerCirElementList: FC = () => {
         <div key={cirElem.type} className="mb-5 mr-[7.5px] select-none">
           <PickerCirElement
             onMouseDown={({ clientX, clientY }) =>
-              pickElement({ clientX, clientY, elementType: cirElem.type })
+              addPickedElement({ clientX, clientY, elementType: cirElem.type })
             }
             cirElem={cirElem}
             pickedElement={pickedElement}

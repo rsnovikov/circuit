@@ -127,7 +127,6 @@ export const addPickedElement =
       ),
     };
     dispatch(setPickedElement(breadboardCirElement));
-    dispatch(addSelectedElementId(breadboardCirElement.id));
   };
 
 export const removePickedElement = () => (dispatch: AppDispatch) => {
@@ -218,7 +217,6 @@ export const addDraggableElement =
         offsetY,
       })
     );
-    dispatch(addSelectedElementId(elementId));
   };
 
 // todo: join confirmDraggableElement and updateDraggableElement

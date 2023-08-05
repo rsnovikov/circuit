@@ -2,10 +2,10 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppDispatch, RootState } from '@/app/appStore';
 import { removeWireById, updateWiresCoordsByNode } from '@/entities/wire';
 import { roundTo } from '@/shared/lib/roundTo';
+import { transformCoords } from '@/shared/lib/transformCoords';
 import { removeSelectedEntities } from '@/shared/model/actions';
 import { ICoords, IDraggableElement } from '@/shared/model/types';
 import { ICirNode } from './types';
-import { transformCoords } from "@/shared/lib/transformCoords";
 
 interface INodeSliceState {
   nodes: ICirNode[];
@@ -96,7 +96,6 @@ export const addDraggableNode =
         offsetY,
       })
     );
-    dispatch(addSelectedNodeId(node.id));
   };
 
 export const confirmDraggableNode = () => (dispatch: AppDispatch, getState: () => RootState) => {

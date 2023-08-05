@@ -15,4 +15,5 @@ export {
   updateSelectedElementField,
   setBreadboardElementFromData,
   toggleIsGridVisible,
+  confirmPickedElement,
 } from './model/slice';

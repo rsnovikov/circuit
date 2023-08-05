@@ -1,5 +1,6 @@
-import { addSelectedWireId } from '@/entities/wire';
-import { useAppDispatch } from '@/shared/model';
+import { addSelectedWireId, removeSelectedWireId } from '@/entities/wire';
+import { useKeyDown } from '@/shared/lib/useKeyDown';
+import { useAppDispatch, useAppSelector } from '@/shared/model';
 
 export const useSelectWire = () => {
   const dispatch = useAppDispatch();
@@ -8,5 +9,11 @@ export const useSelectWire = () => {
     dispatch(addSelectedWireId(wireId));
   };
 
-  return { selectWire };
+  const unselectWire = () => {
+    dispatch(removeSelectedWireId());
+  };
+
+  useKeyDown({ callback: unselectWire, codes: ['Escape'] });
+
+  return { selectWire, unselectWire };
 };

@@ -1,5 +1,6 @@
-import { FC, MouseEventHandler } from 'react';
+import { FC } from 'react';
 import { rotateSelectedElement } from '@/entities/breadboard';
+import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { Icon } from '@/shared/ui/Icon/Icon';
 
@@ -14,15 +15,20 @@ export const RotateElementTool: FC<IRotateElementToolProps> = ({ direction }) =>
 
   const dispatch = useAppDispatch();
 
-  const handleClick: MouseEventHandler = () => {
+  const rotate = () => {
     dispatch(rotateSelectedElement(direction === 'left' ? 90 : -90));
   };
+
+  useKeyDown({
+    callback: rotate,
+    codes: [direction === 'left' ? 'KeyL' : 'KeyR'],
+  });
 
   const isBtnActive = selectedElementId || selectedNodeId || selectedWireId;
 
   return (
     <button
-      onClick={handleClick}
+      onClick={rotate}
       style={{
         cursor: isBtnActive ? 'pointer' : 'default',
       }}

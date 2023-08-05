@@ -1,12 +1,20 @@
-import { addPickedElement, removePickedElement } from '@/entities/breadboard';
+import {
+  addPickedElement as addPickedElementAction,
+  confirmPickedElement as confirmPickedElementAction,
+  updatePickedElementCoords,
+  removePickedElement,
+} from '@/entities/breadboard';
+import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
+import { getMousePosition } from '@/shared/lib/getMouseCoords';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
-import { useAppDispatch } from '@/shared/model';
+import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
 
 export const usePickElement = () => {
   const dispatch = useAppDispatch();
+  const svgRef = useBreadboardSvgRef();
 
-  const pickElement = ({
+  const addPickedElement = ({
     elementType,
     clientX,
     clientY,
@@ -15,7 +23,17 @@ export const usePickElement = () => {
     clientY: number;
     elementType: ElementTypesEnum;
   }) => {
-    dispatch(addPickedElement({ elementType, x: clientX, y: clientY }));
+    dispatch(addPickedElementAction({ elementType, x: clientX, y: clientY }));
+  };
+
+  const movePickedElement = ({ clientX, clientY }: { clientX: number; clientY: number }) => {
+    const coords = getMousePosition({ x: clientX, y: clientY }, svgRef.current?.getScreenCTM());
+    if (!coords) return;
+    dispatch(updatePickedElementCoords(coords));
+  };
+
+  const confirmPickedElement = () => {
+    dispatch(confirmPickedElementAction());
   };
 
   const handleKeyDown = () => {
@@ -24,5 +42,5 @@ export const usePickElement = () => {
 
   useKeyDown({ callback: handleKeyDown, codes: ['Escape'] });
 
-  return { pickElement };
+  return { addPickedElement, movePickedElement, confirmPickedElement };
 };
