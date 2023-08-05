@@ -29,6 +29,7 @@ export const BreadboardGrid: FC = () => {
 
     for (let i = 1; i < width / gridStep / scale; i++) {
       const x = roundTo(i * gridStep - translateX / scale, gridStep);
+
       const verticalLine: IBreadboardLine = {
         id: `vertical${x}`,
         y1: roundTo(-translateY / scale, gridStep),
@@ -41,6 +42,7 @@ export const BreadboardGrid: FC = () => {
 
     for (let i = 1; i < height / gridStep / scale; i++) {
       const y = roundTo(i * gridStep - translateY / scale, gridStep);
+
       const horizontalLine: IBreadboardLine = {
         id: `horizontal${y}`,
         y1: y,
@@ -53,12 +55,10 @@ export const BreadboardGrid: FC = () => {
     return linesArr;
   };
 
-  const lines = getLinesArr();
-
   return (
     <g transform={`matrix(${scale}, 0, 0, ${scale}, ${translateX}, ${translateY})`}>
-      {lines.map(({ id, x1, x2, y1, y2 }) => (
-        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(0, 0, 0, 0.3)" />
+      {getLinesArr().map(({ id, x1, x2, y1, y2 }) => (
+        <line key={id} x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(0, 0, 0, 0.3)" />
       ))}
     </g>
   );

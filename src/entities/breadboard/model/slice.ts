@@ -37,7 +37,7 @@ const initialState: IBreadboardSliceState = {
     translateY: 0,
   },
   gridStep: 30,
-  isGridVisible: true,
+  isGridVisible: false,
 };
 
 export const breadboardSlice = createSlice({
