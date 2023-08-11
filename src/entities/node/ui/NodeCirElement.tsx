@@ -19,7 +19,7 @@ export const NodeCirElement: FC<PropsWithChildren<INodeCirElementProps>> = ({
       <circle
         cx={0}
         cy={0}
-        r={5}
+        r={8}
         fill="green"
         stroke="green"
         strokeOpacity={0.4}
