@@ -3,6 +3,7 @@ import { setBreadboardElementFromData } from '@/entities/breadboard';
 import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode, setNodesFromData } from '@/entities/node';
 import { createWiresFromNodes } from '@/entities/wire';
+import { notify } from '@/features/notification';
 import { useAppDispatch } from '@/shared/model';
 import { ICirWireData } from '@/shared/model/types';
 import { BreadboardToolsBtn } from './BreadboardToolsBtn';
@@ -35,7 +36,10 @@ export const UploadJsonBreadboardTool: FC = () => {
         dispatch(setNodesFromData(nodes));
         dispatch(createWiresFromNodes(wires));
       } catch (error) {
+        dispatch(notify({ message: 'JSON невалидный', type: 'error' }));
         console.error('JSON невалидный');
+      } finally {
+        target.value = '';
       }
     };
 

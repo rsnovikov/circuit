@@ -2,7 +2,7 @@ import { confirmWireAndAddNode, removeDrawingWire, updateDrawingWireCoords } fro
 import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { getMousePosition } from '@/shared/lib/getMouseCoords';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
-import { useAppDispatch, useAppSelector } from '@/shared/model';
+import { useAppDispatch } from '@/shared/model';
 
 export const useDrawWire = () => {
   const dispatch = useAppDispatch();

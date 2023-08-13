@@ -1,9 +1,12 @@
 import { FC } from 'react';
+import { notify } from '@/features/notification';
+import { useAppDispatch } from '@/shared/model';
 import { BreadboardToolsBtn } from './BreadboardToolsBtn';
 
 export const StartModelingBreadboardTool: FC = () => {
+  const dispatch = useAppDispatch();
   const handleClick = () => {
-    console.log('start modeling');
+    dispatch(notify({ message: 'Моделирование началось', type: 'info' }));
   };
 
   return (
