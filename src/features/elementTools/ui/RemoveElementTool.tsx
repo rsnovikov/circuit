@@ -5,6 +5,7 @@ import { removeSelectedWire } from '@/entities/wire/model/slice';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { Icon } from '@/shared/ui/Icon/Icon';
+import { HotkeyTooltip } from '@/shared/ui/Tooltip';
 
 export const RemoveElementTool: FC = () => {
   const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
@@ -21,16 +22,18 @@ export const RemoveElementTool: FC = () => {
 
   useKeyDown({ callback: removeSelected, codes: ['Delete'] });
 
-  const isBtnActive = selectedElementId || selectedNodeId || selectedWireId;
+  const isBtnActive = Boolean(selectedElementId || selectedNodeId || selectedWireId);
 
   return (
-    <button
-      onClick={removeSelected}
-      style={{
-        cursor: isBtnActive ? 'pointer' : 'default',
-      }}
-    >
-      <Icon type="DeleteBin" isDisabled={!isBtnActive} />
-    </button>
+    <HotkeyTooltip text="Удалить" hotkey="DELETE" isActive={isBtnActive}>
+      <button
+        onClick={removeSelected}
+        style={{
+          cursor: isBtnActive ? 'pointer' : 'default',
+        }}
+      >
+        <Icon type="DeleteBin" isDisabled={!isBtnActive} height={33} width={33} />
+      </button>
+    </HotkeyTooltip>
   );
 };

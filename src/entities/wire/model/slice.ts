@@ -197,6 +197,7 @@ export const endWireToNode =
       y2: endNode.y,
     };
     dispatch(addWire(newWire));
+    dispatch(removeDrawingWire());
   };
 
 export const updateDrawingWireCoords =
