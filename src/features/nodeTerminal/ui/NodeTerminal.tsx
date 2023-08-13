@@ -11,6 +11,7 @@ export const NodeTerminal: FC<INodeTerminalProps> = ({ nodeId }) => {
   const dispatch = useAppDispatch();
 
   const handleClick: MouseEventHandler = (e) => {
+    console.log('click node');
     // todo: maybe remove stopPropagation and add check to the handleSvgClick in widget Breadboard
     e.stopPropagation();
     if (drawingWire) {

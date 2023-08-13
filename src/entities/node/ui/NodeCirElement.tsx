@@ -15,16 +15,18 @@ export const NodeCirElement: FC<PropsWithChildren<INodeCirElementProps>> = ({
   const { x, y, id } = node;
 
   return (
-    <g {...rest} transform={`translate(${x}, ${y})`} stroke="black" fill="transparent">
-      <circle
-        cx={0}
-        cy={0}
-        r={8}
-        fill="green"
-        stroke="green"
-        strokeOpacity={0.4}
-        strokeWidth={selectedNodeId === id ? 4 : 0}
-      />
+    <g transform={`translate(${x}, ${y})`} stroke="black" fill="transparent">
+      <g {...rest}>
+        <circle
+          cx={0}
+          cy={0}
+          r={8}
+          fill="green"
+          stroke="green"
+          strokeOpacity={0.4}
+          strokeWidth={selectedNodeId === id ? 4 : 0}
+        />
+      </g>
       {children}
     </g>
   );

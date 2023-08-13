@@ -19,23 +19,20 @@ export const BreadboardCirElement: FC<PropsWithChildren<IBreadboardCirElementPro
 
   return (
     <>
-      <g
-        transform={`translate(${x}, ${y}) rotate(${-rotate})`}
-        stroke="black"
-        fill="transparent"
-        {...rest}
-      >
-        <CirElement components={components} isSelected={selectedElementId === id} />
-        {hitbox && (
-          <rect
-            fill="transparent"
-            stroke="none"
-            x={hitbox.x1}
-            y={hitbox.y1}
-            width={hitbox.x2 - hitbox.x1}
-            height={Math.abs(hitbox.y2 - hitbox.y1)}
-          />
-        )}
+      <g transform={`translate(${x}, ${y}) rotate(${-rotate})`} stroke="black" fill="transparent">
+        <g {...rest}>
+          <CirElement components={components} isSelected={selectedElementId === id} />
+          {hitbox && (
+            <rect
+              fill="transparent"
+              stroke="none"
+              x={hitbox.x1}
+              y={hitbox.y1}
+              width={hitbox.x2 - hitbox.x1}
+              height={Math.abs(hitbox.y2 - hitbox.y1)}
+            />
+          )}
+        </g>
         {children}
       </g>
     </>

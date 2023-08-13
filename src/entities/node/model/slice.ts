@@ -64,10 +64,13 @@ export const {
   setSelectedNodeId,
 } = nodeSlice.actions;
 
-export const addSelectedNodeId = (id: string) => (dispatch: AppDispatch) => {
-  dispatch(removeSelectedEntities());
-  dispatch(setSelectedNodeId(id));
-};
+export const addSelectedNodeId =
+  (id: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { drawingWire } = getState().wire;
+    if (drawingWire) return;
+    dispatch(removeSelectedEntities());
+    dispatch(setSelectedNodeId(id));
+  };
 
 export const addDraggableNode =
   ({ nodeId, clientX, clientY }: { nodeId: string; clientX: number; clientY: number }) =>

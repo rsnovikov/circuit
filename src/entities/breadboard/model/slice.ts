@@ -103,10 +103,13 @@ const {
 
 export const { toggleIsGridVisible } = breadboardSlice.actions;
 
-export const addSelectedElementId = (id: string) => (dispatch: AppDispatch) => {
-  dispatch(removeSelectedEntities());
-  dispatch(setSelectedElementId(id));
-};
+export const addSelectedElementId =
+  (id: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    const { drawingWire } = getState().wire;
+    if (drawingWire) return;
+    dispatch(removeSelectedEntities());
+    dispatch(setSelectedElementId(id));
+  };
 
 // todo: move actions to another file
 export const addPickedElement =

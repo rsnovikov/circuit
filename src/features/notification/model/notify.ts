@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { AppDispatch, RootState } from '@/app/appStore';
-import { addNotification, removeNotificationById } from '@/entities/notification/model/slice';
+import { addNotification } from '@/entities/notification/model/slice';
 import {
   INotification,
   INotifyParams,
