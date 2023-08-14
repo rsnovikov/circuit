@@ -22,7 +22,7 @@ export const SelectedElementFieldList: FC<ISelectedElementFieldListProps> = ({
         return (
           <li
             key={title}
-            className="h-[45px] flex justify-between mb-2 rounded border-2 border-blue-400"
+            className="h-[45px] flex justify-between mb-2 rounded border-2 border-blue-400 bg-gray-200/80"
           >
             <div className="h-full flex items-center justify-center bg-blue-400 text-white px-2">
               <span>{title}</span>

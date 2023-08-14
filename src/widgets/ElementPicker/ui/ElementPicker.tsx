@@ -11,9 +11,9 @@ export const ElementPicker: FC = () => {
 
   return (
     <div
-      className="absolute right-0 top-0 bottom-0 w-[300px] bg-[#E6E7EB] transition-[right] duration-700"
+      className="relative h-full w-[300px] bg-[#E6E7EB] transition-[margin] duration-700"
       style={{
-        right: !isShow ? '-290px' : '',
+        marginRight: !isShow ? '-290px' : '',
       }}
     >
       <PickerCirElementList />

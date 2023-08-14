@@ -14,7 +14,7 @@ export const SelectedElementModal: FC = () => {
   const { name } = cirElementList[selectedElement.type];
 
   return (
-    <div className="absolute right-[310px] top-[10px] w-[260px] border-2 border-blue-400 rounded bg-white">
+    <div className="relative w-[260px] border-2 border-blue-400 rounded mr-3 mt-2 bg-white">
       <div className="py-3 bg-blue-400 px-2 text-xl text-white">{name}</div>
       <div className="p-2">
         <SelectedElementFieldList
