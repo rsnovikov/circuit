@@ -16,17 +16,19 @@ import { IBreadboardCirElement } from './types';
 
 interface IBreadboardSliceState {
   scale: number;
-  pickedElement: IBreadboardCirElement | null;
-  draggableElement: IDraggableElement | null;
-  elements: IBreadboardCirElement[];
-
-  selectedElementId: string | null;
   translateCoords: ITranslateCoords;
   gridStep: number;
   isGridVisible: boolean;
+  name: string;
+
+  pickedElement: IBreadboardCirElement | null;
+  draggableElement: IDraggableElement | null;
+  elements: IBreadboardCirElement[];
+  selectedElementId: string | null;
 }
 
 const initialState: IBreadboardSliceState = {
+  name: 'Новая схема',
   scale: 1,
   pickedElement: null,
   draggableElement: null,
@@ -86,6 +88,9 @@ export const breadboardSlice = createSlice({
     toggleIsGridVisible(state) {
       state.isGridVisible = !state.isGridVisible;
     },
+    setBreadboardName(state, action: PayloadAction<string>) {
+      state.name = action.payload;
+    },
   },
 });
 
@@ -101,7 +106,7 @@ const {
   setTranslateCoords,
 } = breadboardSlice.actions;
 
-export const { toggleIsGridVisible } = breadboardSlice.actions;
+export const { toggleIsGridVisible, setBreadboardName } = breadboardSlice.actions;
 
 export const addSelectedElementId =
   (id: string) => (dispatch: AppDispatch, getState: () => RootState) => {

@@ -35,9 +35,7 @@ export const KeyDownProvider: FC<PropsWithChildren> = ({ children }) => {
       }
     });
   };
-  useEffect(() => {
-    console.log(callbackDataListRef.current);
-  });
+
   useEffect(() => {
     document.addEventListener('keydown', handleKeyPress);
     return () => {

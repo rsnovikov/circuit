@@ -16,7 +16,8 @@ export type IconType =
   | 'BxsErrorCircle'
   | 'BxsError'
   | 'CircleInfo'
-  | 'CheckCircleFill';
+  | 'CheckCircleFill'
+  | 'CircuitBoard';
 
 export const icons: {
   [key in IconType]: { viewBox: string; component: () => ReactElement };
@@ -136,6 +137,18 @@ export const icons: {
     viewBox: '0 0 16 16',
     component: () => (
       <path d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-3.97-3.03a.75.75 0 00-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 00-1.06 1.06L6.97 11.03a.75.75 0 001.079-.02l3.992-4.99a.75.75 0 00-.01-1.05z" />
+    ),
+  },
+  CircuitBoard: {
+    viewBox: '0 0 24 24',
+    component: () => (
+      <>
+        <path d="M5 3 H19 A2 2 0 0 1 21 5 V19 A2 2 0 0 1 19 21 H5 A2 2 0 0 1 3 19 V5 A2 2 0 0 1 5 3 z" />
+        <path d="M11 9h4a2 2 0 002-2V3" />
+        <path d="M11 9 A2 2 0 0 1 9 11 A2 2 0 0 1 7 9 A2 2 0 0 1 11 9 z" />
+        <path d="M7 21v-4a2 2 0 012-2h4" />
+        <path d="M17 15 A2 2 0 0 1 15 17 A2 2 0 0 1 13 15 A2 2 0 0 1 17 15 z" />
+      </>
     ),
   },
 };
