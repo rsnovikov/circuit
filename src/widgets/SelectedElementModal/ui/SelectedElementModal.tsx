@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import { cirElementList } from '@/entities/breadboard/model/cirElementList';
 import { SelectedElementModalForm } from '@/features/selectedElementModalForm/ui/SelectedElementModalForm';
-import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { useAppSelector } from '@/shared/model';
 import { SelectedElementFieldList } from './SelectedElementFieldList';
 

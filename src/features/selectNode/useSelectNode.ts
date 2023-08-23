@@ -5,7 +5,6 @@ import { useAppDispatch } from '@/shared/model';
 export const useSelectNode = () => {
   const dispatch = useAppDispatch();
   const selectNode = ({ nodeId }: { nodeId: string }) => {
-    console.log('mouse down');
     dispatch(addSelectedNodeId(nodeId));
   };
 

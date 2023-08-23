@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import { cirElementList } from '@/entities/breadboard/model/cirElementList';
 import { usePickElement } from '@/features/pickElement';
-import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { useAppSelector } from '@/shared/model';
 import { PickerCirElement } from './PickerCirElement';
 

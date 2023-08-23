@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import { ElementTypesEnum } from '@/entities/breadboard/model/ElementTypesEnum';
+import { cirElementList } from '@/entities/breadboard/model/cirElementList';
 import { IBreadboardElementPhysData } from '@/entities/breadboard/model/types';
-import { cirElementList } from '@/shared/api/__mock__/cirElementList';
-import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
 
 interface ISelectedElementFieldListProps {
   physData: IBreadboardElementPhysData;

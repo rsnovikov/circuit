@@ -7,13 +7,14 @@ interface IIconProps extends SVGProps<SVGSVGElement> {
 }
 
 export const Icon: FC<IIconProps> = ({ type, isDisabled, ...rest }) => {
-  const { viewBox, component } = icons[type];
+  const { viewBox, component, svgProps } = icons[type];
   return (
     <svg
       viewBox={viewBox}
       fill={isDisabled ? '#c5cfd9' : '#34495e'}
       height="100%"
       width="100%"
+      {...svgProps}
       {...rest}
     >
       {component()}

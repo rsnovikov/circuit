@@ -1,4 +1,4 @@
-import { ElementTypesEnum } from './ElementTypesEnum';
+import { ElementTypesEnum } from '../../entities/breadboard/model/ElementTypesEnum';
 
 export interface IComponent {
   d: string;

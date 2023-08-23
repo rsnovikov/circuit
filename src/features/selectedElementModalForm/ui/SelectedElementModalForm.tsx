@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import get from 'lodash.get';
 import { updateSelectedElementField } from '@/entities/breadboard';
+import { cirElementList } from '@/entities/breadboard/model/cirElementList';
 import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
-import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { useAppDispatch } from '@/shared/model';
 
 interface ISelectedElementModalFormProps {

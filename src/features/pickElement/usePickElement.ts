@@ -1,14 +1,14 @@
 import {
   addPickedElement as addPickedElementAction,
   confirmPickedElement as confirmPickedElementAction,
-  updatePickedElementCoords,
   removePickedElement,
+  updatePickedElementCoords,
 } from '@/entities/breadboard';
+import { ElementTypesEnum } from '@/entities/breadboard/model/ElementTypesEnum';
 import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { getMousePosition } from '@/shared/lib/getMouseCoords';
 import { useKeyDown } from '@/shared/lib/useKeyDown';
-import { useAppDispatch, useAppSelector } from '@/shared/model';
-import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
+import { useAppDispatch } from '@/shared/model';
 
 export const usePickElement = () => {
   const dispatch = useAppDispatch();

@@ -1,9 +1,9 @@
 import { FC } from 'react';
+import { cirElementList } from '@/entities/breadboard/model/cirElementList';
 import { BreadboardCirElement } from '@/entities/breadboard/ui/BreadboardCirElement';
 import { useDragElement } from '@/features/dragElement';
 import { ElementTerminals } from '@/features/elementTerminals/ElementTerminals';
 import { useSelectBreadboardElement } from '@/features/selectBreadboardElement/useSelectBreadboardElement';
-import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { useAppSelector } from '@/shared/model';
 
 export const BreadboardElements: FC = () => {

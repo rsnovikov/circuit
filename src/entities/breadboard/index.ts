@@ -18,3 +18,5 @@ export {
   updateSelectedElementField,
   updateTranslateCoords,
 } from './model/slice';
+
+export { useGetAllBreadboardQuery } from './api/api';

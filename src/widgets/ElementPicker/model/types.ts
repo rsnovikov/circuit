@@ -1,4 +1,4 @@
-import { ElementTypesEnum } from '@/shared/model/ElementTypesEnum';
+import { ElementTypesEnum } from '@/entities/breadboard/model/ElementTypesEnum';
 
 export interface IPickerElement {
   type: ElementTypesEnum;

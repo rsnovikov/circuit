@@ -1,6 +1,6 @@
+import { cirElementList } from '@/entities/breadboard/model/cirElementList';
 import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
 import { ICirNode } from '@/entities/node';
-import { cirElementList } from '@/shared/api/__mock__/cirElementList';
 import { ICoords } from '@/shared/model/types';
 
 export const getRelatedNodeAbsoluteCoords = (

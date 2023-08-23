@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, SVGProps } from 'react';
-import { cirElementList } from '@/shared/api/__mock__/cirElementList';
+import { cirElementList } from '@/entities/breadboard/model/cirElementList';
 import { CirElement } from '@/shared/ui/CirElement';
 import { IBreadboardCirElement } from '../model/types';
 

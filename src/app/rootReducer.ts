@@ -1,4 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import { authSlice } from '@/entities/auth';
 import { breadboardSlice } from '@/entities/breadboard';
 import { nodeSlice } from '@/entities/node';
 import { notificationSlice } from '@/entities/notification/model/slice';
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   [wireSlice.name]: wireSlice.reducer,
   [nodeSlice.name]: nodeSlice.reducer,
   [notificationSlice.name]: notificationSlice.reducer,
+  [authSlice.name]: authSlice.reducer,
 });
