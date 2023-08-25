@@ -6,7 +6,7 @@ import { BreadboardToolsBtn } from './BreadboardToolsBtn';
 export const StartModelingBreadboardTool: FC = () => {
   const dispatch = useAppDispatch();
   const handleClick = () => {
-    dispatch(notify({ message: 'Моделирование началось', type: 'info' }));
+    dispatch(notify({ message: 'Пока не реализовано :(', type: 'info' }));
   };
 
   return (

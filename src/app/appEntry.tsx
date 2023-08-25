@@ -5,8 +5,9 @@ import { RouterProvider } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { NotificationContainer } from '@/features/notification';
 import '@/shared/base.css';
-import { BreadboardSvgProvider } from '@/shared/lib/BreadboardSvgProvider';
-import { KeyDownProvider } from '@/shared/lib/KeyDownContext';
+import { BreadboardSvgProvider } from '@/shared/lib/hooks/useBreadboardSvgRef';
+import { KeyDownProvider } from '@/shared/lib/hooks/useKeyDown/KeyDownContext';
+import { ModalProvider } from '@/shared/lib/hooks/useModal/useModal';
 import { Spinner } from '@/shared/ui/Spinner';
 import { appRouter } from './appRouter';
 import { appStore, persistor } from './appStore';
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <PersistGate loading={<Spinner />} persistor={persistor}>
         <BreadboardSvgProvider>
           <KeyDownProvider>
-            <RouterProvider router={appRouter()} />
+            <ModalProvider>
+              <RouterProvider router={appRouter()} />
+            </ModalProvider>
             <NotificationContainer />
           </KeyDownProvider>
         </BreadboardSvgProvider>

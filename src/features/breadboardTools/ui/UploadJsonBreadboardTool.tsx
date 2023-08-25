@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FC, MouseEventHandler, useRef } from 'react';
 import { setBreadboardElementFromData } from '@/entities/breadboard';
-import { IBreadboardResponse } from '@/entities/breadboard/api/types';
+import { CircuitData } from '@/entities/breadboard/api/types';
 import { setNodesFromData } from '@/entities/node';
 import { createWiresFromNodes } from '@/entities/wire';
 import { notify } from '@/features/notification';
@@ -25,7 +25,7 @@ export const UploadJsonBreadboardTool: FC = () => {
       const jsonData = e.target?.result;
       if (typeof jsonData !== 'string') return;
       try {
-        const { elements, nodes, wires }: IBreadboardResponse = JSON.parse(jsonData);
+        const { elements, nodes, wires }: CircuitData = JSON.parse(jsonData);
         dispatch(setBreadboardElementFromData(elements));
         dispatch(setNodesFromData(nodes));
         dispatch(createWiresFromNodes(wires));

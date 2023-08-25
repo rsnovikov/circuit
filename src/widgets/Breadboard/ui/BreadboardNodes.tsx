@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { NodeCirElement } from '@/entities/node';
-import { useDragNode } from '@/features/dragNode/useDragNode';
-import { NodeTerminal } from '@/features/nodeTerminal/ui/NodeTerminal';
-import { useSelectNode } from '@/features/selectNode/useSelectNode';
+import { useDragNode } from '@/features/node/dragNode/useDragNode';
+import { NodeTerminal } from '@/features/node/nodeTerminal/ui/NodeTerminal';
+import { useSelectNode } from '@/features/node/selectNode/useSelectNode';
 import { useAppSelector } from '@/shared/model';
 
 export const BreadboardNodes: FC = () => {

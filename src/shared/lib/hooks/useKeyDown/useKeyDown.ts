@@ -16,5 +16,4 @@ export const useKeyDown = ({ callback, codes }: IUseKeyDownParams) => {
 
     return () => removeKeyDownListener(callbackData.id);
   }, []);
-  const {} = useContext(KeydownContext);
 };

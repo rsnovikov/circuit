@@ -1,16 +1,9 @@
-import {
-  ChangeEventHandler,
-  FC,
-  FormEventHandler,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from 'react';
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { FieldValidateSchema, validateFormData } from '@/shared/lib/validateFormData';
+import { Btn } from '@/shared/ui/Btn/Btn';
 import { ErrorMessage } from '@/shared/ui/ErrorMessage';
-import { FormBtn } from '@/shared/ui/form/FormBtn/FormBtn';
 import { TextField } from '@/shared/ui/form/TextField';
 import { FormField } from '../../../features/auth/model/types';
 
@@ -24,16 +17,20 @@ interface IAuthFormProps {
   btnText: string;
 }
 
-export const Form: FC<PropsWithChildren<IAuthFormProps>> = ({
+export const Form: FC<IAuthFormProps> = ({
   handleSubmit,
   fields,
   error,
   additionalValidate,
   schema,
   isLoading,
+
   btnText,
 }) => {
-  const initialFormData = fields.reduce((acc, field) => ({ ...acc, [field.name]: '' }), {});
+  const initialFormData = fields.reduce(
+    (acc, field) => ({ ...acc, [field.name]: field.defaultValue || '' }),
+    {}
+  );
 
   const [formData, setFormData] = useState<{ [key: string]: string }>(initialFormData);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -88,7 +85,7 @@ export const Form: FC<PropsWithChildren<IAuthFormProps>> = ({
       ))}
 
       <div className="mt-7">
-        {<FormBtn isLoading={isLoading}>{btnText}</FormBtn>}
+        <Btn isLoading={isLoading}>{btnText}</Btn>
 
         {error && (
           <ErrorMessage className="ml-3">

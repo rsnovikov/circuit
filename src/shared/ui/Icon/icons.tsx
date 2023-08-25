@@ -19,7 +19,9 @@ export type IconType =
   | 'CheckCircleFill'
   | 'CircuitBoard'
   | 'BxUserCircle'
-  | 'Menu';
+  | 'Menu'
+  | 'Add'
+  | 'ThreeDotsVertical';
 
 export const icons: {
   [key in IconType]: {
@@ -174,5 +176,29 @@ export const icons: {
       strokeWidth: 2,
     },
     component: () => <path d="M4 12h16M4 6h16M4 18h16" />,
+  },
+  Add: {
+    viewBox: '0 0 512 512',
+    svgProps: {
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
+      strokeWidth: 32,
+    },
+    component: () => (
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+        d="M256 112v288M400 256H112"
+      />
+    ),
+  },
+  ThreeDotsVertical: {
+    viewBox: '0 0 16 16',
+    component: () => (
+      <path d="M9.5 13a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0-5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0-5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+    ),
   },
 };

@@ -1,5 +1,5 @@
 import { addSelectedElementId, removeSelectedElementId } from '@/entities/breadboard/model/slice';
-import { useKeyDown } from '@/shared/lib/useKeyDown';
+import { useKeyDown } from '@/shared/lib/hooks/useKeyDown/useKeyDown';
 import { useAppDispatch } from '@/shared/model';
 
 export const useSelectBreadboardElement = () => {

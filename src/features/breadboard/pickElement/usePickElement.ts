@@ -5,9 +5,9 @@ import {
   updatePickedElementCoords,
 } from '@/entities/breadboard';
 import { ElementTypesEnum } from '@/entities/breadboard/model/ElementTypesEnum';
-import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { getMousePosition } from '@/shared/lib/getMouseCoords';
-import { useKeyDown } from '@/shared/lib/useKeyDown';
+import { useBreadboardSvgRef } from '@/shared/lib/hooks/useBreadboardSvgRef';
+import { useKeyDown } from '@/shared/lib/hooks/useKeyDown/useKeyDown';
 import { useAppDispatch } from '@/shared/model';
 
 export const usePickElement = () => {

@@ -1,5 +1,5 @@
 import { addSelectedNodeId, removeSelectedNodeId } from '@/entities/node/model/slice';
-import { useKeyDown } from '@/shared/lib/useKeyDown';
+import { useKeyDown } from '@/shared/lib/hooks/useKeyDown/useKeyDown';
 import { useAppDispatch } from '@/shared/model';
 
 export const useSelectNode = () => {

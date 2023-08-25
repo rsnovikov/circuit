@@ -3,7 +3,7 @@ import { Authorization } from '@/widgets/authorization/ui/Authorization';
 
 export const RegisterPage: FC = () => {
   return (
-    <div className="w-full h-full flex justify-center items-center bg-gray-400 bg-opacity-80">
+    <div className="w-full h-full flex justify-center items-center bg-opacity-80">
       <Authorization action="register" />
     </div>
   );

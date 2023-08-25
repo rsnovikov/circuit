@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { ChangeBreadboardNameForm } from '@/features/changeBreadboardName';
+import { ChangeBreadboardNameForm } from '@/features/breadboard/changeBreadboardName';
 import { Header } from '@/widgets/header';
 
 export const CircuitLayout: FC = () => {

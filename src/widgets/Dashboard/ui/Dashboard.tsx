@@ -1,8 +1,15 @@
 import { FC } from 'react';
-import { useGetAllBreadboardQuery } from '@/entities/breadboard';
+import { CreateBreadboardBtn } from '@/features/dashboard/createBreadboard';
+import { DashboardCircuitList } from './DashboardCircuitList';
 
 export const Dashboard: FC = () => {
-  const { data } = useGetAllBreadboardQuery();
-  console.log(data);
-  return <div className="min-h-full w-full pt-16 container mx-auto text-3xl">Ваши схемы</div>;
+  return (
+    <div className="min-h-full w-full pt-16 container mx-auto">
+      <h1 className="text-3xl">Ваши схемы</h1>
+      <div className="my-5">
+        <CreateBreadboardBtn />
+      </div>
+      <DashboardCircuitList />
+    </div>
+  );
 };

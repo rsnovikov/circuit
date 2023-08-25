@@ -1,5 +1,5 @@
-import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { getMousePosition } from '@/shared/lib/getMouseCoords';
+import { useBreadboardSvgRef } from '@/shared/lib/hooks/useBreadboardSvgRef';
 import { useAppDispatch } from '@/shared/model';
 import { splitWireAction } from './model/splitWireAction';
 import { ISplitWireParams } from './model/types';

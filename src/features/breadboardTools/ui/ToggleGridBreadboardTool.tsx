@@ -1,5 +1,5 @@
 import { toggleIsGridVisible } from '@/entities/breadboard';
-import { useKeyDown } from '@/shared/lib/useKeyDown';
+import { useKeyDown } from '@/shared/lib/hooks/useKeyDown/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { Icon } from '@/shared/ui/Icon/Icon';
 import { HotkeyTooltip } from '@/shared/ui/Tooltip';

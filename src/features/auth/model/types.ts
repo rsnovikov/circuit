@@ -3,4 +3,5 @@ export type FormField = {
   title?: string;
   placeholder?: string;
   type?: string;
+  defaultValue?: string;
 };

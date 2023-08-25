@@ -1,6 +1,6 @@
 import { addSelectedWireId, removeSelectedWireId } from '@/entities/wire';
-import { useKeyDown } from '@/shared/lib/useKeyDown';
-import { useAppDispatch, useAppSelector } from '@/shared/model';
+import { useKeyDown } from '@/shared/lib/hooks/useKeyDown/useKeyDown';
+import { useAppDispatch } from '@/shared/model';
 
 export const useSelectWire = () => {
   const dispatch = useAppDispatch();

@@ -4,7 +4,7 @@ import {
   confirmDraggableElement,
   updateDraggableElement,
 } from '@/entities/breadboard';
-import { useKeyDown } from '@/shared/lib/useKeyDown';
+import { useKeyDown } from '@/shared/lib/hooks/useKeyDown/useKeyDown';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 
 export const useDragElement = () => {

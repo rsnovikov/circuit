@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
+import { useBreadboardSvgRef } from '@/shared/lib/hooks/useBreadboardSvgRef';
 import { roundTo } from '@/shared/lib/roundTo';
 import { useAppSelector } from '@/shared/model';
 import { IBreadboardLine } from '../model/types';

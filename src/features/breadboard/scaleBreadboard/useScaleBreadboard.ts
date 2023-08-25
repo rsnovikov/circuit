@@ -1,6 +1,6 @@
 import { updateScale } from '@/entities/breadboard';
-import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { getMousePosition } from '@/shared/lib/getMouseCoords';
+import { useBreadboardSvgRef } from '@/shared/lib/hooks/useBreadboardSvgRef';
 import { useAppDispatch } from '@/shared/model';
 
 export const useScaleBreadboard = () => {

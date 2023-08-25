@@ -1,6 +1,6 @@
 import { FC, MouseEventHandler } from 'react';
-import { useBreadboardSvgRef } from '@/shared/lib/BreadboardSvgProvider';
 import { downloadFile } from '@/shared/lib/downloadFile';
+import { useBreadboardSvgRef } from '@/shared/lib/hooks/useBreadboardSvgRef';
 import { BreadboardToolsBtn } from './BreadboardToolsBtn';
 
 export const SaveAsSVgBreadboardTool: FC = () => {
