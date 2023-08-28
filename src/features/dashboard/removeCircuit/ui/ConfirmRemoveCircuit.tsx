@@ -28,7 +28,7 @@ export const ConfirmRemoveCircuit: FC<IConfirmRemoveCircuitProps> = ({ circuit, 
 
   return (
     <div className="flex flex-col items-center">
-      <h4 className="text-xl">Удалить схему "{circuit.name}"?</h4>
+      <h4 className="text-xl">Удалить схему &quot;{circuit.name}&quot;?</h4>
       <h6 className="text-sm fold-bold text-red-700 mb-4">Это действие нельзя будет отменить</h6>
       <Btn isLoading={isLoading} onClick={confirmRemove}>
         Удалить

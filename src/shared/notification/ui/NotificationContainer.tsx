@@ -3,9 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { removeNotification } from '../model/removeNotification';
 import { Notification } from './Notification';
 
-interface INotificationContainerProps {}
-
-export const NotificationContainer: FC<INotificationContainerProps> = ({}) => {
+export const NotificationContainer: FC = () => {
   const notifications = useAppSelector((state) => state.notification.notifications);
   const dispatch = useAppDispatch();
 

@@ -12,19 +12,29 @@ import { Spinner } from '@/shared/ui/Spinner';
 import { appRouter } from './appRouter';
 import { appStore, persistor } from './appStore';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ReduxProvider store={appStore}>
-      <PersistGate loading={<Spinner />} persistor={persistor}>
-        <BreadboardSvgProvider>
-          <KeyDownProvider>
-            <ModalProvider>
-              <RouterProvider router={appRouter()} />
-            </ModalProvider>
-            <NotificationContainer />
-          </KeyDownProvider>
-        </BreadboardSvgProvider>
-      </PersistGate>
-    </ReduxProvider>
-  </React.StrictMode>
-);
+const main = () => {
+  const root = document.getElementById('root');
+
+  if (!root) {
+    throw new Error('Root node is not on page');
+  }
+
+  ReactDOM.createRoot(root).render(
+    <React.StrictMode>
+      <ReduxProvider store={appStore}>
+        <PersistGate loading={<Spinner />} persistor={persistor}>
+          <BreadboardSvgProvider>
+            <KeyDownProvider>
+              <ModalProvider>
+                <RouterProvider router={appRouter()} />
+              </ModalProvider>
+              <NotificationContainer />
+            </KeyDownProvider>
+          </BreadboardSvgProvider>
+        </PersistGate>
+      </ReduxProvider>
+    </React.StrictMode>
+  );
+};
+
+main();

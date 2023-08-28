@@ -1,9 +1,7 @@
 import { FC, SVGProps } from 'react';
 import clsx from 'clsx';
 
-interface ISpinnerProps extends SVGProps<SVGSVGElement> {}
-
-export const Spinner: FC<ISpinnerProps> = ({ className, ...rest }) => {
+export const Spinner: FC<SVGProps<SVGSVGElement>> = ({ className, ...rest }) => {
   return (
     <div role="status" className={className}>
       <svg

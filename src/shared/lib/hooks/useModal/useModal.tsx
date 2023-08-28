@@ -1,6 +1,5 @@
 import { FC, PropsWithChildren, ReactNode, createContext, useContext, useState } from 'react';
-import Modal from "./Modal";
-
+import Modal from './Modal';
 
 interface IModalContext {
   openModal: (Component: ReactNode) => void;
@@ -8,8 +7,12 @@ interface IModalContext {
 }
 
 const ModalContext = createContext<IModalContext>({
-  openModal: () => {},
-  closeModal: () => {},
+  openModal: () => {
+    throw new Error('Function not implemented.');
+  },
+  closeModal: () => {
+    throw new Error('Function not implemented.');
+  },
 });
 
 export const useModal = () => useContext(ModalContext);

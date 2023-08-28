@@ -4,9 +4,6 @@
     "es2021": true
   },
   "extends": [
-    "airbnb",
-    "airbnb-typescript",
-    "airbnb/hooks",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
@@ -44,11 +41,12 @@
     ],
     // todo: enable and configure prettier/prettier
     "prettier/prettier": 0,
-    "no-param-reassign": ["error", {
-      "props": true,
-      "ignorePropertyModificationsFor": [
-        "state"
-      ]
-    }]
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state", "target"]
+      }
+    ]
   }
 }

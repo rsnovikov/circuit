@@ -7,7 +7,7 @@ const AUTH_ERROR_CODE = 401;
 export const baseQueryWithReauth = async (
   args: string | FetchArgs,
   api: BaseQueryApi,
-  extraOptions: {}
+  extraOptions: object
 ) => {
   const result = await baseQuery(args, api, extraOptions);
 

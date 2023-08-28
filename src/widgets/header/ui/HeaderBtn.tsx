@@ -1,9 +1,7 @@
 import { ButtonHTMLAttributes, FC, PropsWithChildren } from 'react';
 import clsx from 'clsx';
 
-interface IHeaderBtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
-
-export const HeaderBtn: FC<PropsWithChildren<IHeaderBtnProps>> = ({
+export const HeaderBtn: FC<PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>> = ({
   children,
   className,
   ...rest

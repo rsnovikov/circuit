@@ -2,9 +2,7 @@ import { ButtonHTMLAttributes, FC } from 'react';
 import { useAppDispatch } from '@/shared/model';
 import { logoutThunk } from '../model/logoutThunk';
 
-interface ILogoutBtn extends ButtonHTMLAttributes<HTMLButtonElement> {}
-
-export const LogoutBtn: FC<ILogoutBtn> = ({ ...rest }) => {
+export const LogoutBtn: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({ ...rest }) => {
   const dispatch = useAppDispatch();
 
   const handleClick = () => {

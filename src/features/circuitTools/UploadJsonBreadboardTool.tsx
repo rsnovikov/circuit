@@ -33,7 +33,7 @@ export const UploadJsonBreadboardTool: FC = () => {
         dispatch(notify({ message: 'JSON невалидный', type: 'error' }));
         console.error('JSON невалидный');
       } finally {
-        target.value = '';
+        (target as HTMLInputElement).value = '';
       }
     };
 

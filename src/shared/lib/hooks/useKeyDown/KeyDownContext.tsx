@@ -6,8 +6,12 @@ interface IKeydownContext {
 }
 
 export const KeydownContext = createContext<IKeydownContext>({
-  addKeyDownListener: () => {},
-  removeKeyDownListener: () => {},
+  addKeyDownListener: () => {
+    throw new Error('Function not implemented.');
+  },
+  removeKeyDownListener: () => {
+    throw new Error('Function not implemented.');
+  },
 });
 
 interface ICallbackData {
