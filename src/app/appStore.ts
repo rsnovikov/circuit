@@ -1,3 +1,6 @@
+import { authSlice } from '@/entities/auth';
+import { invalidateAccessTokenListener } from '@/features/auth/invalidateAccessToken';
+import { baseApi } from '@/shared/api';
 import { configureStore } from '@reduxjs/toolkit';
 import {
   FLUSH,
@@ -10,8 +13,6 @@ import {
   persistStore,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { authSlice } from '@/entities/auth';
-import { baseApi } from '@/shared/api';
 import { rootReducer } from './rootReducer';
 
 const persistConfig = {
@@ -28,7 +29,7 @@ const createStore = () => {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(baseApi.middleware),
+      }).concat(baseApi.middleware, invalidateAccessTokenListener.middleware),
   });
 };
 

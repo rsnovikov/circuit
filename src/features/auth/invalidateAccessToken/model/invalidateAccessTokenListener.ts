@@ -12,7 +12,7 @@ export const startInvalidateAccessTokenListener =
 
 startInvalidateAccessTokenListener({
   actionCreator: invalidateTokenEvent,
-  effect: async (_, api) => {
+  effect: (_, api) => {
     api.dispatch(logoutThunk());
   },
 });
