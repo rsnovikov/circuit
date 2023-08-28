@@ -1,6 +1,7 @@
 import { FC, MouseEventHandler } from 'react';
-import { endWireToNode, startWireFromNode } from '@/entities/wire';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
+import { endWireToNodeAction } from '../model/endWireToNodeAction';
+import { startWireFromNodeAction } from '../model/startWireFromNodeAction';
 
 interface INodeTerminalProps {
   nodeId: string;
@@ -14,9 +15,9 @@ export const NodeTerminal: FC<INodeTerminalProps> = ({ nodeId }) => {
     // todo: maybe remove stopPropagation and add check to the handleSvgClick in widget Breadboard
     e.stopPropagation();
     if (drawingWire) {
-      dispatch(endWireToNode(nodeId));
+      dispatch(endWireToNodeAction(nodeId));
     } else {
-      dispatch(startWireFromNode(nodeId));
+      dispatch(startWireFromNodeAction(nodeId));
     }
   };
 

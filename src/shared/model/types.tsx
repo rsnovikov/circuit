@@ -1,4 +1,4 @@
-import { ElementTypesEnum } from '../../entities/breadboard/model/ElementTypesEnum';
+import { ElementTypesEnum } from '../../entities/cirElement/model/ElementTypesEnum';
 
 export interface IComponent {
   d: string;
@@ -29,7 +29,7 @@ export interface IPhysData {
   [key: string]: IPhysDataItem;
 }
 
-export interface ICirElement {
+export interface IInitialCirElement {
   type: ElementTypesEnum;
   components: IComponent[];
   name: string;
@@ -39,8 +39,8 @@ export interface ICirElement {
   physData: IPhysData;
 }
 
-export type ICirElementList = {
-  [key in ElementTypesEnum]: ICirElement;
+export type IInitialCirElementList = {
+  [key in ElementTypesEnum]: IInitialCirElement;
 };
 
 export interface ICoords {
@@ -67,3 +67,11 @@ export interface ICirWireData {
   endNodeId: string | null;
   color: string;
 }
+
+export type FormField = {
+  name: string;
+  title?: string;
+  placeholder?: string;
+  type?: string;
+  defaultValue?: string;
+};

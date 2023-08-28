@@ -1,11 +1,11 @@
 import { FC, HTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
+import { ICirElement } from '@/entities/cirElement/model/types';
 import { IPickerElement } from '../model/types';
 
 interface IPickerCirElementProps extends HTMLAttributes<HTMLDivElement> {
   cirElem: IPickerElement;
-  pickedElement: IBreadboardCirElement | null;
+  pickedElement: ICirElement | null;
 }
 
 export const PickerCirElement: FC<IPickerCirElementProps> = ({

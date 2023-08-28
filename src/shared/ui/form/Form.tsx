@@ -2,10 +2,10 @@ import { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from 'r
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { FieldValidateSchema, validateFormData } from '@/shared/lib/validateFormData';
+import { FormField } from '@/shared/model/types';
 import { Btn } from '@/shared/ui/Btn/Btn';
 import { ErrorMessage } from '@/shared/ui/ErrorMessage';
 import { TextField } from '@/shared/ui/form/TextField';
-import { FormField } from '../../../features/auth/model/types';
 
 interface IAuthFormProps {
   handleSubmit: (formData: { [key: string]: string }) => void;
@@ -87,13 +87,7 @@ export const Form: FC<IAuthFormProps> = ({
       <div className="mt-7">
         <Btn isLoading={isLoading}>{btnText}</Btn>
 
-        {error && (
-          <ErrorMessage className="ml-3">
-            {/* todo: fix type error */}
-            {/* @ts-ignore */}
-            {error?.data?.message || 'Непредвиденная ошибка, попробуйте позже'}
-          </ErrorMessage>
-        )}
+        {error && <ErrorMessage className="ml-3" error={error} />}
       </div>
     </form>
   );

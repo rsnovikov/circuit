@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren, ReactNode, createContext, useContext, useState } from 'react';
-import Modal from './modal';
+import Modal from "./Modal";
+
 
 interface IModalContext {
   openModal: (Component: ReactNode) => void;

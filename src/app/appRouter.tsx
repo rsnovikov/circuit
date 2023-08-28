@@ -1,8 +1,8 @@
-import { createBrowserRouter } from 'react-router-dom';
 import { CircuitPage } from '@/pages/circuit';
 import { DashboardPage } from '@/pages/dashboard';
 import { LoginPage } from '@/pages/login/ui/Page';
 import { RegisterPage } from '@/pages/register';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import { AuthGuard } from './guards/AuthGuard';
 import { GuestGuard } from './guards/GuestGuard';
 import { BaseLayout } from './layouts/BaseLayout';
@@ -14,7 +14,7 @@ export const appRouter = () =>
       element: <CircuitLayout />,
       children: [
         {
-          path: '/circuit',
+          path: '/circuit/:circuitId',
           element: (
             <GuestGuard>
               <CircuitPage />
@@ -52,4 +52,5 @@ export const appRouter = () =>
         },
       ],
     },
+    {path: '*', element: <Navigate to='/dashboard'/>}
   ]);

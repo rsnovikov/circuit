@@ -1,11 +1,9 @@
 import { FC } from 'react';
-import {
-  SaveAsJsonBreadboardTool,
-  SaveAsSVgBreadboardTool,
-  StartModelingBreadboardTool,
-  ToggleGridBreadboardTool,
-  UploadJsonBreadboardTool,
-} from '@/features/breadboardTools';
+import { SaveAsJsonBreadboardTool } from '@/features/circuitTools/SaveAsJsonBreadboardTool';
+import { SaveAsSVgBreadboardTool } from '@/features/circuitTools/SaveAsSvgBreadboardTool';
+import { StartModelingBreadboardTool } from '@/features/circuitTools/StartModelingBreadboardTool';
+import { ToggleGridBreadboardTool } from '@/features/circuitTools/ToggleGridBreadboardTool';
+import { UploadJsonBreadboardTool } from '@/features/circuitTools/UploadJsonBreadboardTool';
 
 export const BreadboardToolsList: FC = () => {
   return (

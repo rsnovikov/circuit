@@ -1,6 +1,6 @@
 import { BaseQueryApi, FetchArgs } from '@reduxjs/toolkit/dist/query';
 import { baseQuery } from './baseQuery';
-import { invalidateTokenAction } from './invalidateTokenAction';
+import { invalidateTokenEvent } from './invalidateTokenEvent';
 
 const AUTH_ERROR_CODE = 401;
 
@@ -12,7 +12,7 @@ export const baseQueryWithReauth = async (
   const result = await baseQuery(args, api, extraOptions);
 
   if (typeof result.error?.status === 'number' && result.error.status === AUTH_ERROR_CODE) {
-    api.dispatch(invalidateTokenAction());
+    api.dispatch(invalidateTokenEvent());
   }
 
   return result;

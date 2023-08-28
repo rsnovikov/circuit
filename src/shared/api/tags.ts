@@ -1,1 +1,1 @@
-export const BREADBOARD_TAG = 'BREADBOARD_TAG';
+export const CIRCUIT_TAG = 'CIRCUIT_TAG';

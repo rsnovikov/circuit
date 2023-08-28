@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import get from 'lodash.get';
-import { updateSelectedElementField } from '@/entities/breadboard';
-import { cirElementList } from '@/entities/breadboard/model/cirElementList';
-import { IBreadboardCirElement } from '@/entities/breadboard/model/types';
+import { initialCirElementList } from '@/entities/cirElement/model/InitialCirElementList';
+import { ICirElement } from '@/entities/cirElement/model/types';
 import { useAppDispatch } from '@/shared/model';
+import { updateSelectedElementFieldAction } from '../model/updateSelectedElementFieldAction';
 
 interface ISelectedElementModalFormProps {
-  selectedElement: IBreadboardCirElement;
+  selectedElement: ICirElement;
 }
 
 export const SelectedElementModalForm: FC<ISelectedElementModalFormProps> = ({
@@ -21,17 +21,17 @@ export const SelectedElementModalForm: FC<ISelectedElementModalFormProps> = ({
     },
     ...Object.keys(selectedElement.physData)
       .filter((physDataKey) => {
-        return cirElementList[selectedElement.type].physData[physDataKey].isChangeable;
+        return initialCirElementList[selectedElement.type].physData[physDataKey].isChangeable;
       })
       .map((physDataKey) => ({
         path: `physData.${physDataKey}.value`,
-        title: cirElementList[selectedElement.type].physData[physDataKey].title,
+        title: initialCirElementList[selectedElement.type].physData[physDataKey].title,
       })),
   ];
 
   const handleInputChange = ({ path, value }: { path: string; value: string }) => {
     dispatch(
-      updateSelectedElementField({
+      updateSelectedElementFieldAction({
         path,
         value,
       })

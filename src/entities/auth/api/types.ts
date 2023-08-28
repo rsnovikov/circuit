@@ -1,9 +1,9 @@
-export interface ILoginRequestBody {
+export interface IAuthRequestBody {
   email: string;
   password: string;
 }
 
-export interface ILoginRequestResponse {
+export interface IAuthRequestResponse {
   accessToken: string;
   userId: string;
   email: string;

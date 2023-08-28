@@ -1,13 +1,13 @@
 import { FC, MouseEventHandler, useEffect } from 'react';
 import { useDragElement } from '@/features/breadboard/dragElement';
-import { useMoveBreadboard } from '@/features/breadboard/moveBreadboard/useMoveBreadboard';
+import { useMoveBreadboard } from '@/features/breadboard/moveBreadboard/model/useMoveBreadboard';
 import { usePickElement } from '@/features/breadboard/pickElement';
-import { useScaleBreadboard } from '@/features/breadboard/scaleBreadboard/useScaleBreadboard';
-import { useSelectBreadboardElement } from '@/features/breadboard/selectBreadboardElement/useSelectBreadboardElement';
-import { useDragNode } from '@/features/node/dragNode/useDragNode';
-import { useSelectNode } from '@/features/node/selectNode/useSelectNode';
-import { useDrawWire } from '@/features/wire/drawWire/useDrawWire';
-import { useSelectWire } from '@/features/wire/selectWire/useSelectWire';
+import { useScaleBreadboard } from '@/features/breadboard/scaleBreadboard/model/useScaleBreadboard';
+import { useSelectCirElement } from '@/features/breadboard/selectCirElement/model/useSelectCirElement';
+import { useDragNode } from '@/features/node/dragNode/model/useDragNode';
+import { useSelectNode } from '@/features/node/selectNode/model/useSelectNode';
+import { useDrawWire } from '@/features/wire/drawWire/model/useDrawWire';
+import { useSelectWire } from '@/features/wire/selectWire/model/useSelectWire';
 import { useBreadboardSvgRef } from '@/shared/lib/hooks/useBreadboardSvgRef';
 import { BreadboardDrawingWire } from './BreadboardDrawingWire';
 import { BreadboardElements } from './BreadboardElements';
@@ -26,14 +26,13 @@ export const Breadboard: FC = () => {
   const { updateDrawingWire, confirmWireToBreadboard } = useDrawWire();
   const { dragElement } = useDragElement();
   const { dragNode } = useDragNode();
-  const { unselectElement } = useSelectBreadboardElement();
+  const { unselectElement } = useSelectCirElement();
   const { unselectWire } = useSelectWire();
   const { unselectNode } = useSelectNode();
 
   // wheel event
   useEffect(() => {
     svgRef.current?.addEventListener('wheel', handleSvgWheel);
-
     return () => {
       svgRef.current?.removeEventListener('wheel', handleSvgWheel);
     };

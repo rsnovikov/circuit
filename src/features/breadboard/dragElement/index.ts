@@ -1,1 +1,1 @@
-export { useDragElement } from './useDragElement';
+export { useDragElement } from './model/useDragElement';

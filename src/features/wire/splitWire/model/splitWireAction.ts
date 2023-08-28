@@ -11,7 +11,7 @@ export const splitWireAction =
     const {
       wire: { wires },
       node: { nodes },
-      breadboard: { scale, translateCoords },
+      circuit: { scale, translateCoords },
     } = getState();
 
     const splittedWire = wires.find((wire) => wire.id === wireId);

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CircuitListItem } from '@/entities/breadboard/api/types';
-import { DashboardCircuitActions } from '@/features/dashboard/DashboardCircuitActions';
+import { CircuitListItem } from '@/entities/circuit/api/types';
+import { DashboardCircuitActions } from './DashboardCircuitActions';
 
 interface IDashboardCircuitItemProps {
   circuit: CircuitListItem;

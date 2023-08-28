@@ -1,2 +1,2 @@
 export { useLoginMutation } from './api/api';
-export { authSlice } from './model/slice';
+export { authSlice, resetAuthData } from './model/slice';

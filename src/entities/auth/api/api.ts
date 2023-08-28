@@ -1,14 +1,14 @@
 import { baseApi } from '@/shared/api';
-import { ILoginRequestBody, ILoginRequestResponse } from './types';
+import { IAuthRequestBody, IAuthRequestResponse } from './types';
 
 const baseUri = '/auth';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    login: build.mutation<ILoginRequestResponse, ILoginRequestBody>({
+    login: build.mutation<IAuthRequestResponse, IAuthRequestBody>({
       query: (body) => ({ url: `${baseUri}/login`, method: 'POST', body }),
     }),
-    register: build.mutation<ILoginRequestResponse, ILoginRequestBody>({
+    register: build.mutation<IAuthRequestResponse, IAuthRequestBody>({
       query: (body) => ({ url: `${baseUri}/registration`, method: 'POST', body }),
     }),
   }),

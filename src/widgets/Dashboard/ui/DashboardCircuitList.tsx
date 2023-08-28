@@ -1,20 +1,15 @@
 import { FC } from 'react';
-import { useGetAllBreadboardQuery } from '@/entities/breadboard';
+import { useGetAllCircuitQuery } from '@/entities/circuit';
 import { ErrorMessage } from '@/shared/ui/ErrorMessage';
 import { Spinner } from '@/shared/ui/Spinner';
 import { DashboardCircuitItem } from './DashboardCircuitItem';
 
 export const DashboardCircuitList: FC = () => {
-  const { data, error, isLoading } = useGetAllBreadboardQuery();
+  const { data, error, isLoading } = useGetAllCircuitQuery();
 
   if (isLoading) return <Spinner className="flex justify-center" />;
 
-  if (error)
-    return (
-      <ErrorMessage>
-        {error?.data?.message || 'Непредвиденная ошибка, попробуйте позже'}
-      </ErrorMessage>
-    );
+  if (error) return <ErrorMessage error={error} />;
 
   return (
     <div className="flex justify-start items-start -mx-4 flex-wrap">

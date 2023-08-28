@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { LoginForm } from '@/features/auth/ui/LoginForm';
-import { RegisterForm } from '@/features/auth/ui/RegisterForm';
+import { LoginForm } from '@/features/auth/login/ui/LoginForm';
+import { RegisterForm } from '@/features/auth/register/ui/RegisterForm';
 
 interface IAuthorizationProps {
   action: 'register' | 'login';

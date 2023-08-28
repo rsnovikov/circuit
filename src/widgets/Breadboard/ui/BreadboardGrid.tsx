@@ -17,10 +17,10 @@ export const BreadboardGrid: FC = () => {
     setSvgDimensions({ width: svgRef.current.clientWidth, height: svgRef.current.clientHeight });
   }, [svgRef.current]);
 
-  const isGridVisible = useAppSelector((state) => state.breadboard.isGridVisible);
-  const gridStep = useAppSelector((state) => state.breadboard.gridStep);
-  const scale = useAppSelector((state) => state.breadboard.scale);
-  const { translateX, translateY } = useAppSelector((state) => state.breadboard.translateCoords);
+  const isGridVisible = useAppSelector((state) => state.circuit.isGridVisible);
+  const gridStep = useAppSelector((state) => state.circuit.gridStep);
+  const scale = useAppSelector((state) => state.circuit.scale);
+  const { translateX, translateY } = useAppSelector((state) => state.circuit.translateCoords);
 
   if (!isGridVisible || !width || !height) return;
 

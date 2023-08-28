@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Wire } from '@/entities/wire';
-import { useSelectWire } from '@/features/wire/selectWire/useSelectWire';
-import { useSplitWire } from '@/features/wire/splitWire/useSplitWire';
+import { useSelectWire } from '@/features/wire/selectWire/model/useSelectWire';
+import { useSplitWire } from '@/features/wire/splitWire/model/useSplitWire';
 import { useAppSelector } from '@/shared/model';
 
 export const BreadboardWires: FC = () => {

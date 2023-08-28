@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { LogoutBtn } from '@/features/auth';
+import { LogoutBtn } from '@/features/auth/logout/ui/LogoutBtn';
 import { truncateStr } from '@/shared/lib/truncateStr';
 import { useAppSelector } from '@/shared/model';
 import { HeaderMenuItem } from './HeaderMenuItem';

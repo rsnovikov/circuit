@@ -1,16 +1,16 @@
 import { FC } from 'react';
-import { cirElementList } from '@/entities/breadboard/model/cirElementList';
-import { BreadboardCirElement } from '@/entities/breadboard/ui/BreadboardCirElement';
+import { initialCirElementList } from '@/entities/cirElement/model/InitialCirElementList';
+import { BreadboardCirElement } from '@/entities/cirElement/ui/BreadboardCirElement';
 import { useDragElement } from '@/features/breadboard/dragElement';
-import { ElementTerminals } from '@/features/breadboard/elementTerminals/ElementTerminals';
-import { useSelectBreadboardElement } from '@/features/breadboard/selectBreadboardElement/useSelectBreadboardElement';
+import { ElementTerminals } from '@/features/breadboard/elementTerminals/ui/ElementTerminals';
+import { useSelectCirElement } from '@/features/breadboard/selectCirElement/model/useSelectCirElement';
 import { useAppSelector } from '@/shared/model';
 
 export const BreadboardElements: FC = () => {
-  const elements = useAppSelector((state) => state.breadboard.elements);
-  const selectedElementId = useAppSelector((state) => state.breadboard.selectedElementId);
+  const elements = useAppSelector((state) => state.cirElement.elements);
+  const selectedElementId = useAppSelector((state) => state.cirElement.selectedElementId);
   const { startDragElement, endDragElement } = useDragElement();
-  const { selectElement } = useSelectBreadboardElement();
+  const { selectElement } = useSelectCirElement();
 
   return elements.map((element) => (
     <BreadboardCirElement
@@ -23,7 +23,10 @@ export const BreadboardElements: FC = () => {
       }}
       onMouseUp={() => endDragElement({ elementId: element.id })}
     >
-      <ElementTerminals terminals={cirElementList[element.type].terminals} elementId={element.id} />
+      <ElementTerminals
+        terminals={initialCirElementList[element.type].terminals}
+        elementId={element.id}
+      />
     </BreadboardCirElement>
   ));
 };

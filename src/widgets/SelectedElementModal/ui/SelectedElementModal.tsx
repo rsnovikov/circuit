@@ -1,17 +1,17 @@
 import { FC } from 'react';
-import { cirElementList } from '@/entities/breadboard/model/cirElementList';
+import { initialCirElementList } from '@/entities/cirElement/model/InitialCirElementList';
 import { SelectedElementModalForm } from '@/features/selectedElementModalForm/ui/SelectedElementModalForm';
 import { useAppSelector } from '@/shared/model';
 import { SelectedElementFieldList } from './SelectedElementFieldList';
 
 export const SelectedElementModal: FC = () => {
   const selectedElement = useAppSelector((state) =>
-    state.breadboard.elements.find((element) => element.id === state.breadboard.selectedElementId)
+    state.cirElement.elements.find((element) => element.id === state.cirElement.selectedElementId)
   );
 
   if (!selectedElement) return null;
 
-  const { name } = cirElementList[selectedElement.type];
+  const { name } = initialCirElementList[selectedElement.type];
 
   return (
     <div className="relative w-[260px] border-2 border-blue-400 rounded mr-3 mt-2 bg-white">

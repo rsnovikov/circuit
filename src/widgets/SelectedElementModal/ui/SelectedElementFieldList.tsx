@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { ElementTypesEnum } from '@/entities/breadboard/model/ElementTypesEnum';
-import { cirElementList } from '@/entities/breadboard/model/cirElementList';
-import { IBreadboardElementPhysData } from '@/entities/breadboard/model/types';
+import { ElementTypesEnum } from '@/entities/cirElement/model/ElementTypesEnum';
+import { initialCirElementList } from '@/entities/cirElement/model/InitialCirElementList';
+import { ICirElementPhysData } from '@/entities/cirElement/model/types';
 
 interface ISelectedElementFieldListProps {
-  physData: IBreadboardElementPhysData;
+  physData: ICirElementPhysData;
   selectedElementType: ElementTypesEnum;
 }
 
@@ -16,7 +16,7 @@ export const SelectedElementFieldList: FC<ISelectedElementFieldListProps> = ({
     <ul>
       {Object.keys(physData).map((key) => {
         const { value } = physData[key];
-        const { title, isChangeable } = cirElementList[selectedElementType].physData[key];
+        const { title, isChangeable } = initialCirElementList[selectedElementType].physData[key];
         if (isChangeable) return;
 
         return (

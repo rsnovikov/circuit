@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { invalidateTokenAction } from '@/shared/api/invalidateTokenAction';
 import { authApi } from '../api/api';
-import { ILoginRequestResponse } from '../api/types';
+import { IAuthRequestResponse } from '../api/types';
 
 type AuthSliceState =
   | { isAuthorized: true; accessToken: string; userId: string; email: string }
@@ -11,7 +10,7 @@ const initialState: AuthSliceState = { isAuthorized: false };
 
 const authorizeReducer = (
   state: AuthSliceState,
-  { payload }: PayloadAction<ILoginRequestResponse>
+  { payload }: PayloadAction<IAuthRequestResponse>
 ) => {
   state.isAuthorized = true;
 
@@ -28,24 +27,13 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    clearAuthData(state) {
-      state.isAuthorized = false;
-      state.accessToken = undefined;
-      state.userId = undefined;
-      state.email = undefined;
-    },
+    resetAuthData: () => initialState,
   },
   extraReducers(builder) {
     builder
-      .addCase(invalidateTokenAction, (state) => {
-        state.isAuthorized = false;
-        state.accessToken = undefined;
-        state.userId = undefined;
-        state.email = undefined;
-      })
       .addMatcher(authApi.endpoints.login.matchFulfilled, authorizeReducer)
       .addMatcher(authApi.endpoints.register.matchFulfilled, authorizeReducer);
   },
 });
 
-export const { clearAuthData } = authSlice.actions;
+export const { resetAuthData } = authSlice.actions;
