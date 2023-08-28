@@ -1,20 +1,20 @@
-import { FC } from 'react';
-import { icons } from './icons';
+import { FC, SVGProps } from 'react';
+import { IconType, icons } from './icons';
 
-export type IconType = 'arrowRightSLine' | 'arrowLeftSLine';
-
-interface IIconProps extends React.SVGProps<SVGSVGElement> {
+interface IIconProps extends SVGProps<SVGSVGElement> {
   type: IconType;
+  isDisabled?: boolean;
 }
 
-export const Icon: FC<IIconProps> = ({ type, ...rest }) => {
-  const { viewBox, component } = icons[type];
+export const Icon: FC<IIconProps> = ({ type, isDisabled, ...rest }) => {
+  const { viewBox, component, svgProps } = icons[type];
   return (
     <svg
       viewBox={viewBox}
-      fill="currentColor"
+      fill={isDisabled ? '#c5cfd9' : '#34495e'}
       height="100%"
       width="100%"
+      {...svgProps}
       {...rest}
     >
       {component()}

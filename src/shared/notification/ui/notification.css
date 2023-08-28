@@ -1,0 +1,21 @@
+.notification.entering {
+  animation: show-notification 700ms forwards ease-in;
+}
+
+.notification.exiting {
+  animation: show-notification 700ms forwards reverse ease-in;
+}
+
+@keyframes show-notification {
+  0% {
+    transform: translateX(400px);
+  }
+
+  80% {
+    transform: translateX(-40px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}

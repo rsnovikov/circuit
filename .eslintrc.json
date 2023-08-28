@@ -43,6 +43,12 @@
       }
     ],
     // todo: enable and configure prettier/prettier
-    "prettier/prettier": 0
+    "prettier/prettier": 0,
+    "no-param-reassign": ["error", {
+      "props": true,
+      "ignorePropertyModificationsFor": [
+        "state"
+      ]
+    }]
   }
 }

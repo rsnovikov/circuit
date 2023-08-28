@@ -1,24 +1,29 @@
-import { FC } from 'react';
-import { ICirElement, ICoords } from '@/shared/ui/types';
+import { FC, Fragment } from 'react';
+import { IComponent } from '@/shared/model/types';
 
 interface ICirElementProps {
-  cirElem: ICirElement;
-  coords?: ICoords;
+  components: IComponent[];
+  isSelected?: boolean;
 }
 
-export const CirElement: FC<ICirElementProps> = ({ cirElem, coords }) => {
+export const CirElement: FC<ICirElementProps> = ({ components, isSelected }) => {
   return (
-    <g transform={coords && `translate(${coords.x}, ${coords.y})`}>
-      {cirElem.components.map((component) => (
-        <path
-          // todo: use id instead of d
-          key={component.d}
-          d={component.d}
-          stroke="black"
-          fill="transparent"
-          strokeWidth="2"
-        />
+    <>
+      {components.map((component) => (
+        // todo: use id instead of d
+        <Fragment key={component.d}>
+          {isSelected && (
+            <path
+              d={component.d}
+              fill="transparent"
+              stroke="DodgerBlue"
+              strokeOpacity={0.4}
+              strokeWidth={6}
+            />
+          )}
+          <path d={component.d} fill="transparent" stroke="black" strokeWidth={3} />
+        </Fragment>
       ))}
-    </g>
+    </>
   );
 };
