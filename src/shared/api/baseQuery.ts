@@ -14,7 +14,7 @@ export const baseQuery: BaseQueryFn<
   {},
   FetchBaseQueryMeta
 > = fetchBaseQuery({
-  baseUrl: 'http://localhost:8080/api',
+  baseUrl: import.meta.env.VITE_API_ENDPOINT || 'http://localhost:8080/api',
   prepareHeaders: (headers, { getState }) => {
     const { accessToken } = (getState() as RootState).auth;
 

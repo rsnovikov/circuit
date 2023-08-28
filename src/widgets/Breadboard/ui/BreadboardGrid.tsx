@@ -15,7 +15,7 @@ export const BreadboardGrid: FC = () => {
   useEffect(() => {
     if (!svgRef.current) return;
     setSvgDimensions({ width: svgRef.current.clientWidth, height: svgRef.current.clientHeight });
-  }, [svgRef.current]);
+  }, [svgRef]);
 
   const isGridVisible = useAppSelector((state) => state.circuit.isGridVisible);
   const gridStep = useAppSelector((state) => state.circuit.gridStep);
