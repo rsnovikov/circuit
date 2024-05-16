@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/model';
 import { notify } from '@/shared/notification';
 import { BreadboardToolsBtn } from './BreadboardToolsBtn';
-import { analyzeCircuit } from '../../../MNA/test.js';
+import { analyzeCircuit } from 'MNA';
 export const StartModelingBreadboardTool: FC = () => {
   const dispatch = useAppDispatch();
   const nodes = useAppSelector(state => state.node.nodes);
