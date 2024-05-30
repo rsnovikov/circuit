@@ -444,7 +444,7 @@ export const initialCirElementList: IInitialCirElementList = {
         `,
       },
     ],
-    name: 'Свитч',
+    name: 'Реле "тройка"',
     terminals: [
       {
         id: '1',

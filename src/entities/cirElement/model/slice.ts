@@ -8,7 +8,6 @@ interface ICirElementSliceState {
   pickedElement: ICirElement | null;
   draggableElement: IDraggableElement | null;
   selectedElementId: string | null;
-
   elements: ICirElement[];
 }
 
