@@ -30,13 +30,13 @@ export const nodeSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string;
-        updatedNode: ICirNode;
+        updatedNode: Partial<ICirNode>;
       }>
     ) {
       const { id, updatedNode } = action.payload;
       const index = state.nodes.findIndex((element) => element.id === id);
       if (index !== -1) {
-        state.nodes[index] = updatedNode;
+        state.nodes[index] = {...state.nodes[index], ...updatedNode};
       }
     },
     removeNodeById(state, action: PayloadAction<string>) {

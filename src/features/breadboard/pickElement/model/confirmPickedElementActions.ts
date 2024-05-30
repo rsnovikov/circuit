@@ -28,7 +28,7 @@ export const confirmPickedElementAction =
             elementId: updatedPickedElement.id,
             terminalId: terminal.id,
           },
-          connectionIds: terminal.relatedTerminalId ? [terminal.relatedTerminalId] : [],
+          connectionIds: terminal.relatedTerminalId && !terminal.noInitialNode ? [terminal.relatedTerminalId] : [],
           x: terminal.x,
           y: terminal.y,
         };

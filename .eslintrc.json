@@ -47,6 +47,7 @@
         "props": true,
         "ignorePropertyModificationsFor": ["state", "target"]
       }
-    ]
+    ],
+    "react/display-name": 0
   }
 }

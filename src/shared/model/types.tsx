@@ -1,4 +1,6 @@
+import { FC } from "react";
 import { ElementTypesEnum } from '../../entities/cirElement/model/ElementTypesEnum';
+import { ICirElement } from "@/entities/cirElement/model/types";
 
 export interface IComponent {
   d: string;
@@ -10,6 +12,7 @@ export interface ITerminal {
   y: number;
   relatedTerminalId: string | null;
   name: string;
+  noInitialNode?:boolean
 }
 
 export interface IHitbox {
@@ -29,9 +32,13 @@ export interface IPhysData {
   [key: string]: IPhysDataItem;
 }
 
+interface ICirLayout extends Pick<ICirElement, 'power'>{
+  isSelected: boolean
+}
 export interface IInitialCirElement {
   type: ElementTypesEnum;
-  components: IComponent[];
+  components?: IComponent[];
+  Layout?: FC<ICirLayout>;
   name: string;
   terminals: ITerminal[];
   hitbox?: IHitbox;

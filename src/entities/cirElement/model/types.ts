@@ -11,4 +11,5 @@ export interface ICirElement extends Pick<IInitialCirElement, 'type'> {
   rotate: number;
   personalName: string;
   physData: ICirElementPhysData;
+  power: number | null;
 }

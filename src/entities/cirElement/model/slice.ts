@@ -3,6 +3,7 @@ import { ICirElement } from '@/entities/cirElement/model/types';
 import { circuitApi } from '@/entities/circuit';
 import { CircuitData } from '@/entities/circuit/api/types';
 import { IDraggableElement } from '@/shared/model/types';
+import { RootState } from "@/app/appStore";
 
 interface ICirElementSliceState {
   pickedElement: ICirElement | null;
@@ -37,13 +38,13 @@ export const CirElementSlice = createSlice({
       state,
       action: PayloadAction<{
         id: string;
-        updatedElement: ICirElement;
+        updatedElement: Partial<ICirElement>;
       }>
     ) {
       const { id, updatedElement } = action.payload;
       const index = state.elements.findIndex((element) => element.id === id);
       if (index !== -1) {
-        state.elements[index] = updatedElement;
+        state.elements[index] = {...state.elements[index], ...updatedElement };
       }
     },
     removeElementById(state, action: PayloadAction<string>) {
@@ -79,3 +80,5 @@ export const {
   removeElementById,
   resetCircuitData,
 } = CirElementSlice.actions;
+
+export const selectCirElementById = (id: string) => (state: RootState) => state.cirElement.elements.find(item => item.id === id)

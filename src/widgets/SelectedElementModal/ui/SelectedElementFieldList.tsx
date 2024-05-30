@@ -28,7 +28,7 @@ export const SelectedElementFieldList: FC<ISelectedElementFieldListProps> = ({
               <span>{title}</span>
             </div>
             <div className="h-full w-full pl-2 text-blue-400 flex items-center justify-start">
-              <span>{value.toFixed(3)}</span>
+              <span>{value?.toFixed(3)}</span>
             </div>
           </li>
         );

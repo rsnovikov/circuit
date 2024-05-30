@@ -1,15 +1,21 @@
-import { FC, Fragment } from 'react';
-import { IComponent } from '@/shared/model/types';
+import { FC, Fragment, memo } from 'react';
+import { IComponent, IInitialCirElement } from '@/shared/model/types';
+import { ICirElement } from "@/entities/cirElement/model/types";
 
-interface ICirElementProps {
-  components: IComponent[];
-  isSelected?: boolean;
+interface ICirElementProps extends Pick<ICirElement, 'power'>{
+  components?: IComponent[];
+  Layout?: IInitialCirElement['Layout'];
+  isSelected: boolean;
 }
 
-export const CirElement: FC<ICirElementProps> = ({ components, isSelected }) => {
+export const CirElement: FC<ICirElementProps> = memo(({ components, isSelected, Layout, power,  }) => {
+  if(Layout) {
+    return <Layout power={power} isSelected={isSelected}/>
+  }
+
   return (
     <>
-      {components.map((component) => (
+      {components?.map((component) => (
         // todo: use id instead of d
         <Fragment key={component.d}>
           {isSelected && (
@@ -26,4 +32,4 @@ export const CirElement: FC<ICirElementProps> = ({ components, isSelected }) => 
       ))}
     </>
   );
-};
+});

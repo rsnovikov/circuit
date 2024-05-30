@@ -40,6 +40,45 @@ export const initialCirElementList: IInitialCirElementList = {
   },
   [ElementTypesEnum.Key]: {
     type: ElementTypesEnum.Key,
+    Layout: ({power, isSelected}) => {
+      console.log(power)
+      const d = !power ? `
+          M 0 0,
+          m -40 0,
+          a 5 5 1 0 1 -10 0,
+          a 5 5 1 0 1 10 0,
+          l 73 -35,
+          m 7 35,
+          a 5 5 1 0 1 10 0,
+          a 5 5 1 0 1 -10 0,
+          m 10 0,
+          l 20 0,
+          m -120 0,
+          l -20 0
+          ` : `
+          M 0 0,
+          m -40 0,
+          a 5 5 1 0 1 -10 0,
+          a 5 5 1 0 1 10 0,
+          M -40 0
+          L 40 0
+          a 5 5 1 0 1 10 0,
+          a 5 5 1 0 1 -10 0,
+          m 10 0,
+          l 20 0,
+          m -120 0,
+          l -20 0
+          `
+    return (
+      <>
+    <path d={d} fill='transparent'  stroke="black" strokeWidth={3}/>
+   {isSelected && <path d={d}
+    stroke="DodgerBlue"
+              strokeOpacity={0.4}
+              strokeWidth={6}/>}
+    </>
+  )
+    } ,
     components: [
       {
         d: `
@@ -67,6 +106,7 @@ export const initialCirElementList: IInitialCirElementList = {
         x: -70,
         y: 0,
         name: 'Клемма 1',
+        noInitialNode: true
       },
       {
         id: '2',
@@ -74,6 +114,7 @@ export const initialCirElementList: IInitialCirElementList = {
         x: 70,
         y: 0,
         name: 'Клемма 2',
+        noInitialNode: true
       },
     ],
     hitbox: {
@@ -96,6 +137,20 @@ export const initialCirElementList: IInitialCirElementList = {
   },
   [ElementTypesEnum.Lamp]: {
     type: ElementTypesEnum.Lamp,
+    Layout: ({power, isSelected}) => {
+
+      const d = 'M 0 0 m -50 0 a 50 50 1 0 1 100 0 a 50 50 1 0 1 -100 0 m 15 35 l 70 -70 m -70 0 l 70 70 m 15 -35 l 30 0 m -130 0 l -30 0'
+
+    return (
+      <>
+    <path d={d} fill={power && power > 0 ? "yellow" : "transparent"}  stroke="black" strokeWidth={3}/>
+   {isSelected && <path d={d}
+    stroke="DodgerBlue"
+              strokeOpacity={0.4}
+              strokeWidth={6}/>}
+    </>
+  )
+    } ,
     components: [
       {
         d: `
@@ -248,7 +303,7 @@ export const initialCirElementList: IInitialCirElementList = {
     previewImgPath: '/images/elements/power.png',
     physData: {
       voltage: {
-        value: 0,
+        value: 10,
         title: 'Напряжение',
         isChangeable: true,
       },

@@ -2,6 +2,8 @@ import { FC, PropsWithChildren, SVGProps } from 'react';
 import { initialCirElementList } from '@/entities/cirElement/model/InitialCirElementList';
 import { ICirElement } from '@/entities/cirElement/model/types';
 import { CirElement } from '@/shared/ui/CirElement';
+import { useAppDispatch } from "@/shared/model";
+import { interactCirElementActionRecord } from "@/features/interactCirElement";
 
 interface ICirElementProps extends SVGProps<SVGGElement> {
   element: ICirElement;
@@ -14,14 +16,21 @@ export const BreadboardCirElement: FC<PropsWithChildren<ICirElementProps>> = ({
   children,
   ...rest
 }) => {
+  const dispatch = useAppDispatch()
   const { x, y, rotate, id } = element;
-  const { hitbox, components } = initialCirElementList[element.type];
+  const { hitbox, components, Layout } = initialCirElementList[element.type];
 
   return (
     <>
       <g transform={`translate(${x}, ${y}) rotate(${-rotate})`} stroke="black" fill="transparent">
-        <g {...rest}>
-          <CirElement components={components} isSelected={selectedElementId === id} />
+        <g {...rest} onDoubleClick={() => {
+ const interact = interactCirElementActionRecord[element.type];
+ if(!interact) {
+   return;
+ }
+  dispatch(interact(element.id))
+        }}>
+          <CirElement components={components} isSelected={selectedElementId === id} Layout={Layout} power={element.power}/>
           {hitbox && (
             <rect
               fill="transparent"
