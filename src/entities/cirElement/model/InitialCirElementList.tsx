@@ -1,5 +1,6 @@
 import { ElementTypesEnum } from '@/entities/cirElement/model/ElementTypesEnum';
 import { IInitialCirElementList } from '@/shared/model/types';
+import { LampLayout } from "../ui/cirElementsLayout/LampLayout";
 
 export const initialCirElementList: IInitialCirElementList = {
   [ElementTypesEnum.Ground]: {
@@ -131,26 +132,13 @@ export const initialCirElementList: IInitialCirElementList = {
       },
       current: {
         value: 0,
-        title: 'Сила тока',
+        title: 'Сила тока', 
       },
     },
   },
   [ElementTypesEnum.Lamp]: {
     type: ElementTypesEnum.Lamp,
-    Layout: ({power, isSelected}) => {
-
-      const d = 'M 0 0 m -50 0 a 50 50 1 0 1 100 0 a 50 50 1 0 1 -100 0 m 15 35 l 70 -70 m -70 0 l 70 70 m 15 -35 l 30 0 m -130 0 l -30 0'
-
-    return (
-      <>
-    <path d={d} fill={power && power > 0 ? "yellow" : "transparent"}  stroke="black" strokeWidth={3}/>
-   {isSelected && <path d={d}
-    stroke="DodgerBlue"
-              strokeOpacity={0.4}
-              strokeWidth={6}/>}
-    </>
-  )
-    } ,
+    Layout:  LampLayout,
     components: [
       {
         d: `

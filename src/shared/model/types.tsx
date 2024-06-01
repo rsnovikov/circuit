@@ -32,13 +32,13 @@ export interface IPhysData {
   [key: string]: IPhysDataItem;
 }
 
-interface ICirLayout extends Pick<ICirElement, 'power'>{
+export interface ICirElementLayout extends Pick<ICirElement, 'power'>{
   isSelected: boolean
 }
 export interface IInitialCirElement {
   type: ElementTypesEnum;
   components?: IComponent[];
-  Layout?: FC<ICirLayout>;
+  Layout?: FC<ICirElementLayout>;
   name: string;
   terminals: ITerminal[];
   hitbox?: IHitbox;
