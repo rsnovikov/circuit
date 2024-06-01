@@ -2,6 +2,7 @@ import { initialCirElementList } from '@/entities/cirElement/model/InitialCirEle
 import { ICirElement } from '@/entities/cirElement/model/types';
 import { ICirNode } from '@/entities/node';
 import { ICoords } from '@/shared/model/types';
+import { getWirePosByElement } from "./getWirePosByElement";
 
 export const getRelatedNodeAbsoluteCoords = (
   node: ICirNode,
@@ -17,5 +18,5 @@ export const getRelatedNodeAbsoluteCoords = (
   );
   if (!terminal) return;
 
-  return { x: element.x + terminal.x, y: element.y + terminal.y };
+  return getWirePosByElement({element, node});
 };

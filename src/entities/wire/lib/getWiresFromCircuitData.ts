@@ -7,6 +7,8 @@ export const getWiresFromCircuitData = ({ wires: wiresData, elements, nodes }: C
     const startNode = nodes.find((node) => node.id === wireData.startNodeId);
     const endNode = nodes.find((node) => node.id === wireData.endNodeId);
     if (!startNode || !endNode) return acc;
+
+      
     const startCoords = getRelatedNodeAbsoluteCoords(startNode, elements);
     const endCoords = getRelatedNodeAbsoluteCoords(endNode, elements);
     if (!startCoords || !endCoords) return acc;
