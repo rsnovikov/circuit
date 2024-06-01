@@ -5,27 +5,27 @@ import { startModelingAction } from "@/features/circuitTools/model/startModeling
 
 
 const toggleNodeConnection = (connectionIds: string[], connectedNodeId: string) => {
-	if(connectionIds.includes(connectedNodeId)) {
+	if (connectionIds.includes(connectedNodeId)) {
 		return connectionIds.filter(item => item !== connectedNodeId);
 	} else {
 		return [...connectionIds, connectedNodeId]
 	}
 }
 
-export const keyInteractAction = (cirElemId: string ) =>
-  (dispatch: AppDispatch, getState: () => RootState) => {
+export const keyInteractAction = (cirElemId: string) =>
+	(dispatch: AppDispatch, getState: () => RootState) => {
 		const state = getState();
 		const cirElement = selectCirElementById(cirElemId)(state);
 		console.log(cirElement);
 
-		
-			dispatch(updateElementById({id: cirElemId, updatedElement: {power: !cirElement?.power ? 1 : 0 }}))
 
-			const [firstNode, secondNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
+		dispatch(updateElementById({ id: cirElemId, updatedElement: { power: !cirElement?.power ? 1 : 0 } }))
 
-		dispatch(updateNodeById({id: firstNode.id, updatedNode: {connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id)}}))
+		const [firstNode, secondNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
 
-		dispatch(updateNodeById({id: secondNode.id, updatedNode: {connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id)}}))
+		dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
+
+		dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
 
 		dispatch(startModelingAction());
 	}

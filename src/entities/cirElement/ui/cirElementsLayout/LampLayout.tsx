@@ -14,11 +14,11 @@ export const LampLayout: FC<LampLayoutProps> = ({power, isSelected}) => {
 
 return (
 	<>
-<path d={d} fill={power && power > 0 ? "yellow" : "transparent"}  stroke="black" strokeWidth={3}/>
+		<path d={d} fill={power && power > 0 ? `rgba(255,255,0,${power}` : "transparent"} stroke="black" strokeWidth={3} />
 {isSelected && <path d={d}
 stroke="DodgerBlue"
 					strokeOpacity={0.4}
-					strokeWidth={6}/>}
+			strokeWidth={6} />}
 </>
 )
 }

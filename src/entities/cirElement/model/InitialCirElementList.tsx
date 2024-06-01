@@ -1,6 +1,8 @@
 import { ElementTypesEnum } from '@/entities/cirElement/model/ElementTypesEnum';
 import { IInitialCirElementList } from '@/shared/model/types';
 import { LampLayout } from "../ui/cirElementsLayout/LampLayout";
+import { KeyLayout } from '../ui/cirElementsLayout/KeyLayout';
+import { RelayLayout } from '../ui/cirElementsLayout/RelayLayout';
 
 export const initialCirElementList: IInitialCirElementList = {
   [ElementTypesEnum.Ground]: {
@@ -41,45 +43,7 @@ export const initialCirElementList: IInitialCirElementList = {
   },
   [ElementTypesEnum.Key]: {
     type: ElementTypesEnum.Key,
-    Layout: ({power, isSelected}) => {
-      console.log(power)
-      const d = !power ? `
-          M 0 0,
-          m -40 0,
-          a 5 5 1 0 1 -10 0,
-          a 5 5 1 0 1 10 0,
-          l 73 -35,
-          m 7 35,
-          a 5 5 1 0 1 10 0,
-          a 5 5 1 0 1 -10 0,
-          m 10 0,
-          l 20 0,
-          m -120 0,
-          l -20 0
-          ` : `
-          M 0 0,
-          m -40 0,
-          a 5 5 1 0 1 -10 0,
-          a 5 5 1 0 1 10 0,
-          M -40 0
-          L 40 0
-          a 5 5 1 0 1 10 0,
-          a 5 5 1 0 1 -10 0,
-          m 10 0,
-          l 20 0,
-          m -120 0,
-          l -20 0
-          `
-    return (
-      <>
-    <path d={d} fill='transparent'  stroke="black" strokeWidth={3}/>
-   {isSelected && <path d={d}
-    stroke="DodgerBlue"
-              strokeOpacity={0.4}
-              strokeWidth={6}/>}
-    </>
-  )
-    } ,
+    Layout: KeyLayout,
     components: [
       {
         d: `
@@ -189,6 +153,11 @@ export const initialCirElementList: IInitialCirElementList = {
         title: 'Сопротивление',
         isChangeable: true,
       },
+      maxVoltage: {
+        value: 10,
+        title: 'Максимальное напряжение',
+        isChangeable: true,
+      }
     },
   },
   [ElementTypesEnum.Motor]: {
@@ -265,21 +234,21 @@ export const initialCirElementList: IInitialCirElementList = {
         `,
       },
     ],
-    name: 'Источник энергии',
+    name: 'Источник ЭДС',
     terminals: [
       {
         id: '1',
         relatedTerminalId: '2',
         x: -30,
         y: 0,
-        name: 'Клемма 1',
+        name: '+',
       },
       {
         id: '2',
         relatedTerminalId: '1',
         x: 30,
         y: 0,
-        name: 'Клемма 2',
+        name: '-',
       },
     ],
     hitbox: {
@@ -308,6 +277,7 @@ export const initialCirElementList: IInitialCirElementList = {
   },
   [ElementTypesEnum.Relay]: {
     type: ElementTypesEnum.Relay,
+    Layout: RelayLayout,
     components: [
       {
         d: `
@@ -387,7 +357,16 @@ export const initialCirElementList: IInitialCirElementList = {
       y2: 80,
     },
     previewImgPath: '/images/elements/relay.png',
-    physData: {},
+    physData: {
+      voltage: {
+        value: 0,
+        title: 'Напряжение',
+      },
+      current: {
+        value: 0,
+        title: 'Сила тока',
+      }
+    },
   },
   [ElementTypesEnum.Resistor]: {
     type: ElementTypesEnum.Resistor,
