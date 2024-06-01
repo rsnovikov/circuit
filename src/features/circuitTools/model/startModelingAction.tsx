@@ -40,11 +40,13 @@ export const startModelingAction = () =>
       // dispatch(setCirElements(updatedElementList));
       updatedElementList.forEach((cirElem) => {
         const action = executeCirElementActionRecord[cirElem.type];
+
+				dispatch(updateElementById({id: cirElem.id, updatedElement: cirElem}))
+
 				if(action) {
 					dispatch(action(cirElem.id));
         }
-        
-				dispatch(updateElementById({id: cirElem.id, updatedElement: cirElem}))
+      
       })
     } catch (error) {
       console.error(error);
