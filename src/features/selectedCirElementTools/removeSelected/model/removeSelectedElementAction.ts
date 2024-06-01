@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from '@/app/appStore';
 import { removeElementById, setSelectedElementId } from '@/entities/cirElement/model/slice';
-import { removeNodeById } from '@/entities/node';
+import { ICirNode, removeNodeById, updateNodeById } from '@/entities/node';
 import { removeWireById } from '@/entities/wire';
 
 export const removeSelectedElementAction =
@@ -25,6 +25,21 @@ export const removeSelectedElementAction =
 
     elementNodes.forEach((node) => dispatch(removeNodeById(node.id)));
     elementWires.forEach((wire) => dispatch(removeWireById(wire.id)));
+
+    elementNodes.forEach((deletedNode) => {
+      nodes.forEach((node) => {
+        if (node.connectionIds.includes(deletedNode.id)) {
+          const updatedConnectionIds = node.connectionIds.filter(
+            (connectionId) => connectionId !== deletedNode.id
+          );
+          const updatedNode: ICirNode = { ...node, connectionIds: updatedConnectionIds };
+          dispatch(updateNodeById({ id: updatedNode.id, updatedNode }));
+        }
+      });
+    })
+
+
+
     dispatch(removeElementById(selectedElementId));
     dispatch(setSelectedElementId(null));
   };

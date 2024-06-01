@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { RemoveSelectedTool } from '@/features/selectedTools/removeSelected/ui/RemoveSelectedTool';
-import { RotateSelectedTool } from '@/features/selectedTools/rotateSelected/ui/RotateSelectedTool';
+import { RemoveSelectedTool } from '@/features/selectedCirElementTools/removeSelected/ui/RemoveSelectedTool';
+import { RotateSelectedTool } from '@/features/selectedCirElementTools/rotateSelected/ui/RotateSelectedTool';
 
 export const ElementToolsList: FC = () => {
   return (
