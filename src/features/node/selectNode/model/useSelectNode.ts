@@ -1,7 +1,7 @@
-import { setSelectedElementId } from '@/entities/cirElement/model/slice';
 import { useKeyDown } from '@/shared/lib/hooks/useKeyDown/useKeyDown';
 import { useAppDispatch } from '@/shared/model';
 import { selectNodeAction } from './selectNodeAction';
+import { setSelectedNodeId } from "@/entities/node/model/slice";
 
 export const useSelectNode = () => {
   const dispatch = useAppDispatch();
@@ -10,7 +10,7 @@ export const useSelectNode = () => {
   };
 
   const unselectNode = () => {
-    dispatch(setSelectedElementId(null));
+    dispatch(setSelectedNodeId(null));
   };
 
   useKeyDown({ callback: unselectNode, codes: ['Escape'] });

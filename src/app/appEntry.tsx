@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider as ReduxProvider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
-import '@/shared/base.css';
+import '@/shared/base.scss';
 import { BreadboardSvgProvider } from '@/shared/lib/hooks/useBreadboardSvgRef';
 import { KeyDownProvider } from '@/shared/lib/hooks/useKeyDown/KeyDownContext';
 import { ModalProvider } from '@/shared/lib/hooks/useModal/useModal';

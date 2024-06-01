@@ -1,5 +1,6 @@
 import { FC, HTMLAttributes, PropsWithChildren } from 'react';
 import { ICirNode } from '..';
+import clsx from "clsx";
 
 interface INodeCirElementProps extends HTMLAttributes<SVGGElement> {
   node: ICirNode;
@@ -15,12 +16,13 @@ export const NodeCirElement: FC<PropsWithChildren<INodeCirElementProps>> = ({
   const { x, y, id } = node;
 
   return (
-    <g transform={`translate(${x}, ${y})`} stroke="black" fill="transparent">
+    <g transform={`translate(${x}, ${y})`} stroke="black" fill="transparent" className={clsx(node.connectionIds.length < 3 && "only-hover-node")}>
       <g {...rest}>
-        <circle
+         <circle
           cx={0}
           cy={0}
           r={8}
+          className="node"
           fill="green"
           stroke="green"
           strokeOpacity={0.4}

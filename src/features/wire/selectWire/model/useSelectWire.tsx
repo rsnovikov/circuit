@@ -1,7 +1,7 @@
-import { setSelectedElementId } from '@/entities/cirElement/model/slice';
 import { useKeyDown } from '@/shared/lib/hooks/useKeyDown/useKeyDown';
 import { useAppDispatch } from '@/shared/model';
 import { addSelectedWireIdAction } from './addSelectedWireIdAction';
+import { setSelectedWireId } from "@/entities/wire/model/slice";
 
 export const useSelectWire = () => {
   const dispatch = useAppDispatch();
@@ -11,7 +11,7 @@ export const useSelectWire = () => {
   };
 
   const unselectWire = () => {
-    dispatch(setSelectedElementId(null));
+    dispatch(setSelectedWireId(null));
   };
 
   useKeyDown({ callback: unselectWire, codes: ['Escape'] });

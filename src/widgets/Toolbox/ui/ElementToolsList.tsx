@@ -4,7 +4,7 @@ import { RotateSelectedTool } from '@/features/selectedCirElementTools/rotateSel
 
 export const ElementToolsList: FC = () => {
   return (
-    <div className="flex h-full p-2">
+    <div className="flex h-auto p-2 items-center">
       <div className=" mr-1.5">
         <RemoveSelectedTool />
       </div>

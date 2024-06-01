@@ -1,17 +1,15 @@
 import { FC } from 'react';
-import { SaveAsJsonBreadboardTool } from '@/features/circuitTools/SaveAsJsonBreadboardTool';
-import { SaveAsSVgBreadboardTool } from '@/features/circuitTools/SaveAsSvgBreadboardTool';
-import { StartModelingBreadboardTool } from '@/features/circuitTools/StartModelingBreadboardTool';
-import { ToggleGridBreadboardTool } from '@/features/circuitTools/ToggleGridBreadboardTool';
-import { UploadJsonBreadboardTool } from '@/features/circuitTools/UploadJsonBreadboardTool';
+import { SaveAsJsonBreadboardTool } from '@/features/circuitTools/ui/SaveAsJsonBreadboardTool';
+import { SaveAsSVgBreadboardTool } from '@/features/circuitTools/ui/SaveAsSvgBreadboardTool';
+import { StartModelingBreadboardTool } from '@/features/circuitTools/ui/StartModelingBreadboardTool';
+import { ToggleGridBreadboardTool } from '@/features/circuitTools/ui/ToggleGridBreadboardTool';
+import { UploadJsonBreadboardTool } from '@/features/circuitTools/ui/UploadJsonBreadboardTool';
 
 export const BreadboardToolsList: FC = () => {
   return (
     <div className="flex h-full">
-      <div className="flex mx-2 p-2 h-full border-x border-gray-600">
-        <div className="flex">
+      <div className=" mx-2 p-2 flex border-x border-gray-600 h-auto items-center">
           <ToggleGridBreadboardTool />
-        </div>
       </div>
 
       <div className="flex h-full p-2">

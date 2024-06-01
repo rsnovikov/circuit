@@ -17,7 +17,7 @@ export const PickerCirElement: FC<IPickerCirElementProps> = ({
     <div
       {...rest}
       className={clsx(
-        'w-[88px] h-full cursor-pointer bg-[#f1f1f3] rounded-md text-[#34495e] text-[12px] hover:border-blue-400 border-2 border-transparent hover:border-opacity-70 hover:bg-white hover:text-blue-400'
+        'w-full h-full cursor-pointer bg-[#f1f1f3] rounded-md text-[#34495e] text-md hover:border-blue-400 border-2 border-transparent hover:border-opacity-70 hover:bg-white hover:text-blue-400'
 
         // todo: don't work
         // pickedElement?.type === cirElem.type &&
@@ -29,7 +29,7 @@ export const PickerCirElement: FC<IPickerCirElementProps> = ({
       }}
     >
       <img src={cirElem.previewImgPath} className="pointer-events-none" />
-      <div className="text-center h-[41px] text-ellipsis overflow-hidden p-[5px] pt-0">
+      <div className="text-center h-[60px] text-ellipsis overflow-hidden p-[5px] pt-0">
         {cirElem.name}
       </div>
     </div>

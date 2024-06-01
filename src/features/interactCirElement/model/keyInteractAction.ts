@@ -1,6 +1,7 @@
 import { AppDispatch, RootState } from "@/app/appStore";
 import { selectCirElementById, updateElementById } from "@/entities/cirElement/model/slice";
 import { updateNodeById } from "@/entities/node";
+import { startModelingAction } from "@/features/circuitTools/model/startModelingAction";
 
 
 const toggleNodeConnection = (connectionIds: string[], connectedNodeId: string) => {
@@ -25,4 +26,6 @@ export const keyInteractAction = (cirElemId: string ) =>
 		dispatch(updateNodeById({id: firstNode.id, updatedNode: {connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id)}}))
 
 		dispatch(updateNodeById({id: secondNode.id, updatedNode: {connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id)}}))
+
+		dispatch(startModelingAction());
 	}

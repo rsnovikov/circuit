@@ -14,12 +14,12 @@ export const BreadboardToolsBtn: FC<PropsWithChildren<IBreadboardToolsBtnProps>>
   return (
     <button
       {...rest}
-      className="h-[32px] px-2 border rounded-sm border-[#34495e] flex items-center justify-between shadow-sm"
+      className=" p-2 border rounded-sm border-[#34495e] flex items-center justify-between shadow-sm text-xl"
     >
       <span className="h-[32px] py-1 mr-1">
         <Icon type={iconType} className="grow-0 " />
       </span>
-      <span>{children}</span>
+      <span >{children}</span>
     </button>
   );
 };

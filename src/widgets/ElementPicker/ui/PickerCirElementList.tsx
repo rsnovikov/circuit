@@ -10,9 +10,9 @@ export const PickerCirElementList: FC = () => {
   const { addPickedElement } = usePickElement();
 
   return (
-    <div className="flex justify-between items-stretch flex-wrap p-3 after:content-[''] after:flex-auto -mr-[10.5px]">
+    <div className="flex justify-between items-stretch flex-wrap p-3 after:content-[''] after:flex-auto gap-[10px]">
       {Object.values(initialCirElementList).map((cirElem) => (
-        <div key={cirElem.type} className="mb-5 mr-[7.5px] select-none">
+        <div key={cirElem.type} className="select-none" style={{flex: '0 0 calc(33.3% - 10px)'}}>
           <PickerCirElement
             onMouseDown={({ clientX, clientY }) =>
               addPickedElement({ clientX, clientY, elementType: cirElem.type })
