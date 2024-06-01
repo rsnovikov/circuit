@@ -14,6 +14,7 @@ export const startModelingAction = () =>
 		const currentData: CircuitData = JSON.parse(JSON.stringify({ nodes, elements }))
     try {
       const elementsToChange: ICirElement[] = analyzeCircuit(currentData)
+			console.log('elementsToChange',elementsToChange);
       const updatedElementList = currentData.elements.map(e => {
         const index: number = elementsToChange.findIndex(element => element.id === e.id)
 
@@ -39,12 +40,11 @@ export const startModelingAction = () =>
       // dispatch(setCirElements(updatedElementList));
       updatedElementList.forEach((cirElem) => {
         const action = executeCirElementActionRecord[cirElem.type];
-
-        if(!action) {
-          return;
+				if(action) {
+					dispatch(action(cirElem.id));
         }
+        
 				dispatch(updateElementById({id: cirElem.id, updatedElement: cirElem}))
-        dispatch(action(cirElem.id));
       })
     } catch (error) {
       console.error(error);
