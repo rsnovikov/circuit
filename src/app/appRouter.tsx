@@ -50,5 +50,5 @@ export const appRouter = () =>
         },
       ],
     },
-    {path: '*', element: <Navigate to='/dashboard'/>}
+    {path: '*', element: <Navigate to='/circuit'/>}
   ]);
