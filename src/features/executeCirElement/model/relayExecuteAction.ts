@@ -17,6 +17,7 @@ export const relayExecuteAction =
         const state = getState();
         const cirElement = selectCirElementById(cirElemId)(getState());
         const currentStatus = Math.abs(cirElement?.physData?.current?.value || 0) > 0 ? 1 : 0
+
         dispatch(
             updateElementById({
                 id: cirElemId,
@@ -26,8 +27,6 @@ export const relayExecuteAction =
         if (status !== currentStatus) {
             status = currentStatus
             const [, , firstNode, secondNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
-            console.log('1', toggleNodeConnection(firstNode.connectionIds, secondNode.id));
-            console.log('1', toggleNodeConnection(secondNode.connectionIds, firstNode.id));
             dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
 
             dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
