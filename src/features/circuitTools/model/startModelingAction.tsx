@@ -1,6 +1,6 @@
 import { AppDispatch, RootState } from "@/app/appStore";
 import { initialCirElementList } from "@/entities/cirElement/model/InitialCirElementList";
-import { updateElementById } from "@/entities/cirElement/model/slice";
+import { setIsNeedModelingAfterChanges, updateElementById } from "@/entities/cirElement/model/slice";
 import { ICirElement, ICirElementPhysData } from "@/entities/cirElement/model/types";
 import { CircuitData } from "@/entities/circuit/api/types";
 import { executeCirElementActionRecord } from "@/features/executeCirElement";
@@ -9,7 +9,8 @@ import { analyzeCircuit } from 'MNA/analyzeCircuit';
 
 export const startModelingAction = () =>
 	(dispatch: AppDispatch, getState: () => RootState) => {
-		const { node: { nodes }, cirElement: { elements } } = getState();
+		setIsNeedModelingAfterChanges(false);
+		const { node: { nodes }, cirElement: { elements, isNeedModelingAfterChanges } } = getState();
 
 		const currentData: CircuitData = JSON.parse(JSON.stringify({ nodes, elements }))
 		try {
@@ -46,6 +47,9 @@ export const startModelingAction = () =>
 				}
 
 			})
+			if(isNeedModelingAfterChanges) {
+				startModelingAction();
+			}
 		} catch (error) {
 			console.error(error);
 			dispatch(notify({ message: 'Ошибка при просчете', type: 'error' }));

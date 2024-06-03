@@ -10,6 +10,7 @@ interface ICirElementSliceState {
   draggableElement: IDraggableElement | null;
   selectedElementId: string | null;
   elements: ICirElement[];
+  isNeedModelingAfterChanges: boolean;
 }
 
 const initialState: ICirElementSliceState = {
@@ -17,6 +18,7 @@ const initialState: ICirElementSliceState = {
   draggableElement: null,
   elements: [],
   selectedElementId: null,
+  isNeedModelingAfterChanges: false
 };
 
 export const CirElementSlice = createSlice({
@@ -53,6 +55,9 @@ export const CirElementSlice = createSlice({
     setDraggableElement(state, action: PayloadAction<IDraggableElement | null>) {
       state.draggableElement = action.payload;
     },
+    setIsNeedModelingAfterChanges(state, action: PayloadAction<boolean>) {
+      state.isNeedModelingAfterChanges = action.payload;
+    },
     setSelectedElementId(state, action: PayloadAction<string | null>) {
       state.selectedElementId = action.payload;
     },
@@ -79,6 +84,7 @@ export const {
   setSelectedElementId,
   removeElementById,
   resetCircuitData,
+  setIsNeedModelingAfterChanges
 } = CirElementSlice.actions;
 
 export const selectCirElementById = (id: string) => (state: RootState) => state.cirElement.elements.find(item => item.id === id)
