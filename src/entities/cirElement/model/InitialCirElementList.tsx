@@ -3,6 +3,7 @@ import { IInitialCirElementList } from '@/shared/model/types';
 import { LampLayout } from "../ui/cirElementsLayout/LampLayout";
 import { KeyLayout } from '../ui/cirElementsLayout/KeyLayout';
 import { RelayLayout } from '../ui/cirElementsLayout/RelayLayout';
+import { SwitchLayout } from '../ui/cirElementsLayout/SwitchLayout';
 
 export const initialCirElementList: IInitialCirElementList = {
   [ElementTypesEnum.Ground]: {
@@ -47,18 +48,18 @@ export const initialCirElementList: IInitialCirElementList = {
     components: [
       {
         d: `
-          M 0 0,
-          m -40 0,
-          a 5 5 1 0 1 -10 0,
-          a 5 5 1 0 1 10 0,
-          l 73 -35,
-          m 7 35,
-          a 5 5 1 0 1 10 0,
-          a 5 5 1 0 1 -10 0,
-          m 10 0,
-          l 20 0,
-          m -120 0,
-          l -20 0
+        M 0 0
+        m -40 0
+        a 5 5 1 0 1 -10 0
+        a 5 5 1 0 1 10 0
+        l 73 -35
+        m 7 35
+        a 5 5 1 0 1 10 0
+        a 5 5 1 0 1 -10 0
+        m 10 0
+        l 40 0
+        m -140 0
+        l -40 0
         `,
       },
     ],
@@ -68,7 +69,7 @@ export const initialCirElementList: IInitialCirElementList = {
         id: '1',
         relatedTerminalId: '2',
 
-        x: -70,
+        x: -90,
         y: 0,
         name: 'Клемма 1',
         noInitialNode: true
@@ -76,7 +77,7 @@ export const initialCirElementList: IInitialCirElementList = {
       {
         id: '2',
         relatedTerminalId: '1',
-        x: 70,
+        x: 90,
         y: 0,
         name: 'Клемма 2',
         noInitialNode: true
@@ -106,18 +107,7 @@ export const initialCirElementList: IInitialCirElementList = {
     components: [
       {
         d: `
-          M 0 0,
-          m -50 0,
-          a 50 50 1 0 1 100 0,
-          a 50 50 1 0 1 -100 0,
-          m 15 35,
-          l 70 -70,
-          m -70 0,
-          l 70 70
-          m 15 -35
-          l 30 0
-          m -130 0
-          l -30 0
+        M 0 0 m -50 0 a 50 50 1 0 1 100 0 a 50 50 1 0 1 -100 0 m 15 35 l 70 -70 m -70 0 l 70 70 m 15 -35 l 40 0 m -140 0 l -40 0
         `,
       },
     ],
@@ -126,14 +116,14 @@ export const initialCirElementList: IInitialCirElementList = {
       {
         id: '1',
         relatedTerminalId: '2',
-        x: -80,
+        x: -90,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
         relatedTerminalId: '1',
-        x: 80,
+        x: 90,
         y: 0,
         name: 'Клемма 2',
       },
@@ -165,23 +155,25 @@ export const initialCirElementList: IInitialCirElementList = {
     components: [
       {
         d: `
-          M 0 0,
-          m -70 0,
-          a 70 70 1 0 1 140 0,
-          a 70 70 1 0 1 -140 0l -40 0,
-          m 180 0,
-          l 40 0,
-          m -110 70,
-          l 0 40
+
+        M 0 0
+        m -70 0
+        a 70 70 1 0 1 140 0
+        a 70 70 1 0 1 -140 0l -50 0
+        m 190 0
+        l 50 0
+        m -120 70
+        l 0 50
+
         `,
       },
       {
         d: `
-          M 0 0,
-          m 0 -60,
-          l 0 60,
-          l -50 35,
-          m 100 0,
+          M 0 0
+          m 0 -60
+          l 0 60
+          l -50 35
+          m 100 0
           l -50 -35
         `,
       },
@@ -191,14 +183,14 @@ export const initialCirElementList: IInitialCirElementList = {
       {
         id: '1',
         relatedTerminalId: '2',
-        x: -110,
+        x: -120,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
         relatedTerminalId: '1',
-        x: 110,
+        x: 120,
         y: 0,
         name: 'Клемма 2',
       },
@@ -206,7 +198,7 @@ export const initialCirElementList: IInitialCirElementList = {
         id: '3',
         relatedTerminalId: null,
         x: 0,
-        y: 110,
+        y: 120,
         name: 'Клемма 3',
       },
     ],
@@ -281,41 +273,41 @@ export const initialCirElementList: IInitialCirElementList = {
     components: [
       {
         d: `
-          M 0 0,
-          m 0 -20,
-          h -20,
-          v -30,
-          h -40,
-          m 40 0,
-          v -30,
-          h 40,
-          v 30,
-          h 40,
-          m -40 0,
-          v 30,
-          h-20,
-          m 0 10,
-          l 0 10,
-          m 0 10,
-          l 0 10,
-          m 0 10,
-          l 0 10,
-          m 0 10,
-          l 0 10,
-          m 0 10,
-          l 0 10,
-          m 0 10,
-          m -40 -35,
-          a 5 5 1 0 1 -10 0,
-          a 5 5 1 0 1 10 0,
-          l 73 -35,
-          m 7 35,
-          a 5 5 1 0 1 10 0,
-          a 5 5 1 0 1 -10 0,
-          m 10 0,
-          l 20 0,
-          m -120 0,
-          l -20 0
+    M 0 0
+    m 0 -20
+    h -20
+    v -40
+    h -40
+    m 40 0
+    v -40
+    h 40
+    v 40
+    h 40
+    m -40 0
+    v 40
+    h-20
+    m 0 10
+    l 0 10
+    m 0 10
+    l 0 10
+    m 0 10
+    l 0 10
+    m 0 10
+    l 0 10
+    m 0 10
+    l 0 10
+    m 0 15
+    m -40 -35
+    a 5 5 1 0 1 -10 0
+    a 5 5 1 0 1 10 0
+    l 73 -35
+    m 7 35
+    a 5 5 1 0 1 10 0
+    a 5 5 1 0 1 -10 0
+    m 10 0
+    l 40 0
+    m -140 0
+    l -40 0
         `,
       },
     ],
@@ -325,30 +317,30 @@ export const initialCirElementList: IInitialCirElementList = {
         id: '1',
         relatedTerminalId: '2',
         x: 60,
-        y: -50,
+        y: -60,
         name: 'Клемма 1',
       },
       {
         id: '2',
         relatedTerminalId: '1',
         x: -60,
-        y: -50,
+        y: -60,
         name: 'Клемма 2',
       },
       {
         id: '3',
         relatedTerminalId: '4',
         noInitialNode: true,
-        x: -70,
-        y: 55,
+        x: -90,
+        y: 60,
         name: 'Клемма 3',
       },
       {
         id: '4',
         relatedTerminalId: '3',
         noInitialNode: true,
-        x: 70,
-        y: 55,
+        x: 90,
+        y: 60,
         name: 'Клемма 4',
       },
     ],
@@ -375,16 +367,16 @@ export const initialCirElementList: IInitialCirElementList = {
     components: [
       {
         d: `
-          M 0 0 
-          m -50 0
-          v -20
-          h 100
-          v 40
-          h -100
-          z
-          l -20 0
-          m 120 0
-          l 20 0
+        M 0 0
+        m -50 0
+        v -20
+        h 100
+        v 40
+        h -100
+        z
+        l -40 0
+        m 140 0
+        l 40 0
         `,
       },
     ],
@@ -393,14 +385,14 @@ export const initialCirElementList: IInitialCirElementList = {
       {
         id: '1',
         relatedTerminalId: '2',
-        x: 70,
+        x: 90,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
         relatedTerminalId: '1',
-        x: -70,
+        x: -90,
         y: 0,
         name: 'Клемма 2',
       },
@@ -424,47 +416,48 @@ export const initialCirElementList: IInitialCirElementList = {
   },
   [ElementTypesEnum.Switch]: {
     type: ElementTypesEnum.Switch,
+    Layout: SwitchLayout,
     components: [
       {
         d: `
-          M 0 0,
-          m 0 20,
-          h -20,
-          v 30,
-          h-40,
-          m 40 0,
-          v 30,
-          h 40,
-          v -30,
-          h 40,
-          m -40 0,
-          v -30,
-          h -20,
-          m 0 -5,
-          v -10,
-          m 0 -5,
-          v-10,
-          m 0 -5,
-          v -10,
-          m 0 -5,
-          v-10,
-          m 0 -5,
-          v -10,
-          m 0 -5,
-          v-10,
-          m 0 -5,
-          v -10,
-          m 0 -5,
-          v-10,
-          m -60 5,
-          h 120,
-          v 10,
-          m 0 60,
-          v 10,
-          h -120,
-          m 0 -40,
-          h 20,
-          l 110 32
+        M 0 0
+        m 0 20
+        h -20
+        v 40
+        h-40
+        m 40 0
+        v 40
+        h 40
+        v -40
+        h 40
+        m -40 0
+        v -40
+        h -20
+        m 0 -5
+        v -10
+        m 0 -5
+        v-10
+        m 0 -5
+        v -10
+        m 0 -5
+        v-10
+        m 0 -5
+        v -10
+        m 0 -5
+        v-10
+        m 0 -5
+        v -10
+        m 0 -5
+        v-10
+        m -60 10
+        h 120
+        v 10
+        m 0 40
+        v 10
+        h -120
+        m 0 -30
+        h 20
+        l 100 22
         `,
       },
     ],
@@ -472,39 +465,40 @@ export const initialCirElementList: IInitialCirElementList = {
     terminals: [
       {
         id: '1',
-        relatedTerminalId: null,
+        relatedTerminalId: '2',
         x: -60,
-        y: -95,
-        name: 'Клемма 1',
+        y: 60,
+        name: 'Клемма 4',
       },
       {
         id: '2',
-        relatedTerminalId: '3',
-        x: -60,
-        y: -55,
-        name: 'Клемма 2',
+        relatedTerminalId: '1',
+        x: 60,
+        y: 60,
+        name: 'Клемма 5',
       },
       {
         id: '3',
-        relatedTerminalId: '2',
+        relatedTerminalId: null,
+        noInitialNode: true,
         x: -60,
-        y: -15,
-        name: 'Клемма 3',
+        y: -90,
+        name: 'Клемма 1',
       },
       {
         id: '4',
         relatedTerminalId: '5',
         x: -60,
-        y: 50,
-        name: 'Клемма 4',
+        y: -60,
+        name: 'Клемма 2',
       },
       {
         id: '5',
         relatedTerminalId: '4',
-        x: 60,
-        y: 50,
-        name: 'Клемма 5',
-      },
+        x: -60,
+        y: -30,
+        name: 'Клемма 3',
+      }
     ],
     hitbox: {
       x1: -65,
@@ -513,6 +507,15 @@ export const initialCirElementList: IInitialCirElementList = {
       y2: 82,
     },
     previewImgPath: '/images/elements/switch.png',
-    physData: {},
+    physData: {
+      voltage: {
+        value: 0,
+        title: 'Напряжение',
+      },
+      current: {
+        value: 0,
+        title: 'Сила тока',
+      }
+    },
   },
 };

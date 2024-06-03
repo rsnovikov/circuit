@@ -53,7 +53,7 @@ export const startModelingAction = () =>
 			})
 			if (deep === 0) {
 				deep = 1;
-				dispatch(startModelingAction())
+				// dispatch(startModelingAction())
 
 			} else {
 				deep = 0
