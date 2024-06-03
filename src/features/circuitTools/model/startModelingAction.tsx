@@ -10,7 +10,7 @@ import { analyzeCircuit } from 'MNA/analyzeCircuit';
 export const startModelingAction = () =>
 	(dispatch: AppDispatch, getState: () => RootState) => {
 		dispatch(setIsNeedModelingAfterChanges(false))
-		const { node: { nodes }, cirElement: { elements, isNeedModelingAfterChanges } } = getState();
+		const { node: { nodes }, cirElement: { elements } } = getState();
 
 		const currentData: CircuitData = JSON.parse(JSON.stringify({ nodes, elements }))
 		try {
@@ -47,10 +47,11 @@ export const startModelingAction = () =>
 				}
 
 			})
-			console.log(isNeedModelingAfterChanges);
+
+			const { cirElement: {isNeedModelingAfterChanges} } = getState();
 
 			if(isNeedModelingAfterChanges) {
-				startModelingAction();
+				dispatch(startModelingAction());
 			}
 		} catch (error) {
 			console.error(error);

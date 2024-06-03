@@ -4,6 +4,7 @@ import { LampLayout } from "../ui/cirElementsLayout/LampLayout";
 import { KeyLayout } from '../ui/cirElementsLayout/KeyLayout';
 import { RelayLayout } from '../ui/cirElementsLayout/RelayLayout';
 import { SwitchLayout } from '../ui/cirElementsLayout/SwitchLayout';
+import { MotorLayout } from "../ui/cirElementsLayout/MotorLayout";
 
 export const initialCirElementList: IInitialCirElementList = {
   [ElementTypesEnum.Ground]: {
@@ -11,13 +12,13 @@ export const initialCirElementList: IInitialCirElementList = {
     components: [
       {
         d: `
-          M 0 0,
-          v -40,
-          m -20 40,
-          h 40,
-          m -7.5 5,
-          h -25,
-          m 7.5 5,
+          M 0 0
+          v -40
+          m -20 40
+          h 40
+          m -7.5 5
+          h -25
+          m 7.5 5
           h 10
       `,
       },
@@ -144,7 +145,7 @@ export const initialCirElementList: IInitialCirElementList = {
         isChangeable: true,
       },
       maxVoltage: {
-        value: 10,
+      value: 10,
         title: 'Максимальное напряжение',
         isChangeable: true,
       }
@@ -152,32 +153,7 @@ export const initialCirElementList: IInitialCirElementList = {
   },
   [ElementTypesEnum.Motor]: {
     type: ElementTypesEnum.Motor,
-    components: [
-      {
-        d: `
-
-        M 0 0
-        m -70 0
-        a 70 70 1 0 1 140 0
-        a 70 70 1 0 1 -140 0l -50 0
-        m 190 0
-        l 50 0
-        m -120 70
-        l 0 50
-
-        `,
-      },
-      {
-        d: `
-          M 0 0
-          m 0 -60
-          l 0 60
-          l -50 35
-          m 100 0
-          l -50 -35
-        `,
-      },
-    ],
+    Layout: MotorLayout,
     name: 'Мотор',
     terminals: [
       {
@@ -210,14 +186,14 @@ export const initialCirElementList: IInitialCirElementList = {
     components: [
       {
         d: `
-          M 0 0,
-          m 5 20,
-          l 0 -40,
-          m 0 -50,
-          l -10 0,
-          m 5 -5,
-          l 0 10,
-          m -2 15,
+          M 0 0
+          m 5 20
+          l 0 -40
+          m 0 -50
+          l -10 0
+          m 5 -5
+          l 0 10
+          m -2 15
           l 0 100
           m 0 -50
           l -30 0
