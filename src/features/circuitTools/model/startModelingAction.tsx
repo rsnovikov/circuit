@@ -7,49 +7,59 @@ import { executeCirElementActionRecord } from "@/features/executeCirElement";
 import { notify } from "@/shared/notification";
 import { analyzeCircuit } from 'MNA/analyzeCircuit';
 
+let deep = 0
+
 export const startModelingAction = () =>
-  (dispatch: AppDispatch, getState: () => RootState) => {
-		const {node: {nodes}, cirElement: {elements}} = getState();
+	(dispatch: AppDispatch, getState: () => RootState) => {
+		const { node: { nodes }, cirElement: { elements } } = getState();
+		console.log('deep', deep);
 
 		const currentData: CircuitData = JSON.parse(JSON.stringify({ nodes, elements }))
-    try {
-      const elementsToChange: ICirElement[] = analyzeCircuit(currentData)
-			console.log('elementsToChange',elementsToChange);
-      const updatedElementList = currentData.elements.map(e => {
-        const index: number = elementsToChange.findIndex(element => element.id === e.id)
+		try {
+			const elementsToChange: ICirElement[] = analyzeCircuit(currentData)
+			console.log('elementsToChange', elementsToChange);
+			const updatedElementList = currentData.elements.map(e => {
+				const index: number = elementsToChange.findIndex(element => element.id === e.id)
 
 				const initialElementPhysData = initialCirElementList[e.type].physData;
 
-        return index >= 0 ? {id: elementsToChange[index].id, physData: elementsToChange[index].physData, type: e.type} : {
+				return index >= 0 ? { id: elementsToChange[index].id, physData: elementsToChange[index].physData, type: e.type } : {
 					id: e.id,
 					type: e.type,
-					 physData: Object.keys(e.physData).reduce((acc, physDataItemKey) => {
+					physData: Object.keys(e.physData).reduce((acc, physDataItemKey) => {
 						if (initialElementPhysData[physDataItemKey].isChangeable) {
-							return {...acc, [physDataItemKey]: e.physData[physDataItemKey]}
+							return { ...acc, [physDataItemKey]: e.physData[physDataItemKey] }
 						}
 						return {
-							...acc, 
-							[physDataItemKey]: {value: 0}
+							...acc,
+							[physDataItemKey]: { value: 0 }
 						}
-					 }, {} as ICirElementPhysData)
-					};
-      }
-		)
+					}, {} as ICirElementPhysData)
+				};
+			}
+			)
 
-		console.log('updatedElementList',updatedElementList)
-      // dispatch(setCirElements(updatedElementList));
-      updatedElementList.forEach((cirElem) => {
-        const action = executeCirElementActionRecord[cirElem.type];
+			console.log('updatedElementList', updatedElementList)
+			// dispatch(setCirElements(updatedElementList));
+			updatedElementList.forEach((cirElem) => {
+				const action = executeCirElementActionRecord[cirElem.type];
 
-				dispatch(updateElementById({id: cirElem.id, updatedElement: cirElem}))
+				dispatch(updateElementById({ id: cirElem.id, updatedElement: cirElem }))
 
-				if(action) {
+				if (action) {
 					dispatch(action(cirElem.id));
-        }
-      
-      })
-    } catch (error) {
-      console.error(error);
-      dispatch(notify({ message: 'Ошибка при просчете', type: 'error' }));
-    }
+				}
+
+			})
+			if (deep === 0) {
+				deep = 1;
+				dispatch(startModelingAction())
+
+			} else {
+				deep = 0
+			}
+		} catch (error) {
+			console.error(error);
+			dispatch(notify({ message: 'Ошибка при просчете', type: 'error' }));
+		}
 	}

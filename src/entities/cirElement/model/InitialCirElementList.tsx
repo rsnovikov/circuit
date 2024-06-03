@@ -338,6 +338,7 @@ export const initialCirElementList: IInitialCirElementList = {
       {
         id: '3',
         relatedTerminalId: '4',
+        noInitialNode: true,
         x: -70,
         y: 55,
         name: 'Клемма 3',
@@ -345,6 +346,7 @@ export const initialCirElementList: IInitialCirElementList = {
       {
         id: '4',
         relatedTerminalId: '3',
+        noInitialNode: true,
         x: 70,
         y: 55,
         name: 'Клемма 4',
