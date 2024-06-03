@@ -14,11 +14,9 @@ export const appRouter = () =>
       element: <CircuitLayout />,
       children: [
         {
-          path: '/circuit/:circuitId',
+          path: '/circuit/:circuitId?',
           element: (
-            <GuestGuard>
               <CircuitPage />
-            </GuestGuard>
           ),
         },
       ],

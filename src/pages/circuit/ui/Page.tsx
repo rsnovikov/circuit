@@ -17,17 +17,20 @@ export const CircuitPage: FC = () => {
 
   const dispatch = useAppDispatch();
 
-  if (!circuitId) return;
 
+  //@ts-ignore
   const { isLoading, error } = useGetCircuitDataQuery(circuitId, {
     refetchOnMountOrArgChange: true,
+    skip: !circuitId
   });
 
   useEffect(() => {
     return () => {
-      dispatch(resetCircuitData());
-      dispatch(resetNodeData());
-      dispatch(resetWireData());
+      if(circuitId) {
+        dispatch(resetCircuitData());
+        dispatch(resetNodeData());
+        dispatch(resetWireData());
+      }
     };
   }, []);
 
