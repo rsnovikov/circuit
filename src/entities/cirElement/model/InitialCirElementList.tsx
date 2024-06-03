@@ -179,7 +179,26 @@ export const initialCirElementList: IInitialCirElementList = {
       },
     ],
     previewImgPath: '/images/elements/motor.png',
-    physData: {},
+    physData: {
+      voltage: {
+        value: 0,
+        title: 'Напряжение',
+      },
+      current: {
+        value: 0,
+        title: 'Сила тока',
+      },
+      resistance: {
+        value: 5,
+        title: 'Сопротивление',
+        isChangeable: true,
+      },
+      maxVoltage: {
+      value: 100,
+        title: 'Максимальное напряжение',
+        isChangeable: true,
+      }
+    },
   },
   [ElementTypesEnum.VoltageSource]: {
     type: ElementTypesEnum.VoltageSource,

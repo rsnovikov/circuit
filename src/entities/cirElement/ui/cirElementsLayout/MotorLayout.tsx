@@ -9,10 +9,8 @@ interface MotorLayout extends ICirElementLayout { }
  * @returns {JSX.Element}
  */
 export const MotorLayout: FC<MotorLayout> = ({ power, isSelected }) => {
-    console.log(power)
 
-	let speed = -10;
-
+	let speed = power || 0;
 
     const dList =   [`
 
