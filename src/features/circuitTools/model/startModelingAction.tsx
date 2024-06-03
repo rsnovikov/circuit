@@ -9,6 +9,7 @@ import { analyzeCircuit } from 'MNA/analyzeCircuit';
 
 export const startModelingAction = () =>
 	(dispatch: AppDispatch, getState: () => RootState) => {
+		console.time()
 		dispatch(setIsNeedModelingAfterChanges(false))
 		const { node: { nodes }, cirElement: { elements } } = getState();
 
@@ -53,6 +54,7 @@ export const startModelingAction = () =>
 			if(isNeedModelingAfterChanges) {
 				dispatch(startModelingAction());
 			}
+			console.timeEnd()
 		} catch (error) {
 			console.error(error);
 			dispatch(notify({ message: 'Ошибка при просчете', type: 'error' }));

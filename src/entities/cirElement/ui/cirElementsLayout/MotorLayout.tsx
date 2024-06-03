@@ -11,6 +11,8 @@ interface MotorLayout extends ICirElementLayout { }
 export const MotorLayout: FC<MotorLayout> = ({ power, isSelected }) => {
 
 	let speed = power || 0;
+	console.log('speed', speed);
+
 
     const dList =   [`
 
@@ -35,7 +37,7 @@ export const MotorLayout: FC<MotorLayout> = ({ power, isSelected }) => {
         <>
 				{dList.map((d, index) => 
  <path key={d} d={d} fill='transparent' stroke="black" strokeWidth={3} style={index === 1 ? {
-	animation: `motor-rotating ${10 / Math.abs(speed)}s linear infinite${speed < 0 ? ' reverse': ''}`
+						animation: `motor-rotating ${1 / Math.abs(speed)}s linear infinite${speed < 0 ? ' reverse' : ''}`
  } : {}}/>
 				)}
            
