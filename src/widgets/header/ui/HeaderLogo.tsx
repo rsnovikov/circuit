@@ -7,7 +7,7 @@ export const HeaderLogo: FC = () => {
 
   return (
     <Link to={isAuthorized ? "/dashboard": "/circuit"}>
-      <img src="/logo.png" alt="logo" style={{ width: 'auto', height: '50px' }} />
+      <img src="/images/logo.png" alt="logo" style={{ width: 'auto', height: '50px' }} />
     </Link>
   );
 };
