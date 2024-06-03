@@ -28,7 +28,7 @@ export const switchExecuteAction =
             const [, , firstNode, secondNode, thirdNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
             dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
             dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
-            dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(thirdNode.connectionIds, secondNode.id) } }))
+            dispatch(updateNodeById({ id: thirdNode.id, updatedNode: { connectionIds: toggleNodeConnection(thirdNode.connectionIds, secondNode.id) } }))
             dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, thirdNode.id) } }))
         }
 

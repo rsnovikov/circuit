@@ -1,5 +1,5 @@
 import { AppDispatch, RootState } from '@/app/appStore';
-import { selectCirElementById, updateElementById } from '@/entities/cirElement/model/slice';
+import { selectCirElementById, setIsNeedModelingAfterChanges, updateElementById } from '@/entities/cirElement/model/slice';
 import { updateNodeById } from "@/entities/node";
 
 const toggleNodeConnection = (connectionIds: string[], connectedNodeId: string) => {
@@ -10,27 +10,25 @@ const toggleNodeConnection = (connectionIds: string[], connectedNodeId: string) 
     }
 }
 
-let status = 0
+const getPreviousStatus = (FNconnectionIds: string[], secondNodeId: string) => FNconnectionIds.includes(secondNodeId)
 
 export const relayExecuteAction =
     (cirElemId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
         const state = getState();
         const cirElement = selectCirElementById(cirElemId)(getState());
         const currentStatus = Math.abs(cirElement?.physData?.current?.value || 0) > 0 ? 1 : 0
-
         dispatch(
             updateElementById({
                 id: cirElemId,
                 updatedElement: { power: currentStatus },
             })
         );
-        if (status !== currentStatus) {
-            status = currentStatus
-            const [, , firstNode, secondNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
-            dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
+        const [, , firstNode, secondNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
+        if (getPreviousStatus(firstNode.connectionIds, secondNode.id) !== Boolean(currentStatus)) {
+            console.log('Connection status changed');
 
+            dispatch(setIsNeedModelingAfterChanges(true))
+            dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
             dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
         }
-
-        // Сюда добавлять обработку цепи это полная хуйня, оно должно быть уровнем выше.
     };
