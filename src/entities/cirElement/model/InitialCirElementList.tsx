@@ -158,14 +158,14 @@ export const initialCirElementList: IInitialCirElementList = {
     terminals: [
       {
         id: '1',
-        relatedTerminalId: '2',
+        relatedTerminalId: '3',
         x: -120,
         y: 0,
         name: 'Клемма 1',
       },
       {
         id: '2',
-        relatedTerminalId: '1',
+        relatedTerminalId: '3',
         x: 120,
         y: 0,
         name: 'Клемма 2',

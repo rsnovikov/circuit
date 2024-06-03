@@ -7,17 +7,8 @@ export const HeaderLogo: FC = () => {
   const isAuthorized = useAppSelector((state) => state.auth.isAuthorized);
 
   return (
-    <Link to={isAuthorized ? "/dashboard" : 'circuit'}>
-      <Icon
-        type="CircuitBoard"
-        width={40}
-        height={40}
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-      />
+    <Link to="/dashboard">
+      <img src="/logo.png" alt="logo" style={{ width: 'auto', height: '50px' }} />
     </Link>
   );
 };
