@@ -1,6 +1,7 @@
 import { AppDispatch, RootState } from '@/app/appStore';
 import { selectCirElementById, setIsNeedModelingAfterChanges, updateElementById } from '@/entities/cirElement/model/slice';
 import { updateNodeById } from "@/entities/node";
+import { startModelingAction } from "@/features/circuitTools/model/startModelingAction";
 
 const toggleNodeConnection = (connectionIds: string[], connectedNodeId: string) => {
     if (connectionIds.includes(connectedNodeId)) {
@@ -25,10 +26,17 @@ export const relayExecuteAction =
         );
         const [, , firstNode, secondNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
         if (getPreviousStatus(firstNode.connectionIds, secondNode.id) !== Boolean(currentStatus)) {
-            console.log('Connection status changed');
+            if(cirElement?.physData.delay.value) {
+                setTimeout(() => {
+                    dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
+                    dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
+            dispatch(startModelingAction())
+                }, cirElement?.physData.delay.value)
+            } else {
 
-            dispatch(setIsNeedModelingAfterChanges(true))
-            dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
-            dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
+                dispatch(setIsNeedModelingAfterChanges(true))
+                dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
+                dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
+            }
         }
     };

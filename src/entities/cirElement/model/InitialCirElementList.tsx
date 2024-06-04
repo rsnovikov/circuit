@@ -354,6 +354,11 @@ export const initialCirElementList: IInitialCirElementList = {
       current: {
         value: 0,
         title: 'Сила тока',
+      },
+      delay: {
+        value: 0,
+        title: 'Таймер',
+        isChangeable: true,
       }
     },
   },
