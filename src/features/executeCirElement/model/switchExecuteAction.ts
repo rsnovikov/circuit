@@ -1,6 +1,7 @@
 import { AppDispatch, RootState } from '@/app/appStore';
-import { selectCirElementById, updateElementById } from '@/entities/cirElement/model/slice';
+import { selectCirElementById, setIsNeedModelingAfterChanges, updateElementById } from '@/entities/cirElement/model/slice';
 import { updateNodeById } from "@/entities/node";
+import { connected } from 'process';
 
 const toggleNodeConnection = (connectionIds: string[], connectedNodeId: string) => {
     if (connectionIds.includes(connectedNodeId)) {
@@ -10,7 +11,10 @@ const toggleNodeConnection = (connectionIds: string[], connectedNodeId: string) 
     }
 }
 
-let status = 0
+const disconnectNodes = (connectionIds: string[], connectedNodeIds: string[]) => connectionIds.filter(item => !connectedNodeIds.includes(item))
+const connectNodes = (connectionIds: string[], connectedNodeIds: string[]) => [...connectionIds, ...connectedNodeIds]
+
+const getPreviousStatus = (FNconnectionIds: string[], secondNodeId: string) => FNconnectionIds.includes(secondNodeId)
 
 export const switchExecuteAction =
     (cirElemId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
@@ -23,14 +27,22 @@ export const switchExecuteAction =
                 updatedElement: { power: currentStatus },
             })
         );
-        if (status !== currentStatus) {
-            status = currentStatus
-            const [, , firstNode, secondNode, thirdNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
-            dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
-            dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
-            dispatch(updateNodeById({ id: thirdNode.id, updatedNode: { connectionIds: toggleNodeConnection(thirdNode.connectionIds, secondNode.id) } }))
-            dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, thirdNode.id) } }))
-        }
+        const [, , firstNode, secondNode, thirdNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
 
-        // Сюда добавлять обработку цепи это полная хуйня, оно должно быть уровнем выше.
+
+        if (getPreviousStatus(firstNode.connectionIds, secondNode.id) !== Boolean(currentStatus)) {
+            console.log('Connection status changed');
+            dispatch(setIsNeedModelingAfterChanges(true))
+            if (currentStatus === 1) {
+                dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: disconnectNodes(firstNode.connectionIds, [secondNode.id]) } }))
+                dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: disconnectNodes(secondNode.connectionIds, [firstNode.id]) } }))
+                dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: connectNodes(secondNode.connectionIds, [thirdNode.id]) } }))
+                dispatch(updateNodeById({ id: thirdNode.id, updatedNode: { connectionIds: connectNodes(thirdNode.connectionIds, [secondNode.id]) } }))
+            } else {
+                dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: connectNodes(firstNode.connectionIds, [secondNode.id]) } }))
+                dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: connectNodes(secondNode.connectionIds, [firstNode.id]) } }))
+                dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: disconnectNodes(secondNode.connectionIds, [thirdNode.id]) } }))
+                dispatch(updateNodeById({ id: thirdNode.id, updatedNode: { connectionIds: disconnectNodes(thirdNode.connectionIds, [secondNode.id]) } }))
+            }
+        }
     };
