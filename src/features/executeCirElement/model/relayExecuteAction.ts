@@ -18,25 +18,32 @@ export const relayExecuteAction =
         const state = getState();
         const cirElement = selectCirElementById(cirElemId)(getState());
         const currentStatus = Math.abs(cirElement?.physData?.current?.value || 0) > 0 ? 1 : 0
-        dispatch(
-            updateElementById({
-                id: cirElemId,
-                updatedElement: { power: currentStatus },
-            })
-        );
+
         const [, , firstNode, secondNode] = state.node.nodes.filter(item => item.relatedElement?.elementId === cirElemId);
         if (getPreviousStatus(firstNode.connectionIds, secondNode.id) !== Boolean(currentStatus)) {
-            if(cirElement?.physData.delay.value) {
+            if(cirElement?.physData.delay.value && currentStatus) {
                 setTimeout(() => {
                     dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
                     dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
             dispatch(startModelingAction())
+            dispatch(
+                updateElementById({
+                    id: cirElemId,
+                    updatedElement: { power: currentStatus },
+                })
+            );
                 }, cirElement?.physData.delay.value)
             } else {
 
                 dispatch(setIsNeedModelingAfterChanges(true))
                 dispatch(updateNodeById({ id: firstNode.id, updatedNode: { connectionIds: toggleNodeConnection(firstNode.connectionIds, secondNode.id) } }))
                 dispatch(updateNodeById({ id: secondNode.id, updatedNode: { connectionIds: toggleNodeConnection(secondNode.connectionIds, firstNode.id) } }))
+                dispatch(
+                    updateElementById({
+                        id: cirElemId,
+                        updatedElement: { power: currentStatus },
+                    })
+                );
             }
         }
     };

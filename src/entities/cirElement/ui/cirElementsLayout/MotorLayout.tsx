@@ -36,7 +36,7 @@ export const MotorLayout: FC<MotorLayout> = ({ power, isSelected }) => {
     return (
         <>
 				{dList.map((d, index) => 
- <path key={d} d={d} fill='transparent' stroke="black" strokeWidth={3} style={index === 1 ? {
+ <path key={d} d={d} fill='transparent' stroke="black" strokeWidth={3} style={index === 1 && speed !== 0? {
 						animation: `motor-rotating ${1 / Math.abs(speed)}s linear infinite${speed < 0 ? ' reverse' : ''}`
  } : {}}/>
 				)}
